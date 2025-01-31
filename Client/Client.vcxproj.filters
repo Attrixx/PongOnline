@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Private">
+      <UniqueIdentifier>{aa731c93-0214-4fdc-9748-1843b5fc755f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{5fec3f88-fa7b-4d04-8091-25f742b3768c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Core">
+      <UniqueIdentifier>{83b66b9b-0142-4e94-ba31-6ae2d8ea6117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Core">
+      <UniqueIdentifier>{6b32d1bc-c896-407e-957f-d953a599850e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Entity">
+      <UniqueIdentifier>{16367d55-7aa3-40e8-bb09-eb9aff7a7752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Entity">
+      <UniqueIdentifier>{0a1d99ac-d974-4f13-982d-8e96464ca643}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\App.cpp">
+      <Filter>Private\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Client.cpp">
+      <Filter>Private\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TimeManager.cpp">
+      <Filter>Private\Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\App.h">
+      <Filter>Public\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameConsts.h">
+      <Filter>Public\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TimeManager.h">
+      <Filter>Public\Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
