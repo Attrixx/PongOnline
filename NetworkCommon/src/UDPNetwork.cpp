@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-UDPNetwork::UDPNetwork() : m_socket(INVALID_SOCKET) {}
+UDPNetwork::UDPNetwork() : m_socket(INVALID_SOCKET), m_localPort(0) {}
 
 UDPNetwork::~UDPNetwork()
 {
