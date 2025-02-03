@@ -5,6 +5,11 @@
 void ServerApp::Run()
 {
 	InitNetwork();
+
+	while (1)
+	{
+		std::this_thread::sleep_for(std::chrono::seconds(1));
+	}
 }
 
 void ServerApp::InitNetwork()
@@ -21,11 +26,12 @@ void ServerApp::InitNetwork()
 		return;
 	}
 
-	if (!m_udpServer.BindSocket(DEFAULT_PORT))
+	if (!m_udpServer.BindSocket(12345))
 	{
 		std::cerr << "Server socket bind failed." << std::endl;
 		return;
 	}
 
 	std::cout << "Server Initialized successfully" << std::endl;
+	m_udpServer.StartListening();
 }

@@ -67,5 +67,12 @@ void ClientApp::InitNetwork()
 		return;
 	}
 
+	if (!m_udpClient.BindSocket(12346))
+	{
+		std::cerr << "Client socket bind failed." << std::endl;
+		return;
+	}
+
 	std::cout << "Client Initialized successfully" << std::endl;
+	m_udpClient.StartListening();
 }

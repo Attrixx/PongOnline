@@ -24,6 +24,7 @@ bool UDPNetwork::Init()
 
 void UDPNetwork::CleanUp()
 {
+	StopListening();
 	if (m_socket != INVALID_SOCKET)
 	{
 		closesocket(m_socket);
@@ -85,4 +86,44 @@ bool UDPNetwork::ReceiveFrom(char* buffer, int bufferSize, sockaddr_in& senderAd
     }
     buffer[bytesReceived] = '\0'; // Null-terminate the buffer
     return true;
+}
+
+void UDPNetwork::StartListening()
+{
+	if (m_running)
+	{
+		return;
+	}
+
+	m_running = true;
+	m_listenThread = std::thread(&UDPNetwork::Listen, this);
+}
+
+void UDPNetwork::StopListening()
+{
+	if (!m_running)
+	{
+		return;
+	}
+
+	m_running = false;
+
+    if (m_listenThread.joinable())
+    {
+		m_listenThread.join();
+    }
+}
+
+void UDPNetwork::Listen()
+{
+	char buffer[BUFFER_SIZE];
+	sockaddr_in senderAddr = {};
+
+    while (m_running)
+    {
+        if (ReceiveFrom(buffer, BUFFER_SIZE, senderAddr))
+        {
+            std::cout << "Received: " << buffer << std::endl;
+        }
+    }
 }
