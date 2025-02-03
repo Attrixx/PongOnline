@@ -12,5 +12,13 @@
     <ClCompile Include="src\Server.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="src\ServerApp.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ServerApp.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

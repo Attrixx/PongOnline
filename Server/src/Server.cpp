@@ -1,8 +1,12 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "ServerApp.h"
+
 int main()
 {
-	std::cout << "Hello World from Server" << std::endl;
+	ServerApp app;
+	app.Run();
+
 	return EXIT_SUCCESS;
 }
