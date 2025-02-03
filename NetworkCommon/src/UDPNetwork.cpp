@@ -49,13 +49,33 @@ bool UDPNetwork::BindSocket(u_short port)
     sockaddr_in serverAddr = {};
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_addr.s_addr = INADDR_ANY;
-    serverAddr.sin_port = htons(port);
+    serverAddr.sin_port = htons(port == 0 ? 0 : port);
 
     if (bind(m_socket, (sockaddr*)&serverAddr, sizeof(serverAddr)) == SOCKET_ERROR)
     {
         std::cerr << "Bind failed: " << WSAGetLastError() << std::endl;
         return false;
     }
+
+    if (port == 0)
+    {
+        sockaddr_in sockAddr;
+        int addrSize = sizeof(sockAddr);
+        if (getsockname(m_socket, (sockaddr*)&sockAddr, &addrSize) == 0)
+        {
+            m_localPort = ntohs(sockAddr.sin_port);  // Store the assigned local port
+        }
+        else
+        {
+            std::cerr << "Failed to retrieve local port: " << WSAGetLastError() << std::endl;
+            return false;
+        }
+    }
+    else
+    {
+        m_localPort = port;  // If a port was specified, use that one
+    }
+
     return true;
 }
 

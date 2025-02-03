@@ -67,12 +67,12 @@ void ClientApp::InitNetwork()
 		return;
 	}
 
-	if (!m_udpClient.BindSocket(12346))
+	if (!m_udpClient.BindSocket(0)) // Let the OS choose an available port for us
 	{
 		std::cerr << "Client socket bind failed." << std::endl;
 		return;
 	}
 
-	std::cout << "Client Initialized successfully" << std::endl;
+	std::cout << "Client Initialized successfully on port " << m_udpClient.GetLocalPort() << std::endl;
 	m_udpClient.StartListening();
 }

@@ -26,12 +26,12 @@ void ServerApp::InitNetwork()
 		return;
 	}
 
-	if (!m_udpServer.BindSocket(12345))
+	if (!m_udpServer.BindSocket(SERVER_PORT))
 	{
 		std::cerr << "Server socket bind failed." << std::endl;
 		return;
 	}
 
-	std::cout << "Server Initialized successfully" << std::endl;
+	std::cout << "Server Initialized successfully on port " << m_udpServer.GetLocalPort() << std::endl;
 	m_udpServer.StartListening();
 }
