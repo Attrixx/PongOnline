@@ -5,7 +5,7 @@
 
 int main()
 {
-	App app;
+	ClientApp app;
 	app.Run();
 
 	return EXIT_SUCCESS;

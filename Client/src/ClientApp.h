@@ -2,7 +2,7 @@
 
 #include <vector>
 
-class App
+class ClientApp
 {
 public:
 	void Run();

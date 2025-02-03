@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\ClientApp.cpp" />
     <ClCompile Include="src\Client.cpp" />
     <ClCompile Include="src\TimeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\ClientApp.h" />
     <ClInclude Include="src\GameConsts.h" />
     <ClInclude Include="src\TimeManager.h" />
   </ItemGroup>

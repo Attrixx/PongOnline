@@ -1,4 +1,4 @@
-#include "App.h"
+#include "ClientApp.h"
 
 #include "GameConsts.h"
 #include "TimeManager.h"
@@ -12,7 +12,7 @@
 // Shouldn't cause any issues
 #pragma warning(disable: 4098)
 
-void App::Run()
+void ClientApp::Run()
 {
 	InitNetwork();
 
@@ -34,18 +34,18 @@ void App::Run()
 	CloseWindow();
 }
 
-void App::HandleEvents()
+void ClientApp::HandleEvents()
 {
 	// TODO: Handle player input events here
 }
 
-void App::Update(float deltaTime)
+void ClientApp::Update(float deltaTime)
 {
 	// TODO: Update game logic here
 	// Call Entity::Update(deltaTime) for each entity
 }
 
-void App::Render()
+void ClientApp::Render()
 {
 	BeginDrawing();
 	ClearBackground(WHITE);
@@ -56,7 +56,7 @@ void App::Render()
 	EndDrawing();
 }
 
-void App::InitNetwork()
+void ClientApp::InitNetwork()
 {
 	UDPNetwork udpClient;
 	if (!udpClient.Init())

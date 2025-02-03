@@ -21,7 +21,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\App.cpp">
+    <ClCompile Include="src\ClientApp.cpp">
       <Filter>Private\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Client.cpp">
@@ -32,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\App.h">
+    <ClInclude Include="src\ClientApp.h">
       <Filter>Public\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\GameConsts.h">
