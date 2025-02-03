@@ -1,10 +1,8 @@
 #pragma once
 
-#include <winsock2.h>
-#include <ws2tcpip.h>
-#include <iostream>
+#include "winimports.h"
 
-#define DEFAULT_PORT 8888
+constexpr int DEFAULT_PORT = 8888;
 
 class UDPNetwork
 {

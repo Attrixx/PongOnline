@@ -10,6 +10,9 @@
     <ClInclude Include="src\pch.h">
       <Filter>Private</Filter>
     </ClInclude>
+    <ClInclude Include="src\winimports.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NetworkCommon.cpp">

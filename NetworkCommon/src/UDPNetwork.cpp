@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "UDPNetwork.h"
 
+#include <iostream>
+
 UDPNetwork::UDPNetwork() : m_socket(INVALID_SOCKET) {}
 
 UDPNetwork::~UDPNetwork()

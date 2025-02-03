@@ -67,7 +67,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"</Command>
+      <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\winimports.h" "$(ProjectDir)include\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -90,13 +91,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"</Command>
+      <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\winimports.h" "$(ProjectDir)include\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\framework.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\UDPNetwork.h" />
+    <ClInclude Include="src\winimports.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NetworkCommon.cpp" />
