@@ -1,12 +1,9 @@
 #include "ClientApp.h"
 
+#include <iostream>
+
 #include "GameConsts.h"
 #include "TimeManager.h"
-#include "UDPNetwork.h"
-
-#include "raylib.h"
-
-#include <iostream>
 
 // This warning was triggered because Raylib is included statically
 // Shouldn't cause any issues
@@ -58,22 +55,15 @@ void ClientApp::Render()
 
 void ClientApp::InitNetwork()
 {
-	UDPNetwork udpClient;
-	if (!udpClient.Init())
+	if (!m_udpClient.Init())
 	{
 		std::cerr << "Client network initialization failed." << std::endl;
 		return;
 	}
 
-	if (!udpClient.CreateSocket())
+	if (!m_udpClient.CreateSocket())
 	{
 		std::cerr << "Client socket creation failed." << std::endl;
-		return;
-	}
-
-	if (!udpClient.BindSocket(DEFAULT_PORT))
-	{
-		std::cerr << "Client socket bind failed." << std::endl;
 		return;
 	}
 

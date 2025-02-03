@@ -1,11 +1,16 @@
 #pragma once
 
+#include "UDPNetwork.h"
+
 class ServerApp
 {
 public:
-	ServerApp() {}
-	~ServerApp() = default;
-
 	void Run();
+
+private:
+	void InitNetwork();
+
+private:
+	UDPNetwork m_udpServer;
 };
 

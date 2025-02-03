@@ -1,6 +1,8 @@
 #pragma once
 
-#include <vector>
+#include <raylib.h>
+
+#include "UDPNetwork.h"
 
 class ClientApp
 {
@@ -15,5 +17,8 @@ private:
 
 	// Networking
 	void InitNetwork();
+
+private:
+	UDPNetwork m_udpClient;
 };
 
