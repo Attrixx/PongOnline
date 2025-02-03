@@ -98,6 +98,8 @@ xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Object.h" />
+    <ClInclude Include="src\Message.h" />
     <ClInclude Include="src\framework.h" />
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\UDPNetwork.h" />
@@ -105,6 +107,8 @@ xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"</Command>
     <ClInclude Include="src\User.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Message.cpp" />
     <ClCompile Include="src\NetworkCommon.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

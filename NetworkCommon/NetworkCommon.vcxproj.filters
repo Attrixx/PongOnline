@@ -16,6 +16,12 @@
     <ClInclude Include="src\User.h">
       <Filter>Public</Filter>
     </ClInclude>
+    <ClInclude Include="src\Message.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Object.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NetworkCommon.cpp">
@@ -28,6 +34,12 @@
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="src\User.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Message.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Object.cpp">
       <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>
