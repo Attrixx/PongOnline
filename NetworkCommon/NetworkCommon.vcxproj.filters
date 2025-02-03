@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="src\pch.h">
+    <ClInclude Include="src\UDPNetwork.h">
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="src\framework.h">
-      <Filter>Public</Filter>
+      <Filter>Private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pch.h">
+      <Filter>Private</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -13,6 +16,9 @@
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="src\pch.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UDPNetwork.cpp">
       <Filter>Private</Filter>
     </ClCompile>
   </ItemGroup>

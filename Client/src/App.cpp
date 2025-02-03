@@ -18,6 +18,8 @@ void App::Run()
 
 	while (!WindowShouldClose())
 	{
+		HandleEvents();
+
 		timeManager.Update();
 		Update(timeManager.GetDeltaTime());
 		
