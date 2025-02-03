@@ -1,6 +1,7 @@
 #include "ClientApp.h"
 
 #include <iostream>
+#include <string>
 
 #include "GameConsts.h"
 #include "TimeManager.h"
@@ -17,6 +18,17 @@ void ClientApp::Run()
 
 	TimeManager timeManager;
 	timeManager.Update();
+
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	std::string message = "signature:2344575663312;type:CONNECT;user:{name:Attrix;IP:127.0.0.1;Port:" +
+		std::to_string(m_udpClient.GetLocalPort()) + "}";
+	const char* finalMessage = message.c_str();
+	if (!m_udpClient.SendTo("127.0.0.1", SERVER_PORT, finalMessage, static_cast<int>(strlen(finalMessage))))
+	{
+		std::cerr << "Failed to send message to the server." << std::endl;
+		return;
+	}
 
 	while (!WindowShouldClose())
 	{
