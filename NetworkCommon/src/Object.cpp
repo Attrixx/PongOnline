@@ -31,6 +31,7 @@ const Object& Object::FromString(char* input)
 		s = s.substr(1, s.size() - 2); //remove "(" and ")"
 	}
 
+	return Object(Vector2(0.f, 0.f), Vector2(0.f, 0.f), 0.f);
 }
 
 const std::string Object::ToString(const Object& input)

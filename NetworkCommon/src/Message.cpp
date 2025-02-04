@@ -8,5 +8,5 @@ const char* Message::toString(const Message& input)
 
 const Message& Message::toMessage(char* input)
 {
-	// TODO: insérer une instruction return ici
+	return Message();
 }
