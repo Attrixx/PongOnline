@@ -1,7 +1,7 @@
 #include "Entity.h"
 
 Entity::Entity()
-: m_isPendingDestroy(false)
+	: m_isPendingDestroy(false), m_color(WHITE), m_texture(Texture2D())
 {
 }
 
@@ -20,5 +20,5 @@ void Entity::Update(float deltaTime)
 
 void Entity::Render()
 {
-	DrawTexture(m_texture, m_position.x, m_position.y, m_color);
+	DrawTexture(m_texture, static_cast<int>(m_position.x), static_cast<int>(m_position.y), m_color);
 }
