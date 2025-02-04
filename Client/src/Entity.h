@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include <raylib.h>
 
 class Entity : public Object
 {
@@ -12,5 +13,6 @@ public:
 
 protected:
 	bool m_isPendingDestroy;
+	Texture2D m_texture;
 };
 
