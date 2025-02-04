@@ -50,8 +50,6 @@ void ClientApp::Run()
 
 	while (!WindowShouldClose())
 	{
-		HandleEvents();
-
 		timeManager.Update();
 		Update(timeManager.GetDeltaTime());
 		
@@ -59,11 +57,6 @@ void ClientApp::Run()
 	}
 
 	CloseWindow();
-}
-
-void ClientApp::HandleEvents()
-{
-	// TODO: Handle player input events here
 }
 
 void ClientApp::Update(float deltaTime)
@@ -74,8 +67,7 @@ void ClientApp::Update(float deltaTime)
 		m_loadedScene = m_newScene;
 		m_newScene = nullptr;
 	}
-	// TODO: Update game logic here
-	// Call Entity::Update(deltaTime) for each entity
+
 	if (m_loadedScene)
 	{
 		m_loadedScene->Update(deltaTime);
@@ -87,8 +79,6 @@ void ClientApp::Render()
 	BeginDrawing();
 	ClearBackground(WHITE);
 
-	// TODO: Draw game objects here
-	// Draw associated shape/sprite to each entity
 	if (m_loadedScene)
 	{
 		m_loadedScene->Render();

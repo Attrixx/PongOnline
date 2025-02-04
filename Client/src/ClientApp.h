@@ -16,7 +16,6 @@ public:
 
 private:
 	// Window
-	void HandleEvents();
 	void Update(float deltaTime);
 	void Render();
 
