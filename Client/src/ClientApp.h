@@ -1,5 +1,9 @@
 #pragma once
 
+// This warning was triggered because Raylib is included statically
+// Shouldn't cause any issues
+#pragma warning(disable: 4098)
+
 #include <raylib.h>
 #include <vector>
 
