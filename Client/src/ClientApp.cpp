@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "MainMenuScene.h"
 
+
 #include <raylib.h>
 
 // This warning was triggered because Raylib is included statically
@@ -31,22 +32,20 @@ void ClientApp::Run()
 	InitNetwork();
 
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
-
-	TimeManager timeManager;
-	timeManager.Update();
-
-	std::this_thread::sleep_for(std::chrono::milliseconds(100));
-	
 	LoadScene<MainMenuScene>();
 
-	std::string message = "signature:2344575663312;type:CONNECT;user:{name:Attrix;IP:127.0.0.1;Port:" +
-		std::to_string(m_udpClient.GetLocalPort()) + "}";
-	const char* finalMessage = message.c_str();
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+	
+	const char* finalMessage = "";
 	if (!m_udpClient.SendTo("127.0.0.1", SERVER_PORT, finalMessage, static_cast<int>(strlen(finalMessage))))
 	{
 		std::cerr << "Failed to send message to the server." << std::endl;
 		return;
 	}
+
+	TimeManager timeManager;
+	timeManager.Update();
 
 	while (!WindowShouldClose())
 	{
