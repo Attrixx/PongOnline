@@ -1,7 +1,8 @@
 #include "MainMenuScene.h"
 #include "Button.h"
 #include "InputText.h"
-#include "GameConsts.h"
+#include "ClientGameConsts.h"
+#include "CommonGameConsts.h"
 
 #include <iostream>
 

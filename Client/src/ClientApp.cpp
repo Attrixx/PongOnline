@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 
-#include "GameConsts.h"
+#include "ClientGameConsts.h"
+#include "CommonGameConsts.h"
 #include "TimeManager.h"
 #include "Scene.h"
 #include "MainMenuScene.h"
