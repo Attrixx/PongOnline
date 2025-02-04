@@ -1,10 +1,13 @@
 #pragma once 
 
 #include "Object.h"
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 enum MessageType
 {
 	PLAY,
+	LOGIC,
 	CONNECT,
 	DISCONNECT
 };
@@ -25,4 +28,27 @@ private:
 	Object* m_ball;
 	Object* m_paddleRight;
 	Object* m_paddleLeft;
+
+	json m_message = {
+		{"signature"},
+		{"id"},
+		{"messageType"},
+		{"data"}
+	};
+
+	json m_connectData = {
+		{"name"},
+		{"port"}
+	};
+
+	json m_logic = {
+		{"ball"},
+		{"paddleRight"},
+		{"paddelLeft"}
+	};
+
+	json m_play = {
+		{"movedPaddle"}
+	};
+
 };
