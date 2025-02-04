@@ -85,6 +85,7 @@ void ServerApp::RegisterUser(const std::string& name, u_short port)
 {
 	m_users.emplace_back(m_userIdCounter, name, port);
 	m_userIdCounter++;
+	std::cout << "User " << name << " connected" << std::endl;
 }
 
 void ServerApp::UnregisterUser(int id)
@@ -98,14 +99,27 @@ void ServerApp::UnregisterUser(int id)
 
 void ServerHandler::HandleMessage(const Message& message)
 {
-	std::cout << "Server received message" << std::endl;
+	json content = message.content;
+	json data = content["data"];
+
+	MessageType type = content["messageType"];
+	switch (type)
+	{
+	case MessageType::CONNECT:
+	{
+		std::string name = data["name"];
+		u_short port = data["port"];
+		ServerApp::GetInstance()->RegisterUser(name, port);
+	}
+	break;
+	}
 }
 
 void ServerApp::InitRound()
 {
 	m_ball->SetPosition(Vector2Float(WINDOW_WIDTH * 0.5f - BALL_RADIUS, WINDOW_HEIGHT * 0.5f - BALL_RADIUS));
 	m_ball->SetSpeed(BALL_INITIAL_SPEED);
-	
+
 	bool leftSize = rand() / RAND_MAX > 0.5f;
 	float minAngle = leftSize ? -BALL_INITIAL_MAX_HALF_ANGLE : -BALL_INITIAL_MAX_HALF_ANGLE + (M_PI * 0.5f);
 	float maxAngle = minAngle + (BALL_INITIAL_MAX_HALF_ANGLE * 2.f);

@@ -27,15 +27,15 @@ public:
 	void Run();
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
 
-private:
-	void InitNetwork();
-
-	void Update(float deltaTime);
-
 	void RegisterUser(const std::string& name, u_short port);
 	void UnregisterUser(int id);
 
+private:
+	void InitNetwork();
 	void InitRound();
+
+	void Update(float deltaTime);
+
 
 private:
 	UDPNetwork m_udpServer;
