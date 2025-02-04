@@ -4,11 +4,11 @@
 
 #include "Scene.h"
 
-class App
+class ClientApp
 {
 public:
-	App();
-	virtual ~App();
+	ClientApp();
+	virtual ~ClientApp();
 
 	void Run();
 
@@ -28,7 +28,7 @@ private:
 };
 
 template<typename T>
-void App::LoadScene()
+void ClientApp::LoadScene()
 {
 	static_assert(std::is_base_of<Scene, T>::value, "T must be derived from Scene");
 

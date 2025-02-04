@@ -1,4 +1,4 @@
-#include "App.h"
+#include "ClientApp.h"
 
 #include "GameConsts.h"
 #include "TimeManager.h"
@@ -11,19 +11,19 @@
 // Shouldn't cause any issues
 #pragma warning(disable: 4098)
 
-App::App()
+ClientApp::ClientApp()
 	: m_loadedScene(nullptr)
 	, m_newScene(nullptr)
 {
 }
 
-App::~App()
+ClientApp::~ClientApp()
 {
 	delete m_loadedScene;
 	delete m_newScene;
 }
 
-void App::Run()
+void ClientApp::Run()
 {
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
 
@@ -43,12 +43,12 @@ void App::Run()
 	CloseWindow();
 }
 
-void App::HandleEvents()
+void ClientApp::HandleEvents()
 {
 	// TODO: Handle player input events here
 }
 
-void App::Update(float deltaTime)
+void ClientApp::Update(float deltaTime)
 {
 	// Replace old scene by the new one on frame start
 	if (m_newScene)
@@ -64,7 +64,7 @@ void App::Update(float deltaTime)
 	}
 }
 
-void App::Render()
+void ClientApp::Render()
 {
 	BeginDrawing();
 	ClearBackground(WHITE);

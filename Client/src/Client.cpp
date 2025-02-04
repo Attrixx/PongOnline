@@ -1,11 +1,11 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "App.h"
+#include "ClientApp.h"
 
 int main()
 {
-	App app;
+	ClientApp app;
 	app.Run();
 
 	return EXIT_SUCCESS;
