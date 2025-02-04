@@ -13,6 +13,12 @@
 template<typename T>
 concept IsScene = std::is_base_of<Scene, T>::value;
 
+class ClientHandler : public NetworkHandler
+{
+public:
+	void HandleMessage(const Message& message) override;
+};
+
 class ClientApp
 {
 public:

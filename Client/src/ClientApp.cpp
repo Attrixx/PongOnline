@@ -12,6 +12,7 @@
 ClientApp::ClientApp()
 	: m_loadedScene(nullptr)
 	, m_newScene(nullptr)
+	, m_udpClient(new ClientHandler())
 {
 }
 
@@ -108,4 +109,9 @@ void ClientApp::InitNetwork()
 
 	std::cout << "Client Initialized successfully on port " << m_udpClient.GetLocalPort() << std::endl;
 	m_udpClient.StartListening();
+}
+
+void ClientHandler::HandleMessage(const Message& message)
+{
+
 }

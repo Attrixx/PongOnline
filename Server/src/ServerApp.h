@@ -5,9 +5,17 @@
 
 #include <vector>
 
+class ServerHandler : public NetworkHandler
+{
+public:
+	void HandleMessage(const Message& message) override;
+};
+
 class ServerApp
 {
 public:
+	ServerApp();
+
 	void Run();
 
 private:

@@ -1,11 +1,10 @@
 #include "pch.h"
 #include "UDPNetwork.h"
-#include "Message.h"
 
 #include <iostream>
 #include <unordered_map>
 
-UDPNetwork::UDPNetwork() : m_socket(INVALID_SOCKET), m_localPort(0) {}
+UDPNetwork::UDPNetwork(NetworkHandler* handler) : m_socket(INVALID_SOCKET), m_localPort(0), m_networkHandler(handler) {}
 
 UDPNetwork::~UDPNetwork()
 {
@@ -104,10 +103,6 @@ bool UDPNetwork::SendTo(const char* address, u_short port, const char* data, int
 		std::vector<char> packet(sizeof(MessageHeader) + packetSize);
 		memcpy(packet.data(), &header, sizeof(MessageHeader));
 		memcpy(packet.data() + sizeof(MessageHeader), data + offset, packetSize);
-
-		std::cout << "Sending packet " << packetIndex + 1 << "/" << packetCount
-			<< " | offset: " << offset
-			<< " | size: " << packetSize << std::endl;
 
 		int bytesSent = sendto(m_socket, packet.data(), static_cast<int>(packet.size()), 0, (sockaddr*)&destAddr, sizeof(destAddr));
 		if (bytesSent == SOCKET_ERROR)
@@ -220,6 +215,9 @@ void UDPNetwork::Interpret()
 		std::string messageStr(messageChar.begin(), messageChar.end());
 		Message message = Message::toMessage(messageStr.c_str());
 
-		std::cout << "Received message: " << message.toString() << std::endl;
+		if (m_networkHandler)
+		{
+			m_networkHandler->HandleMessage(message);
+		}
 	}
 }

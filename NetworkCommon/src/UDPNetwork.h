@@ -1,6 +1,7 @@
 #pragma once
 
 #include "winimports.h"
+#include "Message.h"
 
 #include <atomic>
 #include <thread>
@@ -11,10 +12,18 @@
 constexpr u_short SERVER_PORT = 12345;
 constexpr int BUFFER_SIZE = 1024;
 
+class NetworkHandler
+{
+public:
+	virtual ~NetworkHandler() = default;
+
+	virtual void HandleMessage(const Message& message) = 0;
+};
+
 class UDPNetwork
 {
 public:
-	UDPNetwork();
+	UDPNetwork(NetworkHandler* handler);
 	~UDPNetwork();
 
 	bool Init();
@@ -35,6 +44,9 @@ private:
 	void Interpret();
 
 private:
+	// Implemented in Server and Client to handle messages
+	NetworkHandler* m_networkHandler = nullptr;
+
 	// Socket
 	SOCKET m_socket;
 	u_short m_localPort;

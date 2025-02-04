@@ -2,6 +2,11 @@
 
 #include <iostream>
 
+ServerApp::ServerApp()
+	: m_udpServer(new ServerHandler())
+{
+}
+
 void ServerApp::Run()
 {
 	// TODO: Get server IP
@@ -53,4 +58,9 @@ void ServerApp::UnregisterUser(int id)
 	{
 		m_users.erase(it);
 	}
+}
+
+void ServerHandler::HandleMessage(const Message& message)
+{
+	std::cout << "Server received message" << std::endl;
 }
