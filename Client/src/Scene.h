@@ -5,6 +5,12 @@
 class Entity;
 class UIElement;
 
+template<typename T>
+concept IsEntity = std::is_base_of<Entity, T>::value;
+
+template<typename T>
+concept IsUIElement = std::is_base_of<UIElement, T>::value;
+
 class Scene
 {
 public:
@@ -19,10 +25,10 @@ public:
 	virtual void OnRender() = 0;
 	virtual void OnUninitialize() = 0;
 
-	template<typename T>
+	template<IsEntity T>
 	T* CreateEntity();
 
-	template<typename T>
+	template<IsUIElement T>
 	T* CreateUIElement();
 
 protected:
@@ -32,7 +38,7 @@ protected:
 
 };
 
-template<typename T>
+template<IsEntity T>
 T* Scene::CreateEntity()
 {
 	static_assert(std::is_base_of<Entity, T>::value, "T must be derived from Entity");
@@ -44,7 +50,7 @@ T* Scene::CreateEntity()
 	return newEntity;
 }
 
-template<typename T>
+template<IsUIElement T>
 T* Scene::CreateUIElement()
 {
 	static_assert(std::is_base_of<UIElement, T>::value, "T must be derived from UIElement");
