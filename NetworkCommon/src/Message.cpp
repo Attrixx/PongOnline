@@ -1,12 +1,23 @@
 #include "pch.h"
 #include "Message.h"
+#include <iostream>
 
-const char* Message::toString(const Message& input)
+void Message::toString(const Message& input, std::string& output)
 {
-	return nullptr;
+	output = input.message.dump();
 }
 
-const Message& Message::toMessage(char* input)
+const Message& Message::toMessage(const char* input)
 {
-	// TODO: insérer une instruction return ici
+	Message newMessage;
+	try
+	{
+		newMessage.message = json::parse(input);
+		return newMessage;
+	}
+	catch (const std::exception&)
+	{
+		std::cout << "can't read message" << std::endl;
+		return Message();
+	}
 }

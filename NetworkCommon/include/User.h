@@ -6,7 +6,7 @@
 class User
 {
 public:
-	User(int id, const std::string& name, const std::string& address, u_short port) : m_id(id), m_name(name), m_address(address), m_port(port) {}
+	User(int id, std::string& name, std::string& address, u_short port) : m_id(id), m_name(name), m_address(address), m_port(port) {}
 
 	int GetId() const { return m_id; }
 	const std::string& GetName() const { return m_name; }

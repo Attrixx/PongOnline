@@ -15,40 +15,51 @@ enum MessageType
 class Message
 {
 public:
-	const char* toString(const Message& input);
-	static const Message& toMessage(char* input);
+	void toString(const Message& input, std::string& output);
+	static const Message& toMessage(const char* input);
 
-
-private:
-	int m_signature;
-	class User* m_user;
-
-	MessageType m_messageType;
-
-	Object* m_ball;
-	Object* m_paddleRight;
-	Object* m_paddleLeft;
-
-	json m_message = {
-		{"signature"},
+public:
+	json message = {
 		{"id"},
 		{"messageType"},
 		{"data"}
 	};
 
-	json m_connectData = {
+	json connectData = {
 		{"name"},
 		{"port"}
 	};
 
-	json m_logic = {
-		{"ball"},
-		{"paddleRight"},
-		{"paddelLeft"}
-	};
+	json logic = {
+		{"ball", {
+			{"posX"},
+			{"posy"},
+			{"dirX"},
+			{"dirY"},
+			{"speed"},
+}},
+		{"paddleRight", {
+			{"posX"},
+			{"posy"},
+			{"dirX"},
+			{"dirY"},
+			{"speed"},
+}},
+		{"paddelLeft", {
+			{"posX"},
+			{"posy"},
+			{"dirX"},
+			{"dirY"},
+			{"speed"},
+}} };
 
-	json m_play = {
-		{"movedPaddle"}
-	};
+	json play = {
+		{"movedPaddle", {
+			{"posX"},
+			{"posy"},
+			{"dirX"},
+			{"dirY"},
+			{"speed"},
+}} };
 
 };
