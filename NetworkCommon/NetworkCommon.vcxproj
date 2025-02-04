@@ -71,7 +71,8 @@
       <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\winimports.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"
-xcopy /Y "$(ProjectDir)src\Object.h" "$(ProjectDir)include\"</Command>
+xcopy /Y "$(ProjectDir)src\Object.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\Message.h" "$(ProjectDir)include\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -97,7 +98,9 @@ xcopy /Y "$(ProjectDir)src\Object.h" "$(ProjectDir)include\"</Command>
     <PostBuildEvent>
       <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\winimports.h" "$(ProjectDir)include\"
-xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"</Command>
+xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\Object.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\Message.h" "$(ProjectDir)include\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
