@@ -5,8 +5,7 @@
 
 int main()
 {
-	ServerApp app;
-	app.Run();
+	I(ServerApp)->Run();
 
 	return EXIT_SUCCESS;
 }

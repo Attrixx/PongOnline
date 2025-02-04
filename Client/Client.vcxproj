@@ -24,13 +24,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameScene.h" />
+    <ClInclude Include="src\ClientGameConsts.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ClientApp.h" />
     <ClInclude Include="src\MainMenuScene.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Button.h" />
     <ClInclude Include="src\InputText.h" />
-    <ClInclude Include="src\GameConsts.h" />
     <ClInclude Include="src\TimeManager.h" />
     <ClInclude Include="src\UIElement.h" />
   </ItemGroup>

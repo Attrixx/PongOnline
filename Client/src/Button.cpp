@@ -1,5 +1,5 @@
 #include "Button.h"
-#include "GameConsts.h"
+#include "ClientGameConsts.h"
 
 #include <iostream>
 

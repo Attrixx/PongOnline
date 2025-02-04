@@ -68,9 +68,6 @@
     <ClInclude Include="src\ClientApp.h">
       <Filter>Public\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameConsts.h">
-      <Filter>Public\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\TimeManager.h">
       <Filter>Public\Core</Filter>
     </ClInclude>
@@ -94,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="src\GameScene.h">
       <Filter>Public\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ClientGameConsts.h">
+      <Filter>Public\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,11 +2,9 @@
 
 #include <raylib.h>
 
-constexpr int WINDOW_WIDTH = 800;
-constexpr int WINDOW_HEIGHT = 600;
 constexpr const char* WINDOW_TITLE = "Client";
 
-constexpr Color TEXT_COLOR = { 255, 255, 255, 255};
+constexpr Color TEXT_COLOR = { 255, 255, 255, 255 };
 constexpr Color UI_ELEMENT_BACKGROUND_COLOR = { 50, 50, 50, 255 };
 constexpr Color UI_ELEMENT_HOVER_COLOR = { 75, 75, 75, 255 };
 constexpr Color UI_ELEMENT_FOCUS_COLOR = { 100, 100, 100, 255 };

@@ -11,10 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ball.cpp" />
+    <ClCompile Include="src\Paddle.cpp" />
     <ClCompile Include="src\ServerApp.cpp" />
     <ClCompile Include="src\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ball.h" />
+    <ClInclude Include="src\Paddle.h" />
     <ClInclude Include="src\ServerApp.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
