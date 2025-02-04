@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "UDPNetwork.h"
+#include "Message.h"
 
 #include <iostream>
+#include <unordered_map>
 
 UDPNetwork::UDPNetwork() : m_socket(INVALID_SOCKET), m_localPort(0) {}
 
@@ -86,12 +88,31 @@ bool UDPNetwork::SendTo(const char* address, u_short port, const char* data, int
     inet_pton(AF_INET, address, &destAddr.sin_addr);
     destAddr.sin_port = htons(port);
 
-    int bytesSent = sendto(m_socket, data, dataSize, 0, (sockaddr*)&destAddr, sizeof(destAddr));
-    if (bytesSent == SOCKET_ERROR)
+	const int payloadSize = BUFFER_SIZE - sizeof(MessageHeader);
+	int packetCount = dataSize / payloadSize + 1;
+
+    for (int packetIndex = 0; packetIndex < packetCount; ++packetIndex)
     {
-        std::cerr << "Send failed: " << WSAGetLastError() << std::endl;
-        return false;
+		MessageHeader header;
+		header.totalSize = dataSize;
+		header.packetIndex = packetIndex;
+		header.packetCount = packetCount;
+
+		int offset = packetIndex * payloadSize;
+		int packetSize = std::min(payloadSize, dataSize - offset);
+
+		std::vector<char> packet(sizeof(MessageHeader) + packetSize);
+		memcpy(packet.data(), &header, sizeof(MessageHeader));
+		memcpy(packet.data() + sizeof(MessageHeader), data + offset, packetSize);
+
+		int bytesSent = sendto(m_socket, packet.data(), static_cast<int>(packet.size()), 0, (sockaddr*)&destAddr, sizeof(destAddr));
+        if (bytesSent == SOCKET_ERROR)
+        {
+            std::cerr << "Send failed: " << WSAGetLastError() << std::endl;
+            return false;
+        }
     }
+    
     return true;
 }
 
@@ -110,43 +131,84 @@ bool UDPNetwork::ReceiveFrom(char* buffer, int bufferSize, sockaddr_in& senderAd
 
 void UDPNetwork::StartListening()
 {
-	if (m_running)
-	{
-		return;
-	}
+    m_running = true;
+    m_processing = true;
 
-	m_running = true;
-	m_listenThread = std::thread(&UDPNetwork::Listen, this);
+    m_listenThread = std::thread(&UDPNetwork::Listen, this);
+    m_interpreterThread = std::thread(&UDPNetwork::Interpret, this);
 }
 
 void UDPNetwork::StopListening()
 {
-	if (!m_running)
-	{
-		return;
-	}
-
-	m_running = false;
+    m_running = false;
+    m_processing = false;
 
     if (m_listenThread.joinable())
-    {
-		m_listenThread.join();
-    }
+        m_listenThread.join();
+
+    m_messageQueueCondition.notify_all();
+    if (m_interpreterThread.joinable())
+        m_interpreterThread.join();
 }
 
 void UDPNetwork::Listen()
 {
+    std::unordered_map<std::string, std::vector<char>> partialMessages;
 	char buffer[BUFFER_SIZE];
 	sockaddr_in senderAddr = {};
 
-	// TODO: Construct a Message object from the received data
-	// Then call a function to handle the message in the main thread
-	// This function should switch the type of the message the perform the appropriate action
     while (m_running)
     {
         if (ReceiveFrom(buffer, BUFFER_SIZE, senderAddr))
         {
-            std::cout << "Received: " << buffer << std::endl;
+            MessageHeader* header = reinterpret_cast<MessageHeader*>(buffer);
+            if (header->signature != SIGNATURE)
+            {
+                std::cerr << "Invalid signature, ignoring packet" << std::endl;
+                continue;
+            }
+
+            std::string senderKey = std::to_string(senderAddr.sin_addr.S_un.S_addr) + ":" + std::to_string(senderAddr.sin_port);
+            int totalSize = header->totalSize;
+            int receivedSize = BUFFER_SIZE - sizeof(MessageHeader);
+
+            partialMessages[senderKey].insert(partialMessages[senderKey].end(), buffer + sizeof(MessageHeader), buffer + receivedSize);
+
+			// Message is complete
+			if (receivedSize >= totalSize)
+			{
+                std::vector<char> completeMessage = std::move(partialMessages[senderKey]);
+                partialMessages.erase(senderKey);
+
+				std::lock_guard<std::mutex> lock(m_messageQueueMutex);
+				m_messageQueue.push(std::move(completeMessage));
+                m_messageQueueCondition.notify_one();
+			}
         }
+    }
+}
+
+void UDPNetwork::Interpret()
+{
+    while (m_processing)
+    {
+        std::vector<char> messageChar;
+        {
+            std::unique_lock<std::mutex> lock(m_messageQueueMutex);
+            m_messageQueueCondition.wait(lock, [this] { return !m_messageQueue.empty(); });
+
+			if (!m_processing)
+			{
+				break;
+			}
+
+            messageChar = std::move(m_messageQueue.front());
+            m_messageQueue.pop();
+        }
+
+		std::string messageStr(messageChar.begin(), messageChar.end());
+		Message message = Message::toMessage(messageStr.c_str());
+
+		std::cout << "Received message: " << message.toString() << std::endl;
     }
 }
