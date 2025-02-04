@@ -77,7 +77,7 @@ void InputText::Update(float deltaTime)
 		}
 	}
 
-	if (IsKeyPressed(KEY_BACKSPACE))
+	if (m_hasFocus && IsKeyPressed(KEY_BACKSPACE))
 	{
 		if(!m_text.empty()) m_text.pop_back();
 	}
