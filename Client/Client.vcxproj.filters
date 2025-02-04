@@ -57,6 +57,15 @@
     <ClCompile Include="src\Scene.cpp">
       <Filter>Private\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entity.cpp">
+      <Filter>Private\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ball.cpp">
+      <Filter>Private\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Paddle.cpp">
+      <Filter>Private\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ClientApp.h">
@@ -82,6 +91,15 @@
     </ClInclude>
     <ClInclude Include="src\Scene.h">
       <Filter>Public\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Entity.h">
+      <Filter>Public\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ball.h">
+      <Filter>Public\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Paddle.h">
+      <Filter>Public\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 #include "Scene.h"
-//#include "Entity.h"
+#include "Entity.h"
 #include "UIElement.h"
 
 void Scene::Initialize()
@@ -9,10 +9,10 @@ void Scene::Initialize()
 
 void Scene::Update(float deltaTime)
 {
-	/*for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 	{
 		(*it)->Update(deltaTime);
-	}*/
+	}
 	for (auto it = m_uiElements.begin(); it != m_uiElements.end(); ++it)
 	{
 		(*it)->Update(deltaTime);
@@ -23,7 +23,7 @@ void Scene::Update(float deltaTime)
 
 void Scene::Render()
 {
-	/*for (auto it = m_entities.begin(); it != m_entities.end();)
+	for (auto it = m_entities.begin(); it != m_entities.end();)
 	{
 		if ((*it)->IsPendingDestroy())
 		{
@@ -33,7 +33,7 @@ void Scene::Render()
 		{
 			(*it)->Render();
 		}
-	}*/
+	}
 	for (auto it = m_uiElements.begin(); it != m_uiElements.end(); ++it)
 	{
 		if ((*it)->IsPendingDestroy())
@@ -51,10 +51,10 @@ void Scene::Render()
 
 void Scene::Uninitialize()
 {
-	/*for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
+	for (auto it = m_entities.begin(); it != m_entities.end(); ++it)
 	{
 		(*it)->SetPendingDestroy(true);
-	}*/
+	}
 	for (auto it = m_uiElements.begin(); it != m_uiElements.end(); ++it)
 	{
 		(*it)->SetPendingDestroy(true);

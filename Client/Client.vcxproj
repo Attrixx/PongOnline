@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ball.cpp" />
+    <ClCompile Include="src\Paddle.cpp" />
+    <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\ClientApp.cpp" />
     <ClCompile Include="src\MainMenuScene.cpp" />
     <ClCompile Include="src\Scene.cpp" />
@@ -21,6 +24,9 @@
     <ClCompile Include="src\UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ball.h" />
+    <ClInclude Include="src\Paddle.h" />
+    <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ClientApp.h" />
     <ClInclude Include="src\MainMenuScene.h" />
     <ClInclude Include="src\Scene.h" />
