@@ -6,6 +6,9 @@
 #include "UDPNetwork.h"
 #include "Scene.h"
 
+template<typename T>
+concept IsScene = std::is_base_of<Scene, T>::value;
+
 class ClientApp
 {
 public:
@@ -21,7 +24,7 @@ private:
 
 	// Networking
 	void InitNetwork();
-	template<typename T>
+	template<IsScene T>
 	void LoadScene();
 
 private:
@@ -32,10 +35,10 @@ private:
 
 };
 
-template<typename T>
+template<IsScene T>
 void ClientApp::LoadScene()
 {
-	static_assert(std::is_base_of<Scene, T>::value, "T must be derived from Scene");
+	//static_assert(std::is_base_of<Scene, T>::value, "T must be derived from Scene");
 
 	if (m_loadedScene)
 	{
