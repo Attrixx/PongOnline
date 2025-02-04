@@ -41,8 +41,6 @@ protected:
 template<IsEntity T>
 T* Scene::CreateEntity()
 {
-	static_assert(std::is_base_of<Entity, T>::value, "T must be derived from Entity");
-
 	T* newEntity = new T();
 
 	m_entities.push_back(newEntity);
@@ -53,8 +51,6 @@ T* Scene::CreateEntity()
 template<IsUIElement T>
 T* Scene::CreateUIElement()
 {
-	static_assert(std::is_base_of<UIElement, T>::value, "T must be derived from UIElement");
-
 	T* newElement = new T();
 
 	m_uiElements.push_back(newElement);

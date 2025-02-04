@@ -52,19 +52,24 @@ void Button::SetSize(const Vector2& size)
 void Button::Update(float deltaTime)
 {
 	const Vector2 mousePosition = GetMousePosition();
-	m_isMouseHovering = CheckCollisionPointRec(mousePosition, m_rectangle);
-	if (m_isMouseHovering)
+	bool isMouseOnButton = CheckCollisionPointRec(mousePosition, m_rectangle);
+	if (isMouseOnButton)
 	{
-		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-
-		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+		if (!m_isMouseHovering)
 		{
-			m_onClickFunction();
+			m_isMouseHovering = true;
+			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 		}
 	}
-	else
+	else if (m_isMouseHovering)
 	{
+		m_isMouseHovering = false;
 		SetMouseCursor(MOUSE_CURSOR_DEFAULT);
+	}
+
+	if (m_isMouseHovering && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+	{
+		m_onClickFunction();
 	}
 }
 
