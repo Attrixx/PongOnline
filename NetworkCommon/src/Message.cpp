@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "Message.h"
 
-#include <nlohmann/json.hpp>
-using json = nlohmann::json;
-
 const char* Message::toString(const Message& input)
 {
 	return nullptr;
