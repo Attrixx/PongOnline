@@ -37,6 +37,8 @@ public:
 	std::string toString();
 	static Message toMessage(const char* input);
 
+	static Message CreateMessage(MessageType type = DEFAULT, const json& data = defaultData);
+
 public:
     json content = {
         {"id", 0},

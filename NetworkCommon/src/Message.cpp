@@ -32,3 +32,12 @@ Message Message::toMessage(const char* input)
 		return Message();
 	}
 }
+
+Message Message::CreateMessage(MessageType type, const json& data)
+{
+	Message message;
+	message.content["id"] = -1;
+	message.content["messageType"] = static_cast<int>(type);
+	message.content["data"] = data;
+	return message;
+}
