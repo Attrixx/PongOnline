@@ -12,13 +12,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ClientApp.cpp" />
+    <ClCompile Include="src\MainMenuScene.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\Button.cpp" />
+    <ClCompile Include="src\InputText.cpp" />
     <ClCompile Include="src\Client.cpp" />
     <ClCompile Include="src\TimeManager.cpp" />
+    <ClCompile Include="src\UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ClientApp.h" />
+    <ClInclude Include="src\MainMenuScene.h" />
+    <ClInclude Include="src\Scene.h" />
+    <ClInclude Include="src\Button.h" />
+    <ClInclude Include="src\InputText.h" />
     <ClInclude Include="src\GameConsts.h" />
     <ClInclude Include="src\TimeManager.h" />
+    <ClInclude Include="src\UIElement.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
