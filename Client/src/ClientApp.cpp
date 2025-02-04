@@ -31,9 +31,18 @@ void ClientApp::Run()
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
-	
-	const char* finalMessage = "";
-	if (!m_udpClient.SendTo("127.0.0.1", SERVER_PORT, finalMessage, static_cast<int>(strlen(finalMessage))))
+	Message message;
+	message.content["id"] = -1;
+	message.content["messageType"] = static_cast<int>(MessageType::CONNECT);
+	message.content["data"] = message.connectData;
+	message.content["data"]["name"] = "Client";
+	message.content["data"]["port"] = m_udpClient.GetLocalPort();
+
+	std::string finalMessage = message.toString(); // Ensure thread safety
+	std::vector<char> messageBuffer(finalMessage.begin(), finalMessage.end());
+	std::cout << "Sending message: " << finalMessage << std::endl;
+
+	if (!m_udpClient.SendTo("127.0.0.1", SERVER_PORT, messageBuffer.data(), static_cast<int>(messageBuffer.size())))
 	{
 		std::cerr << "Failed to send message to the server." << std::endl;
 		return;

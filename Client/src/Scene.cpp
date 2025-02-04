@@ -32,9 +32,10 @@ void Scene::Render()
 		else
 		{
 			(*it)->Render();
+			++it;
 		}
 	}
-	for (auto it = m_uiElements.begin(); it != m_uiElements.end(); ++it)
+	for (auto it = m_uiElements.begin(); it != m_uiElements.end();)
 	{
 		if ((*it)->IsPendingDestroy())
 		{
@@ -43,6 +44,7 @@ void Scene::Render()
 		else
 		{
 			(*it)->Render();
+			++it;
 		}
 	}
 

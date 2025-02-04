@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\ClientApp.cpp" />
     <ClCompile Include="src\MainMenuScene.cpp" />
@@ -22,6 +23,7 @@
     <ClCompile Include="src\UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\ClientGameConsts.h" />
     <ClInclude Include="src\Entity.h" />
     <ClInclude Include="src\ClientApp.h" />

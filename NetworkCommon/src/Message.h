@@ -4,6 +4,9 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
+constexpr int SIGNATURE = 0x12345678;
+constexpr size_t SIGNATURE_SIZE = sizeof(int);
+
 enum MessageType
 {
 	DEFAULT = 0,
@@ -13,58 +16,36 @@ enum MessageType
 	DISCONNECT
 };
 
+struct MessageHeader
+{
+    int signature = SIGNATURE;
+    int totalSize = 0;   // Taille totale du message
+    int packetIndex = 0; // Index du fragment
+    int packetCount = 0; // Nombre total de fragments
+};
+
+struct MessageBuffer
+{
+	std::vector<char> data;
+	int receivedPackets = 0;
+	int expectedPackets = 0;
+};
+
 class Message
 {
 public:
-	void toString(const Message& input, std::string& output);
-	static const Message& toMessage(const char* input);
+	std::string toString();
+	static Message toMessage(const char* input);
 
 public:
-	json content = {
-		{"id", 0},
-		{"messageType", DEFAULT},
-		{"data", defaultData}
-	};
+    json content = {
+        {"id", 0},
+        {"messageType", DEFAULT},
+        {"data", defaultData}
+    };
 
-	json defaultData = {
-		{"message"}
-	};
-
-	json connectData = {
-		{"name"},
-		{"port"}
-	};
-
-	json logic = {
-		{"ball", {
-			{"posX"},
-			{"posy"},
-			{"dirX"},
-			{"dirY"},
-			{"speed"},
-}},
-		{"paddleRight", {
-			{"posX"},
-			{"posy"},
-			{"dirX"},
-			{"dirY"},
-			{"speed"},
-}},
-		{"paddelLeft", {
-			{"posX"},
-			{"posy"},
-			{"dirX"},
-			{"dirY"},
-			{"speed"},
-}} };
-
-	json play = {
-		{"movedPaddle", {
-			{"posX"},
-			{"posy"},
-			{"dirX"},
-			{"dirY"},
-			{"speed"},
-}} };
-
+	static const json defaultData;
+	static const json connectData;
+	static const json logicData;
+	static const json playData;
 };

@@ -7,6 +7,7 @@ class Vector2Float
 {
 public:
 	Vector2Float(float x, float y) : x(x), y(y) {};
+	Vector2Float() : x(0), y(0) {};
 
 	float x;
 	float y;
