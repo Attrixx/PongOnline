@@ -11,21 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ClientApp.cpp" />
     <ClCompile Include="src\MainMenuScene.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Button.cpp" />
     <ClCompile Include="src\InputText.cpp" />
-    <ClCompile Include="src\ClientApp.cpp" />
     <ClCompile Include="src\Client.cpp" />
     <ClCompile Include="src\TimeManager.cpp" />
     <ClCompile Include="src\UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ClientApp.h" />
     <ClInclude Include="src\MainMenuScene.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Button.h" />
     <ClInclude Include="src\InputText.h" />
-    <ClInclude Include="src\ClientApp.h" />
     <ClInclude Include="src\GameConsts.h" />
     <ClInclude Include="src\TimeManager.h" />
     <ClInclude Include="src\UIElement.h" />
@@ -80,7 +80,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies\raylib-5.5_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)NetworkCommon\include;$(SolutionDir)\Dependencies\raylib-5.5_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -98,7 +98,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Dependencies\raylib-5.5_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)NetworkCommon\include;$(SolutionDir)\Dependencies\raylib-5.5_win64_msvc16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -1,7 +1,9 @@
 #pragma once
 
+#include <raylib.h>
 #include <vector>
 
+#include "UDPNetwork.h"
 #include "Scene.h"
 
 class ClientApp
@@ -13,14 +15,18 @@ public:
 	void Run();
 
 private:
+	// Window
 	void HandleEvents();
 	void Update(float deltaTime);
 	void Render();
 
+	// Networking
+	void InitNetwork();
 	template<typename T>
 	void LoadScene();
 
 private:
+	UDPNetwork m_udpClient;
 
 	Scene* m_loadedScene;
 	Scene* m_newScene;

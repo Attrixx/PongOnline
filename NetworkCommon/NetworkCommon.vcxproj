@@ -60,12 +60,19 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\nlohmann\single_include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\winimports.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\Object.h" "$(ProjectDir)include\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -78,6 +85,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\nlohmann\single_include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -86,17 +94,31 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\winimports.h" "$(ProjectDir)include\"
+xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Object.h" />
+    <ClInclude Include="src\Message.h" />
     <ClInclude Include="src\framework.h" />
     <ClInclude Include="src\pch.h" />
+    <ClInclude Include="src\UDPNetwork.h" />
+    <ClInclude Include="src\winimports.h" />
+    <ClInclude Include="src\User.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Object.cpp" />
+    <ClCompile Include="src\Message.cpp" />
     <ClCompile Include="src\NetworkCommon.cpp" />
     <ClCompile Include="src\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\UDPNetwork.cpp" />
+    <ClCompile Include="src\User.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
