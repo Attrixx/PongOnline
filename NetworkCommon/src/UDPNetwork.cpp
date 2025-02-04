@@ -139,6 +139,9 @@ void UDPNetwork::Listen()
 	char buffer[BUFFER_SIZE];
 	sockaddr_in senderAddr = {};
 
+	// TODO: Construct a Message object from the received data
+	// Then call a function to handle the message in the main thread
+	// This function should switch the type of the message the perform the appropriate action
     while (m_running)
     {
         if (ReceiveFrom(buffer, BUFFER_SIZE, senderAddr))
