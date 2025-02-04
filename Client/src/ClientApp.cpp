@@ -98,6 +98,7 @@ void ClientApp::Render()
 }
 
 void ClientApp::InitNetwork()
+{
 	if (!m_udpClient.Init())
 	{
 		std::cerr << "Client network initialization failed." << std::endl;
