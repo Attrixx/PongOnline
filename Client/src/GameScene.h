@@ -2,7 +2,7 @@
 
 #include "Scene.h"
 
-class MainMenuScene : public Scene
+class GameScene : public Scene
 {
 public:
 
@@ -10,5 +10,4 @@ public:
 	virtual void OnUpdate(float deltaTime) override;
 	virtual void OnRender() override;
 	virtual void OnUninitialize() override;
-
 };
