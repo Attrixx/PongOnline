@@ -16,7 +16,7 @@ class Object
 public:
 	Object(Vector2Float position, Vector2Float direction, float speed);
 
-private:
+protected:
 	Vector2Float m_position;
 	Vector2Float m_direction;
 	float m_speed;
