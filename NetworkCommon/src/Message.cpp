@@ -4,7 +4,7 @@
 
 void Message::toString(const Message& input, std::string& output)
 {
-	output = input.message.dump();
+	output = input.content.dump();
 }
 
 const Message& Message::toMessage(const char* input)
@@ -12,7 +12,7 @@ const Message& Message::toMessage(const char* input)
 	Message newMessage;
 	try
 	{
-		newMessage.message = json::parse(input);
+		newMessage.content = json::parse(input);
 		return newMessage;
 	}
 	catch (const std::exception&)

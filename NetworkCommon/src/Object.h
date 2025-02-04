@@ -2,10 +2,10 @@
 
 #include <string>
 
-class Vector2
+class Vector2Float
 {
 public:
-	Vector2(float x, float y) : x(x), y(y) {};
+	Vector2Float(float x, float y) : x(x), y(y) {};
 
 	float x;
 	float y;
@@ -14,10 +14,10 @@ public:
 class Object
 {
 public:
-	Object(Vector2 position, Vector2 direction, float speed);
+	Object(Vector2Float position, Vector2Float direction, float speed);
 
 private:
-	Vector2 m_position;
-	Vector2 m_direction;
+	Vector2Float m_position;
+	Vector2Float m_direction;
 	float m_speed;
 };

@@ -7,13 +7,14 @@
 #include "TimeManager.h"
 #include "Scene.h"
 #include "MainMenuScene.h"
-
-
-#include <raylib.h>
+#include "Message.h"
 
 // This warning was triggered because Raylib is included statically
 // Shouldn't cause any issues
 #pragma warning(disable: 4098)
+
+#include <raylib.h>
+
 
 ClientApp::ClientApp()
 	: m_loadedScene(nullptr)
