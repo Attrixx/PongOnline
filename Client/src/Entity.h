@@ -2,17 +2,22 @@
 #include "Object.h"
 #include <raylib.h>
 
-class Entity : public Object
+class Entity : Object
 {
 public:
-	virtual void Update(float deltaTime) = 0;
-	virtual void Render() = 0;	
-	
+	Entity();
+
+	void Init(Vector2 position, Vector2 direction, float speed, const char* spritePath, Color color);
+
+	virtual void Update(float deltaTime);
+	virtual void Render();
+
 	void SetPendingDestroy(bool isPendingDestroy) { m_isPendingDestroy = isPendingDestroy; }
 	bool IsPendingDestroy() const { return m_isPendingDestroy; }
 
-protected:
+private:
 	bool m_isPendingDestroy;
 	Texture2D m_texture;
+	Color m_color;
 };
 

@@ -60,6 +60,9 @@
     <ClCompile Include="src\Entity.cpp">
       <Filter>Private\Entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameScene.cpp">
+      <Filter>Private\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ClientApp.h">
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="src\Entity.h">
       <Filter>Public\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameScene.h">
+      <Filter>Public\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
