@@ -2,6 +2,7 @@
 #include "Button.h"
 #include "InputText.h"
 #include "GameConsts.h"
+#include "Entity.h"
 
 #include <iostream>
 
