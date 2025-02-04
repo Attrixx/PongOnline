@@ -19,9 +19,16 @@ enum MessageType
 struct MessageHeader
 {
     int signature = SIGNATURE;
-    int totalSize;   // Taille totale du message
-    int packetIndex; // Index du fragment
-    int packetCount; // Nombre total de fragments
+    int totalSize = 0;   // Taille totale du message
+    int packetIndex = 0; // Index du fragment
+    int packetCount = 0; // Nombre total de fragments
+};
+
+struct MessageBuffer
+{
+	std::vector<char> data;
+	int receivedPackets = 0;
+	int expectedPackets = 0;
 };
 
 class Message

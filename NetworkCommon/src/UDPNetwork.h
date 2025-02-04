@@ -11,9 +11,6 @@
 constexpr u_short SERVER_PORT = 12345;
 constexpr int BUFFER_SIZE = 1024;
 
-constexpr int FOOTER = 0x87654321;
-constexpr size_t FOOTER_SIZE = sizeof(int);
-
 class UDPNetwork
 {
 public:
@@ -26,7 +23,7 @@ public:
 	bool CreateSocket();
 	bool BindSocket(u_short port);
 	bool SendTo(const char* address, u_short port, const char* data, int dataSize);
-	bool ReceiveFrom(char* buffer, int bufferSize, sockaddr_in& senderAddr);
+	int ReceiveFrom(char* buffer, int bufferSize, sockaddr_in& senderAddr);
 
 	u_short GetLocalPort() const { return m_localPort; }
 
