@@ -19,6 +19,18 @@
     <Filter Include="Private\Entity">
       <UniqueIdentifier>{0a1d99ac-d974-4f13-982d-8e96464ca643}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Private\UI">
+      <UniqueIdentifier>{f7a8e3ac-1a0f-4787-909e-5b49a3f717ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\UI">
+      <UniqueIdentifier>{1fae3c70-ecf8-4caf-b50d-a7c65aa1cfa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private\Scene">
+      <UniqueIdentifier>{4df974eb-8c72-459c-904c-ac3a02ae78e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public\Scene">
+      <UniqueIdentifier>{0cbbdeae-0451-4416-930c-6127d6f8e408}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ClientApp.cpp">
@@ -30,6 +42,21 @@
     <ClCompile Include="src\TimeManager.cpp">
       <Filter>Private\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Button.cpp">
+      <Filter>Private\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputText.cpp">
+      <Filter>Private\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UIElement.cpp">
+      <Filter>Private\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainMenuScene.cpp">
+      <Filter>Private\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Private\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ClientApp.h">
@@ -40,6 +67,21 @@
     </ClInclude>
     <ClInclude Include="src\TimeManager.h">
       <Filter>Public\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Button.h">
+      <Filter>Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputText.h">
+      <Filter>Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UIElement.h">
+      <Filter>Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainMenuScene.h">
+      <Filter>Public\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene.h">
+      <Filter>Public\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

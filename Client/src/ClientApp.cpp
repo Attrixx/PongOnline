@@ -5,10 +5,26 @@
 
 #include "GameConsts.h"
 #include "TimeManager.h"
+#include "Scene.h"
+#include "MainMenuScene.h"
+
+#include <raylib.h>
 
 // This warning was triggered because Raylib is included statically
 // Shouldn't cause any issues
 #pragma warning(disable: 4098)
+
+ClientApp::ClientApp()
+	: m_loadedScene(nullptr)
+	, m_newScene(nullptr)
+{
+}
+
+ClientApp::~ClientApp()
+{
+	delete m_loadedScene;
+	delete m_newScene;
+}
 
 void ClientApp::Run()
 {
@@ -20,6 +36,8 @@ void ClientApp::Run()
 	timeManager.Update();
 
 	std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	
+	LoadScene<MainMenuScene>();
 
 	std::string message = "signature:2344575663312;type:CONNECT;user:{name:Attrix;IP:127.0.0.1;Port:" +
 		std::to_string(m_udpClient.GetLocalPort()) + "}";
@@ -50,8 +68,18 @@ void ClientApp::HandleEvents()
 
 void ClientApp::Update(float deltaTime)
 {
+	// Replace old scene by the new one on frame start
+	if (m_newScene)
+	{
+		m_loadedScene = m_newScene;
+		m_newScene = nullptr;
+	}
 	// TODO: Update game logic here
 	// Call Entity::Update(deltaTime) for each entity
+	if (m_loadedScene)
+	{
+		m_loadedScene->Update(deltaTime);
+	}
 }
 
 void ClientApp::Render()
@@ -61,12 +89,15 @@ void ClientApp::Render()
 
 	// TODO: Draw game objects here
 	// Draw associated shape/sprite to each entity
+	if (m_loadedScene)
+	{
+		m_loadedScene->Render();
+	}
 
 	EndDrawing();
 }
 
 void ClientApp::InitNetwork()
-{
 	if (!m_udpClient.Init())
 	{
 		std::cerr << "Client network initialization failed." << std::endl;
