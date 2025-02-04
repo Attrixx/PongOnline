@@ -1,5 +1,5 @@
 #include "GameScene.h"
-#include "GameConsts.h"
+#include "CommonGameConsts.h"
 #include "Entity.h"
 
 void GameScene::OnInitialize()

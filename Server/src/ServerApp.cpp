@@ -12,6 +12,7 @@ ServerApp::ServerApp()
 	, m_paddleLeft(nullptr)
 	, m_paddleRight(nullptr)
 	, m_healthPoints(3)
+	, m_udpServer(new ServerHandler())
 {
 }
 
@@ -20,11 +21,6 @@ ServerApp::~ServerApp()
 	delete m_ball;
 	delete m_paddleLeft;
 	delete m_paddleRight;
-}
-
-ServerApp::ServerApp()
-	: m_udpServer(new ServerHandler())
-{
 }
 
 void ServerApp::Run()
