@@ -9,9 +9,16 @@ constexpr size_t SIGNATURE_SIZE = sizeof(int);
 
 enum MessageType
 {
-	DEFAULT = 0,
+	DEFAULT_MESSAGE = 0,
+
 	CONNECT,
 	DISCONNECT,
+
+	LOBBIES_LIST,
+	CREATE_LOBBY,
+	JOIN_LOBBY,
+	LEAVE_LOBBY,
+
 	PLAY,
 	LOGIC
 };
@@ -37,12 +44,12 @@ public:
 	std::string toString();
 	static Message toMessage(const char* input);
 
-	static Message CreateMessage(MessageType type = DEFAULT, const json& data = defaultData);
+	static Message CreateMessage(MessageType type = DEFAULT_MESSAGE, const json& data = defaultData);
 
 public:
     json content = {
         {"id", 0},
-        {"messageType", DEFAULT},
+        {"messageType", DEFAULT_MESSAGE},
         {"data", defaultData}
     };
 
