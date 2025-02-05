@@ -46,7 +46,7 @@ void Lobby::Update(float deltaTime)
 	});
 	for (auto it = m_users.begin(); it != m_users.end(); ++it)
 	{
-		//I(ServerApp)->SendMessage();
+		I(ServerApp)->SendMessage(it->second->GetPublicIpAddress().c_str(), it->second->GetPort(), message);
 	}
 }
 

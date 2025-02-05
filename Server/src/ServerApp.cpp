@@ -8,10 +8,7 @@
 #include <ctime>
 
 ServerApp::ServerApp()
-	: m_ball(nullptr)
-	, m_paddleLeft(nullptr)
-	, m_paddleRight(nullptr)
-	, m_healthPoints(3)
+	: m_healthPoints(3)
 	, m_udpServer(new ServerHandler())
 {
 }
@@ -29,8 +26,6 @@ void ServerApp::Run()
 	RegisterUser("Server", SERVER_PORT, "127.0.0.1");
 
 	InitNetwork();
-
-	InitRound();
 
 	while (1)
 	{
