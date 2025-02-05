@@ -17,4 +17,3 @@ private:
 	std::string m_name;
 	u_short m_port;
 };
-

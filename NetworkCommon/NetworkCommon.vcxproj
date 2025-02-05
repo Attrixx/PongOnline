@@ -70,7 +70,6 @@
     <PostBuildEvent>
       <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\winimports.h" "$(ProjectDir)include\"
-xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\Object.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\Message.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\CommonGameConsts.h" "$(ProjectDir)include\"
@@ -100,7 +99,6 @@ xcopy /Y "$(ProjectDir)src\Singleton.h" "$(ProjectDir)include\"</Command>
     <PostBuildEvent>
       <Command>xcopy /Y "$(ProjectDir)src\UDPNetwork.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\winimports.h" "$(ProjectDir)include\"
-xcopy /Y "$(ProjectDir)src\User.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\Object.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\Message.h" "$(ProjectDir)include\"
 xcopy /Y "$(ProjectDir)src\CommonGameConsts.h" "$(ProjectDir)include\"
@@ -116,7 +114,6 @@ xcopy /Y "$(ProjectDir)src\Singleton.h" "$(ProjectDir)include\"</Command>
     <ClInclude Include="src\pch.h" />
     <ClInclude Include="src\UDPNetwork.h" />
     <ClInclude Include="src\winimports.h" />
-    <ClInclude Include="src\User.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Object.cpp" />
@@ -127,7 +124,6 @@ xcopy /Y "$(ProjectDir)src\Singleton.h" "$(ProjectDir)include\"</Command>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\UDPNetwork.cpp" />
-    <ClCompile Include="src\User.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

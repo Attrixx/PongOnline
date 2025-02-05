@@ -21,6 +21,9 @@
     <ClCompile Include="src\Paddle.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="src\Lobby.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ServerApp.h">
@@ -30,6 +33,12 @@
       <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="src\Paddle.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Lobby.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="src\User.h">
       <Filter>Public</Filter>
     </ClInclude>
   </ItemGroup>

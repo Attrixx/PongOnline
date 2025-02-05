@@ -11,15 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Lobby.cpp" />
     <ClCompile Include="src\Ball.cpp" />
     <ClCompile Include="src\Paddle.cpp" />
     <ClCompile Include="src\ServerApp.cpp" />
     <ClCompile Include="src\Server.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Lobby.h" />
     <ClInclude Include="src\Ball.h" />
     <ClInclude Include="src\Paddle.h" />
     <ClInclude Include="src\ServerApp.h" />
+    <ClInclude Include="src\User.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

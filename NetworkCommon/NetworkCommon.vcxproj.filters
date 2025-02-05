@@ -13,9 +13,6 @@
     <ClInclude Include="src\winimports.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="src\User.h">
-      <Filter>Public</Filter>
-    </ClInclude>
     <ClInclude Include="src\Message.h">
       <Filter>Public</Filter>
     </ClInclude>
@@ -37,9 +34,6 @@
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="src\UDPNetwork.cpp">
-      <Filter>Private</Filter>
-    </ClCompile>
-    <ClCompile Include="src\User.cpp">
       <Filter>Private</Filter>
     </ClCompile>
     <ClCompile Include="src\Message.cpp">
