@@ -4,7 +4,9 @@
 #include "UDPNetwork.h"
 #include "User.h"
 
-#include <vector>
+#include <unordered_map>
+#include <atomic>
+#include <mutex>
 
 class ServerHandler : public NetworkHandler
 {
@@ -39,9 +41,11 @@ private:
 
 private:
 	UDPNetwork m_udpServer;
-	std::vector<User> m_users;
 
-	int m_userIdCounter = 0;
+	std::unordered_map<int, User> m_users;
+	std::mutex m_usersMutex;
+
+	std::atomic_int m_userIdCounter = -1;
 
 	Ball* m_ball;
 	Paddle* m_paddleLeft;

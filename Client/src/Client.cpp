@@ -5,6 +5,8 @@
 
 int main()
 {
+	SetThreadDescription(GetCurrentThread(), L"Client Main");
+
 	ClientApp app;
 	app.Run();
 

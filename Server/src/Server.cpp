@@ -5,6 +5,8 @@
 
 int main()
 {
+	SetThreadDescription(GetCurrentThread(), L"Server Main");
+
 	I(ServerApp)->Run();
 
 	return EXIT_SUCCESS;

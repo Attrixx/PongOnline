@@ -134,7 +134,10 @@ void UDPNetwork::StartListening()
 	m_processing = true;
 
 	m_listenThread = std::thread(&UDPNetwork::Listen, this);
+	SetThreadDescription(m_listenThread.native_handle(), L"UDPNetwork Listen");
+
 	m_interpreterThread = std::thread(&UDPNetwork::Interpret, this);
+	SetThreadDescription(m_interpreterThread.native_handle(), L"UDPNetwork Interpret");
 }
 
 void UDPNetwork::StopListening()
@@ -201,7 +204,7 @@ void UDPNetwork::Interpret()
 		std::vector<char> messageChar;
 		{
 			std::unique_lock<std::mutex> lock(m_messageQueueMutex);
-			m_messageQueueCondition.wait(lock, [this] { return !m_messageQueue.empty(); });
+			m_messageQueueCondition.wait(lock, [this] { return !m_messageQueue.empty() || !m_processing; });
 
 			if (!m_processing)
 			{
@@ -215,9 +218,13 @@ void UDPNetwork::Interpret()
 		std::string messageStr(messageChar.begin(), messageChar.end());
 		Message message = Message::toMessage(messageStr.c_str());
 
-		if (m_networkHandler)
+		try
 		{
 			m_networkHandler->HandleMessage(message);
+		}
+		catch (const std::exception& e)
+		{
+			std::cerr << "Wrong message format detected: " << e.what() << std::endl;
 		}
 	}
 }

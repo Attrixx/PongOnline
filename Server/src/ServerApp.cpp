@@ -25,7 +25,7 @@ ServerApp::~ServerApp()
 
 void ServerApp::Run()
 {
-	srand(time(NULL));
+	srand(static_cast<unsigned int>(time(NULL)));
 
 	// TODO: Get server IP
 	// Server has id 0
@@ -83,17 +83,21 @@ void ServerApp::Update(float deltaTime)
 
 void ServerApp::RegisterUser(const std::string& name, u_short port)
 {
-	m_users.emplace_back(m_userIdCounter, name, port);
-	m_userIdCounter++;
+	int userId = m_userIdCounter.fetch_add(1, std::memory_order_relaxed);
+
+	{
+		std::lock_guard<std::mutex> lock(m_usersMutex);
+		m_users.insert({ userId, User(userId, name, port) });
+	}
+
 	std::cout << "User " << name << " connected" << std::endl;
 }
 
 void ServerApp::UnregisterUser(int id)
 {
-	auto it = std::find_if(m_users.begin(), m_users.end(), [id](const User& user) { return user.GetId() == id; });
-	if (it != m_users.end())
 	{
-		m_users.erase(it);
+		std::lock_guard<std::mutex> lock(m_usersMutex);
+		m_users.erase(id);
 	}
 }
 
@@ -109,7 +113,31 @@ void ServerHandler::HandleMessage(const Message& message)
 	{
 		std::string name = data["name"];
 		u_short port = data["port"];
-		ServerApp::GetInstance()->RegisterUser(name, port);
+		I(ServerApp)->RegisterUser(name, port);
+	}
+	break;
+	case MessageType::DISCONNECT:
+	{
+		int id = data["id"];
+		I(ServerApp)->UnregisterUser(id);
+	}
+	break;
+	case MessageType::PLAY:
+	{
+		int dirY = data["movedPaddle"]["dirY"];
+		// Get lobby with user Id
+		// Get user paddle
+		// Move paddle
+	}
+	break;
+	case MessageType::LOGIC:
+	{
+		
+	}
+	break;
+	default:
+	{
+
 	}
 	break;
 	}

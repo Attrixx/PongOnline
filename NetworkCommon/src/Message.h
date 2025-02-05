@@ -10,10 +10,10 @@ constexpr size_t SIGNATURE_SIZE = sizeof(int);
 enum MessageType
 {
 	DEFAULT = 0,
-	PLAY,
-	LOGIC,
 	CONNECT,
-	DISCONNECT
+	DISCONNECT,
+	PLAY,
+	LOGIC
 };
 
 struct MessageHeader
