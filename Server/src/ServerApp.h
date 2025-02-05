@@ -32,7 +32,7 @@ public:
 
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
 
-	int RegisterUser(const std::string& name, u_short port);
+	int RegisterUser(const std::string& name, u_short port, const std::string& address);
 	void UnregisterUser(int id);
 
 	int CreateLobby(int userId, const std::string& name);

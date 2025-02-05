@@ -22,7 +22,7 @@ class Lobby;
 class User
 {
 public:
-	User(int id, const std::string& name, u_short port) : m_id(id), m_name(name), m_port(port) {}
+	User(int id, const std::string& name, u_short port, const std::string& address) : m_id(id), m_name(name), m_port(port), m_publicIpAddress(address) {}
 	~User();
 
 	int GetId() const { return m_id; }
@@ -31,6 +31,7 @@ public:
 	UserState GetState() const { return m_state; }
 	PaddlePosition GetPaddlePosition() const { return m_paddlePosition; }
 	Lobby* GetLobby() const { return m_lobby; }
+	const std::string& GetPublicIpAddress() const { return m_publicIpAddress; }
 
 	void SetLobby(Lobby* lobby);
 
@@ -42,4 +43,5 @@ private:
 	UserState m_state = NOLOBBY;
 	PaddlePosition m_paddlePosition = DEFAULT_POSITION;
 	Lobby* m_lobby = nullptr;
+	std::string m_publicIpAddress = "127.0.0.1";
 };
