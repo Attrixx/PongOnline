@@ -262,7 +262,7 @@ std::string UDPNetwork::GetPublicIPAddress() const
 		return ipAddress;
 	}
 
-	buffer[recv_size] = '\0';
+	buffer[recv_size - 1] = '\0';
 
 	std::string response(buffer);
 	size_t pos = response.rfind("\r\n");
