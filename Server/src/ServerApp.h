@@ -59,8 +59,8 @@ private:
 	std::mutex m_usersMutex;
 	std::mutex m_lobbiesMutex;
 
-	std::atomic_int m_userIdCounter = -1;
-	std::atomic_int m_lobbyIdCounter = -1;
+	std::atomic_int m_userIdCounter = 0;
+	std::atomic_int m_lobbyIdCounter = 0;
 
 	Ball* m_ball;
 	Paddle* m_paddleLeft;

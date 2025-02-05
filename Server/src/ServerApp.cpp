@@ -200,9 +200,8 @@ void ServerHandler::HandleMessage(const Message& message)
 		int userId = I(ServerApp)->RegisterUser(name, port);
 
 		// Send User Id
-		Message response = Message::CreateMessage(MessageType::CONNECT, {
-			{"id", userId}
-			});
+		Message response = Message::CreateMessage(MessageType::CONNECT, {});
+		response.content["id"] = userId;
 
 		I(ServerApp)->SendMessage(address.c_str(), port, response);
 	}
