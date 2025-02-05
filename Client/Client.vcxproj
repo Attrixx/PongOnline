@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BasicText.cpp" />
+    <ClCompile Include="src\LobbyScene.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\Entity.cpp" />
     <ClCompile Include="src\ClientApp.cpp" />
@@ -23,6 +25,8 @@
     <ClCompile Include="src\UIElement.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BasicText.h" />
+    <ClInclude Include="src\LobbyScene.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\ClientGameConsts.h" />
     <ClInclude Include="src\Entity.h" />

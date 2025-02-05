@@ -4,6 +4,8 @@
 #include "Entity.h"
 #include "ClientGameConsts.h"
 #include "CommonGameConsts.h"
+#include "Message.h"
+#include "ClientApp.h"
 
 #include <iostream>
 
@@ -18,7 +20,14 @@ void MainMenuScene::OnInitialize()
 	Button* buttonCreateGame = CreateUIElement<Button>();
 	buttonCreateGame->SetPosition({ WINDOW_WIDTH * 0.5f - BUTTON_WIDTH - 25.f, 75.f });
 	buttonCreateGame->SetText("Create game");
-	auto onCreateGameButtonClicked = []() { std::cout << "CREATE GAME BUTTON CLICKED" << std::endl; };
+	auto onCreateGameButtonClicked = [&inputIP]() {
+		Message message = Message::CreateMessage(MessageType::CONNECT, {
+		{"name", "Client"},
+		{"port", I(ClientApp)->GetUdpClient().GetLocalPort()}
+			});
+		I(ClientApp)->SetServerHostname(inputIP->GetValue());
+		I(ClientApp)->SendMessage(message);
+	};
 	buttonCreateGame->BindOnClickFunction(onCreateGameButtonClicked);
 
 	Button* buttonJoinGame = CreateUIElement<Button>();
