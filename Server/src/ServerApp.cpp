@@ -45,6 +45,17 @@ void ServerApp::Run()
 	}
 }
 
+void ServerApp::SendMessage(const char* address, u_short port, Message& message)
+{
+	std::string finalMessage = message.toString(); // Ensure thread safety
+	std::vector<char> messageBuffer(finalMessage.begin(), finalMessage.end());
+
+	if (!m_udpServer.SendTo(address, port, messageBuffer.data(), static_cast<int>(messageBuffer.size())))
+	{
+		std::cerr << "Failed to send message to the client." << std::endl;
+	}
+}
+
 void ServerApp::InitNetwork()
 {
 	if (!m_udpServer.Init())
@@ -81,7 +92,7 @@ void ServerApp::Update(float deltaTime)
 	m_ball->CheckCollision(m_paddleRight);
 }
 
-void ServerApp::RegisterUser(const std::string& name, u_short port)
+int ServerApp::RegisterUser(const std::string& name, u_short port)
 {
 	int userId = m_userIdCounter.fetch_add(1, std::memory_order_relaxed);
 
@@ -91,6 +102,7 @@ void ServerApp::RegisterUser(const std::string& name, u_short port)
 	}
 
 	std::cout << "User " << name << " connected" << std::endl;
+	return userId;
 }
 
 void ServerApp::UnregisterUser(int id)
@@ -107,13 +119,15 @@ void ServerApp::UnregisterUser(int id)
 
 int ServerApp::CreateLobby(int userId, const std::string& name)
 {
+	int lobbyId = m_lobbyIdCounter.fetch_add(1, std::memory_order_relaxed);
+
 	{
 		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
-		int lobbyId = m_lobbyIdCounter.fetch_add(1, std::memory_order_relaxed);
 
 		m_lobbies.insert({ lobbyId, new Lobby(userId, name) });
-		return lobbyId;
 	}
+
+	return lobbyId;
 }
 
 void ServerApp::RemoveLobby(int lobbyId)
@@ -179,7 +193,18 @@ void ServerHandler::HandleMessage(const Message& message)
 	{
 		std::string name = data["name"];
 		u_short port = data["port"];
-		I(ServerApp)->RegisterUser(name, port);
+		std::string address = data["address"];
+
+		std::cout << address << std::endl;
+
+		int userId = I(ServerApp)->RegisterUser(name, port);
+
+		// Send User Id
+		Message response = Message::CreateMessage(MessageType::CONNECT, {
+			{"id", userId}
+			});
+
+		I(ServerApp)->SendMessage(address.c_str(), port, response);
 	}
 	break;
 	case MessageType::DISCONNECT:

@@ -228,3 +228,40 @@ void UDPNetwork::Interpret()
 		}
 	}
 }
+
+std::string UDPNetwork::GetLocalIPAddress() const
+{
+	std::string ipAddress = "127.0.0.1"; // Default fallback
+	sockaddr_in addr;
+	addr.sin_family = AF_INET;
+	addr.sin_port = htons(80); // Arbitrary external port
+	inet_pton(AF_INET, "8.8.8.8", &addr.sin_addr); // Google's public DNS
+
+	SOCKET sock = socket(AF_INET, SOCK_DGRAM, 0);
+	if (sock == INVALID_SOCKET) {
+		std::cerr << "socket() failed with error: " << WSAGetLastError() << std::endl;
+		return ipAddress;
+	}
+
+	if (connect(sock, (sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR) {
+		std::cerr << "connect() failed with error: " << WSAGetLastError() << std::endl;
+		closesocket(sock);
+		return ipAddress;
+	}
+
+	sockaddr_in localAddr;
+	socklen_t localAddrLen = sizeof(localAddr);
+	if (getsockname(sock, (sockaddr*)&localAddr, &localAddrLen) == SOCKET_ERROR) {
+		std::cerr << "getsockname() failed with error: " << WSAGetLastError() << std::endl;
+		closesocket(sock);
+		return ipAddress;
+	}
+
+	char ipStr[INET_ADDRSTRLEN];
+	inet_ntop(AF_INET, &localAddr.sin_addr, ipStr, sizeof(ipStr));
+	ipAddress = ipStr;
+
+	closesocket(sock);
+	return ipAddress;
+}
+

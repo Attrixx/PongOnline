@@ -28,9 +28,11 @@ public:
 	virtual ~ServerApp();
 
 	void Run();
+	void SendMessage(const char* address, u_short port, Message& message);
+
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
 
-	void RegisterUser(const std::string& name, u_short port);
+	int RegisterUser(const std::string& name, u_short port);
 	void UnregisterUser(int id);
 
 	int CreateLobby(int userId, const std::string& name);

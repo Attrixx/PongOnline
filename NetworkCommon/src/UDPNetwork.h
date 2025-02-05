@@ -39,6 +39,8 @@ public:
 	void StartListening();
 	void StopListening();
 
+	std::string GetLocalIPAddress() const;
+
 private:
 	void Listen();
 	void Interpret();
