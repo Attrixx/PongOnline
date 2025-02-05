@@ -11,21 +11,21 @@
 
 void MainMenuScene::OnInitialize()
 {
-	InputText* inputUsername = CreateUIElement<InputText>();
-	inputUsername->SetPosition({ WINDOW_WIDTH * 0.5f - INPUT_WIDTH - 25.f, 25.f });
+	m_inputUsername = CreateUIElement<InputText>();
+	m_inputUsername->SetPosition({ WINDOW_WIDTH * 0.5f - INPUT_WIDTH - 25.f, 25.f });
 
-	InputText* inputIP = CreateUIElement<InputText>();
-	inputIP->SetPosition({ WINDOW_WIDTH * 0.5f + 25.f, 25.f });
+	m_inputIp = CreateUIElement<InputText>();
+	m_inputIp->SetPosition({ WINDOW_WIDTH * 0.5f + 25.f, 25.f });
 
 	Button* buttonCreateGame = CreateUIElement<Button>();
 	buttonCreateGame->SetPosition({ WINDOW_WIDTH * 0.5f - BUTTON_WIDTH - 25.f, 75.f });
 	buttonCreateGame->SetText("Create game");
-	auto onCreateGameButtonClicked = [&inputIP]() {
+	auto onCreateGameButtonClicked = [this]() {
 		Message message = Message::CreateMessage(MessageType::CONNECT, {
-		{"name", "Client"},
-		{"port", I(ClientApp)->GetUdpClient().GetLocalPort()}
-			});
-		I(ClientApp)->SetServerHostname(inputIP->GetValue());
+			{"name", "Client"},
+			{"port", I(ClientApp)->GetUdpClient().GetLocalPort()}
+		});
+		I(ClientApp)->SetServerHostname(m_inputIp->GetValue());
 		I(ClientApp)->SendMessage(message);
 	};
 	buttonCreateGame->BindOnClickFunction(onCreateGameButtonClicked);
