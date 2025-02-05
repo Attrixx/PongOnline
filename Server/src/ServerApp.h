@@ -30,7 +30,7 @@ public:
 	void Run();
 	void SendMessage(const char* address, u_short port, Message& message);
 
-	int RegisterUser(const std::string& name, u_short port);
+	int RegisterUser(const std::string& name, u_short port, const std::string& address);
 	void UnregisterUser(int id);
 
 	int CreateLobby(int userId, const std::string& name);

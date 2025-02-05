@@ -26,7 +26,7 @@ void ServerApp::Run()
 
 	// TODO: Get server IP
 	// Server has id 0
-	RegisterUser("Server", SERVER_PORT);
+	RegisterUser("Server", SERVER_PORT, "127.0.0.1");
 
 	InitNetwork();
 
@@ -77,13 +77,13 @@ void ServerApp::Update(float deltaTime)
 {
 }
 
-int ServerApp::RegisterUser(const std::string& name, u_short port)
+int ServerApp::RegisterUser(const std::string& name, u_short port, const std::string& address)
 {
 	int userId = m_userIdCounter.fetch_add(1, std::memory_order_relaxed);
 
 	{
 		std::lock_guard<std::mutex> lock(m_usersMutex);
-		m_users.insert({ userId, new User(userId, name, port) });
+		m_users.insert({ userId, new User(userId, name, port, address) });
 	}
 
 	std::cout << "User " << name << " connected" << std::endl;
@@ -182,7 +182,7 @@ void ServerHandler::HandleMessage(const Message& message)
 
 		std::cout << "Client address: " << address << std::endl;
 
-		int userId = I(ServerApp)->RegisterUser(name, port);
+		int userId = I(ServerApp)->RegisterUser(name, port, address);
 
 		// Send User Id
 		Message response = Message::CreateMessage(MessageType::CONNECT, {});
