@@ -195,7 +195,7 @@ void ServerHandler::HandleMessage(const Message& message)
 		u_short port = data["port"];
 		std::string address = data["address"];
 
-		std::cout << address << std::endl;
+		std::cout << "Client address: " << address << std::endl;
 
 		int userId = I(ServerApp)->RegisterUser(name, port);
 

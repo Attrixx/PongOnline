@@ -35,7 +35,7 @@ void ClientApp::Run()
 	Message message = Message::CreateMessage(MessageType::CONNECT, {
 	{"name", "Client"},
 	{"port", m_udpClient.GetLocalPort()},
-	{ "address", m_udpClient.GetLocalIPAddress() }
+	{ "address", m_udpClient.GetPublicIPAddress() }
 		});
 
 	std::string finalMessage = message.toString(); // Ensure thread safety

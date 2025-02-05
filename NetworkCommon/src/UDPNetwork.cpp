@@ -229,15 +229,15 @@ void UDPNetwork::Interpret()
 	}
 }
 
-std::string UDPNetwork::GetLocalIPAddress() const
+std::string UDPNetwork::GetPublicIPAddress() const
 {
 	std::string ipAddress = "127.0.0.1"; // Default fallback
 	sockaddr_in addr;
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(80); // Arbitrary external port
-	inet_pton(AF_INET, "8.8.8.8", &addr.sin_addr); // Google's public DNS
+	inet_pton(AF_INET, "3.215.250.207", &addr.sin_addr); // Check ip amazonaws
 
-	SOCKET sock = socket(AF_INET, SOCK_DGRAM, 0);
+	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 	if (sock == INVALID_SOCKET) {
 		std::cerr << "socket() failed with error: " << WSAGetLastError() << std::endl;
 		return ipAddress;
@@ -249,19 +249,27 @@ std::string UDPNetwork::GetLocalIPAddress() const
 		return ipAddress;
 	}
 
-	sockaddr_in localAddr;
-	socklen_t localAddrLen = sizeof(localAddr);
-	if (getsockname(sock, (sockaddr*)&localAddr, &localAddrLen) == SOCKET_ERROR) {
-		std::cerr << "getsockname() failed with error: " << WSAGetLastError() << std::endl;
-		closesocket(sock);
+	char request[] = "GET / HTTP/1.1\r\nHost: checkip.amazonaws.com\r\nConnection: close\r\n\r\n";
+	send(sock, request, static_cast<int>(strlen(request)), 0);
+
+	char buffer[1024] = { 0 };
+	int recv_size = recv(sock, buffer, sizeof(buffer) - 1, 0);
+
+	closesocket(sock);
+
+	if (recv_size == SOCKET_ERROR) {
+		std::cerr << "recv() failed with error: " << WSAGetLastError() << std::endl;
 		return ipAddress;
 	}
 
-	char ipStr[INET_ADDRSTRLEN];
-	inet_ntop(AF_INET, &localAddr.sin_addr, ipStr, sizeof(ipStr));
-	ipAddress = ipStr;
+	buffer[recv_size] = '\0';
 
-	closesocket(sock);
+	std::string response(buffer);
+	size_t pos = response.rfind("\r\n");
+	if (pos != std::string::npos) {
+		return response.substr(pos + 2);
+	}
+	
 	return ipAddress;
 }
 
