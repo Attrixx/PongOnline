@@ -20,7 +20,7 @@ void MainMenuScene::OnInitialize()
 	Button* buttonCreateGame = CreateUIElement<Button>();
 	buttonCreateGame->SetPosition({ WINDOW_WIDTH * 0.5f - BUTTON_WIDTH - 25.f, 75.f });
 	buttonCreateGame->SetText("Create game");
-	auto onCreateGameButtonClicked = [this]() {
+	auto onCreateGameButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::CONNECT, {
 			{"name", "Client"},
 			{"port", I(ClientApp)->GetUdpClient().GetLocalPort()},
