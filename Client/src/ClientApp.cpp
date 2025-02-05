@@ -192,5 +192,7 @@ void ClientHandler::HandleMessage(const Message& message)
 		}
 	}
 	break;
+	default:
+		break;
 	}
 }

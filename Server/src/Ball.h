@@ -3,13 +3,14 @@
 #include "Object.h"
 
 class Paddle;
+class Lobby;
 
 class Ball : public Object
 {
 public:
 
-	Ball();
-	Ball(const Vector2Float& position, const Vector2Float& direction, float speed, float radius);
+	Ball(Lobby* lobby);
+	Ball(Lobby* lobby, const Vector2Float& position, const Vector2Float& direction, float speed, float radius);
 
 	virtual void Update(float deltaTime) override;
 
@@ -20,6 +21,8 @@ public:
 private:
 
 	float m_radius;
+
+	Lobby* m_lobby;
 
 };
 

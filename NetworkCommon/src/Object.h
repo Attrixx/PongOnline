@@ -30,7 +30,9 @@ public:
 	void SetPosition(const Vector2Float& position) { m_position = position; }
 	Vector2Float GetPosition() const { return m_position; }
 	void SetDirection(const Vector2Float& direction) { m_direction = direction; }
+	Vector2Float GetDirection() const { return m_direction; }
 	void SetSpeed(float speed) { m_speed = speed; }
+	float GetSpeed() const { return m_speed; }
 
 protected:
 	Vector2Float m_position;

@@ -13,3 +13,5 @@ constexpr float BALL_INITIAL_MAX_HALF_ANGLE = M_PI / 3.f;
 constexpr int PADDLE_WIDTH = 25;
 constexpr int PADDLE_HEIGHT = 49;
 constexpr int PADDLE_MARGIN = 35;
+
+constexpr int HEALTH_POINTS = 3;

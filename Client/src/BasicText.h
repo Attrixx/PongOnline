@@ -35,9 +35,9 @@ public:
 	void SetFont(Font& font) { m_font = font; };
 	void SetTextColor(const Color& color) { m_textColor = color; };
 
-	void SetPosition(const Vector2& position);
-	void SetHorizontalAlignment(HorizontalAlignment alignment);
-	void SetVerticalAlignment(VerticalAlignment alignment);
+	void SetPosition(const Vector2& position) { m_position = position; };
+	void SetHorizontalAlignment(HorizontalAlignment alignment) { m_horizontalAlignment = alignment; };
+	void SetVerticalAlignment(VerticalAlignment alignment) { m_verticalAlignment = alignment; };
 
 private:
 
@@ -45,6 +45,9 @@ private:
 	float m_fontSize;
 	Font m_font;
 	Color m_textColor;
+
+	HorizontalAlignment m_horizontalAlignment;
+	VerticalAlignment m_verticalAlignment;
 
 	Vector2 m_position;
 

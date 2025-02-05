@@ -2,15 +2,17 @@
 #include "Paddle.h"
 #include "CommonGameConsts.h"
 #include "ServerApp.h"
+#include "Lobby.h"
 
-Ball::Ball()
+Ball::Ball(Lobby* lobby)
 	: m_radius(0.f)
+	, m_lobby(lobby)
 {
-
 }
 
-Ball::Ball(const Vector2Float& position, const Vector2Float& direction, float speed, float radius)
+Ball::Ball(Lobby* lobby, const Vector2Float& position, const Vector2Float& direction, float speed, float radius)
 	: m_radius(radius)
+	, m_lobby(lobby)
 {
 	m_position = position;
 	m_direction = direction;
@@ -26,13 +28,13 @@ void Ball::Update(float deltaTime)
 		m_direction.y *= -1.f;
 	}
 
-	if (m_position.x < -m_radius)
+	if (m_position.x < -m_radius && m_lobby)
 	{
-		I(ServerApp)->OnBallOutOfScreen(true);
+		m_lobby->OnBallOutOfScreen(true);
 	}
-	else if (m_position.x > WINDOW_WIDTH)
+	else if (m_position.x > WINDOW_WIDTH && m_lobby)
 	{
-		I(ServerApp)->OnBallOutOfScreen(false);
+		m_lobby->OnBallOutOfScreen(false);
 	}
 }
 

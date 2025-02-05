@@ -1,15 +1,21 @@
 #pragma once
 
+#include "CommonGameConsts.h"
+
 #include <unordered_map>
 #include <string>
 
 class User;
+class Ball;
+class Paddle;
 
 class Lobby
 {
 public:
-	Lobby(int id, const std::string& inName) : lobbyId(id), name(inName) {}
+	Lobby(int id, const std::string& inName);
 	~Lobby();
+
+	void Update(float deltaTime);
 
 	int GetId() const { return lobbyId; }
 	const std::string& GetName() const { return name; }
@@ -21,11 +27,20 @@ public:
 	void AddUser(User* user);
 	void RemoveUser(int id);
 
+	void InitRound();
+	void OnBallOutOfScreen(bool isOutOnLeftSide);
+
 private:
 	int lobbyId;
 	std::string name;
 
 	std::unordered_map<int, User*> m_users;
+
+	int m_healthPoints;
+
+	Ball* m_ball;
+	Paddle* m_paddleLeft;
+	Paddle* m_paddleRight;
 
 };
 

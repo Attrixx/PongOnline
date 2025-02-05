@@ -18,9 +18,6 @@ ServerApp::ServerApp()
 
 ServerApp::~ServerApp()
 {
-	delete m_ball;
-	delete m_paddleLeft;
-	delete m_paddleRight;
 }
 
 void ServerApp::Run()
@@ -30,10 +27,6 @@ void ServerApp::Run()
 	// TODO: Get server IP
 	// Server has id 0
 	RegisterUser("Server", SERVER_PORT);
-
-	m_ball = new Ball();
-	m_paddleLeft = new Paddle();
-	m_paddleRight = new Paddle();
 
 	InitNetwork();
 
@@ -82,14 +75,6 @@ void ServerApp::InitNetwork()
 
 void ServerApp::Update(float deltaTime)
 {
-	// Update objects
-	m_ball->Update(deltaTime);
-	m_paddleLeft->Update(deltaTime);
-	m_paddleRight->Update(deltaTime);
-
-	// Check collisions
-	m_ball->CheckCollision(m_paddleLeft);
-	m_ball->CheckCollision(m_paddleRight);
 }
 
 int ServerApp::RegisterUser(const std::string& name, u_short port)
@@ -251,26 +236,6 @@ void ServerHandler::HandleMessage(const Message& message)
 	}
 }
 
-void ServerApp::InitRound()
-{
-	m_ball->SetPosition(Vector2Float(WINDOW_WIDTH * 0.5f - BALL_RADIUS, WINDOW_HEIGHT * 0.5f - BALL_RADIUS));
-	m_ball->SetSpeed(BALL_INITIAL_SPEED);
-
-	bool leftSize = rand() / RAND_MAX > 0.5f;
-	float minAngle = leftSize ? -BALL_INITIAL_MAX_HALF_ANGLE : -BALL_INITIAL_MAX_HALF_ANGLE + (M_PI * 0.5f);
-	float maxAngle = minAngle + (BALL_INITIAL_MAX_HALF_ANGLE * 2.f);
-	float angle = (minAngle + (rand() / (float)RAND_MAX) * (maxAngle - minAngle));
-	m_ball->SetDirection(Vector2Float(cos(angle), sin(angle)));
-
-	m_paddleLeft->SetPosition(Vector2Float(PADDLE_MARGIN, WINDOW_HEIGHT * 0.5f - PADDLE_HEIGHT));
-	m_paddleLeft->SetDirection(Vector2Float(0.f, 1.f));
-	m_paddleLeft->SetSpeed(0.f);
-
-	m_paddleRight->SetPosition(Vector2Float(WINDOW_WIDTH - PADDLE_MARGIN - PADDLE_WIDTH, WINDOW_HEIGHT * 0.5f - PADDLE_HEIGHT));
-	m_paddleRight->SetDirection(Vector2Float(0.f, 1.f));
-	m_paddleRight->SetSpeed(0.f);
-}
-
 User* ServerApp::GetUser(int id)
 {
 	auto it = m_users.find(id);
@@ -289,14 +254,4 @@ Lobby* ServerApp::GetLobby(int id)
 		return it->second;
 	}
 	return nullptr;
-}
-
-void ServerApp::OnBallOutOfScreen(bool isOutOnLeftSide)
-{
-	if (m_healthPoints > 0)
-	{
-		--m_healthPoints;
-	}
-
-	// Send scores
 }
