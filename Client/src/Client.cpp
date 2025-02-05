@@ -7,8 +7,7 @@ int main()
 {
 	SetThreadDescription(GetCurrentThread(), L"Client Main");
 
-	ClientApp app;
-	app.Run();
+	I(ClientApp)->Run();
 
 	return EXIT_SUCCESS;
 }
