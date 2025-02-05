@@ -24,6 +24,9 @@
     <ClCompile Include="src\Lobby.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="src\User.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ServerApp.h">

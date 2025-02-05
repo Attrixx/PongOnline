@@ -87,7 +87,7 @@ void ServerApp::RegisterUser(const std::string& name, u_short port)
 
 	{
 		std::lock_guard<std::mutex> lock(m_usersMutex);
-		m_users.insert({ userId, User(userId, name, port) });
+		m_users.insert({ userId, new User(userId, name, port) });
 	}
 
 	std::cout << "User " << name << " connected" << std::endl;
@@ -97,7 +97,73 @@ void ServerApp::UnregisterUser(int id)
 {
 	{
 		std::lock_guard<std::mutex> lock(m_usersMutex);
-		m_users.erase(id);
+		User* user = GetUser(id);
+		if (user)
+		{
+			m_users.erase(id);
+		}
+	}
+}
+
+int ServerApp::CreateLobby(int userId, const std::string& name)
+{
+	{
+		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
+		int lobbyId = m_lobbyIdCounter.fetch_add(1, std::memory_order_relaxed);
+
+		m_lobbies.insert({ lobbyId, new Lobby(userId, name) });
+		return lobbyId;
+	}
+}
+
+void ServerApp::RemoveLobby(int lobbyId)
+{
+	{
+		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
+		Lobby* lobby = GetLobby(lobbyId);
+		if (lobby)
+		{
+			m_lobbies.erase(lobbyId);
+		}
+	}
+}
+
+void ServerApp::JoinLobby(int userId, int lobbyId)
+{
+	{
+		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
+		std::lock_guard<std::mutex> lock2(m_usersMutex);
+
+		Lobby* lobby = GetLobby(lobbyId);
+		User* user = GetUser(userId);
+
+		if (lobby && user)
+		{
+			lobby->AddUser(user);
+			user->SetLobby(lobby);
+		}
+	}
+}
+
+void ServerApp::LeaveLobby(int userId)
+{
+	{
+		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
+		std::lock_guard<std::mutex> lock2(m_usersMutex);
+
+		User* user = GetUser(userId);
+		Lobby* lobby = user->GetLobby();
+
+		if (user && lobby)
+		{
+			lobby->RemoveUser(user->GetId());
+			user->SetLobby(nullptr);
+
+			if (lobby->IsEmpty())
+			{
+				RemoveLobby(lobby->GetId());
+			}
+		}
 	}
 }
 
@@ -122,17 +188,35 @@ void ServerHandler::HandleMessage(const Message& message)
 		I(ServerApp)->UnregisterUser(id);
 	}
 	break;
+	case MessageType::CREATE_LOBBY:
+	{
+		int userId = data["id"];
+		std::string name = data["name"];
+
+		ServerApp* app = I(ServerApp);
+		int lobbyId = app->CreateLobby(userId, name);
+		app->JoinLobby(userId, lobbyId);
+	}
+	break;
+	case MessageType::JOIN_LOBBY:
+	{
+		int userId = data["id"];
+		int lobbyId = data["lobbyId"];
+		I(ServerApp)->JoinLobby(userId, lobbyId);
+	}
+	break;
+	case MessageType::LEAVE_LOBBY:
+	{
+		int userId = data["id"];
+		I(ServerApp)->LeaveLobby(userId);
+	}
+	break;
 	case MessageType::PLAY:
 	{
 		int dirY = data["movedPaddle"]["dirY"];
 		// Get lobby with user Id
 		// Get user paddle
 		// Move paddle
-	}
-	break;
-	case MessageType::LOGIC:
-	{
-		
 	}
 	break;
 	default:
@@ -161,6 +245,26 @@ void ServerApp::InitRound()
 	m_paddleRight->SetPosition(Vector2Float(WINDOW_WIDTH - PADDLE_MARGIN - PADDLE_WIDTH, WINDOW_HEIGHT * 0.5f - PADDLE_HEIGHT));
 	m_paddleRight->SetDirection(Vector2Float(0.f, 1.f));
 	m_paddleRight->SetSpeed(0.f);
+}
+
+User* ServerApp::GetUser(int id)
+{
+	auto it = m_users.find(id);
+	if (it != m_users.end())
+	{
+		return it->second;
+	}
+	return nullptr;
+}
+
+Lobby* ServerApp::GetLobby(int id)
+{
+	auto it = m_lobbies.find(id);
+	if (it != m_lobbies.end())
+	{
+		return it->second;
+	}
+	return nullptr;
 }
 
 void ServerApp::OnBallOutOfScreen(bool isOutOnLeftSide)
