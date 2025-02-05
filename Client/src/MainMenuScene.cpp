@@ -23,7 +23,8 @@ void MainMenuScene::OnInitialize()
 	auto onCreateGameButtonClicked = [this]() {
 		Message message = Message::CreateMessage(MessageType::CONNECT, {
 			{"name", "Client"},
-			{"port", I(ClientApp)->GetUdpClient().GetLocalPort()}
+			{"port", I(ClientApp)->GetUdpClient().GetLocalPort()},
+			{"address", I(ClientApp)->GetUdpClient().GetPublicIPAddress()}
 		});
 		I(ClientApp)->SetServerHostname(m_inputIp->GetValue());
 		I(ClientApp)->SendMessage(message);

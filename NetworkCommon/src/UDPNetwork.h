@@ -39,7 +39,7 @@ public:
 	void StartListening();
 	void StopListening();
 
-	std::string GetLocalIPAddress() const;
+	std::string GetPublicIPAddress() const;
 
 private:
 	void Listen();
