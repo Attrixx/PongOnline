@@ -51,7 +51,7 @@ void LobbyListScene::OnInitialize()
 	createLobbyButton->BindOnClickFunction(onCreateLobbyButtonClicked);
 
 	Button* refreshListButton = CreateUIElement<Button>();
-	refreshListButton->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH), float(GetScreenHeight() / 2) - BUTTON_HEIGHT*2 });
+	refreshListButton->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH), float(GetScreenHeight() / 2) + BUTTON_HEIGHT*2 });
 	refreshListButton->SetText("Refresh");
 	auto onRefreshButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
