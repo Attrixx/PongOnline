@@ -7,6 +7,7 @@
 #include <mutex>
 
 class Entity;
+class Ball;
 
 struct ReplicationData
 {
@@ -38,7 +39,7 @@ private:
 	std::mutex m_paddleLeftMutex;
 	std::mutex m_paddleRightMutex;
 
-	Entity* m_ball;
+	Ball* m_ball;
 	Entity* m_paddleLeft;
 	Entity* m_paddleRight;
 

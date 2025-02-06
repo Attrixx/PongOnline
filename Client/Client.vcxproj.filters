@@ -72,6 +72,9 @@
     <ClCompile Include="src\LobbyScene.cpp">
       <Filter>Private\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ball.cpp">
+      <Filter>Private\Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ClientApp.h">
@@ -112,6 +115,9 @@
     </ClInclude>
     <ClInclude Include="src\LobbyScene.h">
       <Filter>Public\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ball.h">
+      <Filter>Public\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

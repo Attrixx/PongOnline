@@ -18,6 +18,7 @@ public:
 private:
 	bool m_isPendingDestroy;
 	Texture2D m_texture;
+protected:
 	Color m_color;
 };
 

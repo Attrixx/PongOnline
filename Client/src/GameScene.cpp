@@ -1,10 +1,11 @@
 #include "GameScene.h"
 #include "CommonGameConsts.h"
 #include "Entity.h"
+#include "Ball.h"
 
 void GameScene::OnInitialize()
 {
-	m_ball = CreateEntity<Entity>();
+	m_ball = CreateEntity<Ball>();
 	m_ball->Init(Vector2(0, 0), Vector2(1, 0), 100, "res/ball.png", PURPLE);
 
 	m_paddleRight = CreateEntity<Entity>();
