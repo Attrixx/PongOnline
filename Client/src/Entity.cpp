@@ -11,7 +11,8 @@ void Entity::Init(Vector2 position, Vector2 direction, float speed, const char* 
 	m_direction = Vector2Float(direction.x, direction.y);
 	m_speed = speed;
 	m_color = color;
-	m_texture = LoadTexture(spritePath);
+	Image image = LoadImage(spritePath);
+	m_texture = LoadTextureFromImage(image);
 }
 
 void Entity::Update(float deltaTime)
