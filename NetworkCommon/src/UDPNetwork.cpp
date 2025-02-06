@@ -4,7 +4,10 @@
 #include <iostream>
 #include <unordered_map>
 
-UDPNetwork::UDPNetwork(NetworkHandler* handler) : m_socket(INVALID_SOCKET), m_localPort(0), m_networkHandler(handler) {}
+UDPNetwork::UDPNetwork(NetworkHandler* handler) 
+	: m_socket(INVALID_SOCKET)
+	, m_localPort(0)
+	, m_networkHandler(handler) {}
 
 UDPNetwork::~UDPNetwork()
 {

@@ -12,6 +12,7 @@
 class ServerHandler : public NetworkHandler
 {
 public:
+	ServerHandler() {}
 	void HandleMessage(const Message& message) override;
 };
 
