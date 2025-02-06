@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Scene.h"
+#include "Object.h"
 
 #include <raylib.h>
 #include <mutex>
