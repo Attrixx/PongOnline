@@ -22,7 +22,7 @@ class Lobby;
 class User
 {
 public:
-	User(int id, const std::string& name, u_short port, const std::string& address) : m_id(id), m_name(name), m_port(port), m_publicIpAddress(address) {}
+	User(int id, const std::string& name, u_short port, const std::string& address);
 	~User();
 
 	int GetId() const { return m_id; }
@@ -32,16 +32,18 @@ public:
 	PaddlePosition GetPaddlePosition() const { return m_paddlePosition; }
 	Lobby* GetLobby() const { return m_lobby; }
 	const std::string& GetPublicIpAddress() const { return m_publicIpAddress; }
+	bool IsOwner() const { return m_isOwner; }
 
 	void SetLobby(Lobby* lobby);
+	void SetIsOwner(bool isOwner) { m_isOwner = isOwner; }
 
 private:
 	int m_id;
 	std::string m_name;
+	std::string m_publicIpAddress = "127.0.0.1";
 	u_short m_port;
 
+	Lobby* m_lobby = nullptr;
 	UserState m_state = NOLOBBY;
 	PaddlePosition m_paddlePosition = DEFAULT_POSITION;
-	Lobby* m_lobby = nullptr;
-	std::string m_publicIpAddress = "127.0.0.1";
 };

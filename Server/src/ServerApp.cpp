@@ -104,7 +104,7 @@ int ServerApp::CreateLobby(int userId, const std::string& name)
 	{
 		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
 
-		m_lobbies.insert({ lobbyId, new Lobby(userId, name) });
+		m_lobbies.insert({ lobbyId, new Lobby(lobbyId, name) });
 	}
 
 	return lobbyId;

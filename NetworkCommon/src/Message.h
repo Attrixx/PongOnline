@@ -20,6 +20,7 @@ enum MessageType
 	JOIN_LOBBY_RESPONSE,
 	LEAVE_LOBBY,
 
+	START_GAME,
 	PLAY,
 	LOGIC
 };
