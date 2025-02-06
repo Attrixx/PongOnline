@@ -9,6 +9,12 @@
 
 void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
 {
+	for (int i = 0; i < m_lobbyButtons.size(); i++)
+	{
+		m_uiElements.erase(find(m_uiElements.begin(), m_uiElements.end(), m_lobbyButtons[i]));
+	}
+	m_lobbyButtons.clear();
+
 	for (int i = 0; i < lobbies.size(); i++)
 	{
 		Button* lobbyButton = CreateUIElement<Button>();
@@ -23,6 +29,7 @@ void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
 			I(ClientApp)->SendMessage(message);
 			};
 		lobbyButton->BindOnClickFunction(onLobbyButtonClicked);
+		m_lobbyButtons.push_back(lobbyButton);
 	}
 }
 
@@ -42,6 +49,16 @@ void LobbyListScene::OnInitialize()
 		I(ClientApp)->SendMessage(message);
 		};
 	createLobbyButton->BindOnClickFunction(onCreateLobbyButtonClicked);
+
+	Button* refreshListButton = CreateUIElement<Button>();
+	refreshListButton->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH), float(GetScreenHeight() / 2) + BUTTON_HEIGHT*2 });
+	refreshListButton->SetText("Refresh");
+	auto onRefreshButtonClicked = [&]() {
+		Message message = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
+		message.content["id"] = I(ClientApp)->GetClientId();
+		I(ClientApp)->SendMessage(message);
+		};
+	refreshListButton->BindOnClickFunction(onRefreshButtonClicked);
 
 	Message message = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
 	message.content["id"] = I(ClientApp)->GetClientId();

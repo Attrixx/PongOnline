@@ -35,7 +35,6 @@ protected:
 
 	std::list<Entity*> m_entities;
 	std::list<UIElement*> m_uiElements;
-
 };
 
 template<IsEntity T>
