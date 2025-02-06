@@ -12,8 +12,8 @@ void LobbyScene::OnInitialize()
 	PlayButton->SetText("Play");
 	auto onPlayButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::START_GAME, {});
-		I(ClientApp)->SendMessage(message);
 		message.content["id"] = I(ClientApp)->GetClientId();
+		I(ClientApp)->SendMessage(message);
 		};
 	PlayButton->BindOnClickFunction(onPlayButtonClicked);
 
@@ -23,8 +23,8 @@ void LobbyScene::OnInitialize()
 	QuitButton->SetText("Quit");
 	auto OnQuitButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::LEAVE_LOBBY, {});
-		I(ClientApp)->SendMessage(message);
 		message.content["id"] = I(ClientApp)->GetClientId();
+		I(ClientApp)->SendMessage(message);
 		};
 	QuitButton->BindOnClickFunction(OnQuitButtonClicked);
 }
