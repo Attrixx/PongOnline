@@ -197,6 +197,14 @@ void ClientHandler::HandleMessage(const Message& message)
 		}
 	}
 	break;
+	case MessageType::JOIN_LOBBY_RESPONSE:
+	{
+		if (LobbyScene* scene = dynamic_cast<LobbyScene*>(I(ClientApp)->GetLoadedScene()))
+		{
+			// send the response to the LobbyScene
+		}
+	}
+	break;
 	default:
 		break;
 	}

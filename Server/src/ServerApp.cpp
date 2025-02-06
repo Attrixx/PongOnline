@@ -131,7 +131,46 @@ void ServerApp::JoinLobby(int userId, int lobbyId)
 		Lobby* lobby = GetLobby(lobbyId);
 		User* user = GetUser(userId);
 
-		if (lobby && user)
+		json responseData;
+		bool joined = false;
+
+		if (!user)
+		{
+			std::cerr << "User not found." << std::endl;
+			return;
+		}
+
+		if (!lobby)
+		{
+			responseData = {
+				{"canJoin", joined},
+				{"message", "Lobby does not exist."}
+				};
+		}
+
+		else if (lobby->IsFull())
+		{
+			responseData = {
+				{"canJoin", joined},
+				{"message", "Lobby is full."}
+			};
+		}
+
+		else
+		{
+			joined = true;
+			responseData = {
+				{"canJoin", joined},
+				{"message", ""}
+			};
+		}
+
+		Message response = Message::CreateMessage(MessageType::JOIN_LOBBY_RESPONSE, responseData);
+		response.content["id"] = userId;
+
+		SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
+		
+		if (joined)
 		{
 			lobby->AddUser(user);
 			user->SetLobby(lobby);

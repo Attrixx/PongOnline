@@ -21,6 +21,7 @@ public:
 	const std::string& GetName() const { return name; }
 
 	bool IsEmpty() const { return m_users.empty(); }
+	bool IsFull() const { return m_users.size() >= m_capacity; }
 
 	void Rename(const std::string& inName) { name = inName; }
 	
@@ -34,6 +35,7 @@ private:
 	int lobbyId;
 	std::string name;
 
+	int m_capacity;
 	std::unordered_map<int, User*> m_users;
 
 	int m_healthPoints;

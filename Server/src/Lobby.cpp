@@ -9,6 +9,7 @@ Lobby::Lobby(int id, const std::string& inName)
 	: lobbyId(id)
 	, name(inName)
 	, m_healthPoints(HEALTH_POINTS)
+	, m_capacity(2)
 {
 	m_ball = new Ball(this);
 	m_paddleLeft = new Paddle();

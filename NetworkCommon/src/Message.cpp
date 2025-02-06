@@ -16,6 +16,10 @@ const json Message::lobbiesListData = {
 
 };
 
+const json Message::joinLobbyAnswerData = {
+	{"canJoin", false},
+	{"message", ""}
+};
 
 std::string Message::toString()
 {
