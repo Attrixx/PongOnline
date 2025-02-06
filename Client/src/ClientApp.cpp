@@ -182,10 +182,10 @@ void ClientHandler::HandleMessage(const Message& message)
 			for (auto lobby : message.content["data"])
 			{
 				LobbyStruct lStruct;
-				lStruct.name = message.content["name"];
-				lStruct.id = message.content["id"];
-				lStruct.maxSize = message.content["capacity"];
-				lStruct.currentSize = message.content["userAmount"];
+				lStruct.name = lobby["name"];
+				lStruct.id = lobby["id"];
+				lStruct.maxSize = lobby["capacity"];
+				lStruct.currentSize = lobby["userAmount"];
 				lobbies.push_back(lStruct);
 			}
 			
