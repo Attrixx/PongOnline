@@ -262,8 +262,14 @@ void ServerApp::SendLobbies(int userId)
 void ServerApp::OnPaddleDirectionChanged(int userId, int dirY)
 {
 	User* user = GetUser(userId);
+	if (!user)
+	{
+		std::cout << "User not found." << std::endl;
+		return;
+	}
+
 	Lobby* lobby = user->GetLobby();
-	if (user && lobby)
+	if (lobby)
 	{
 		lobby->UpdatePaddleDirection(user->GetPaddlePosition(), dirY);
 	}

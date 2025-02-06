@@ -62,7 +62,7 @@ void ClientApp::HandleEvents()
 			{
 				m_paddleDirection = PaddleDirection::UP;
 				Message m = Message::CreateMessage(MessageType::PLAY, {
-					{"movedPaddle", {"dirY", -1}}
+					{"movedPaddle", {{"dirY", -1}}}
 					});
 				SendMessage(m);
 			}
@@ -73,7 +73,7 @@ void ClientApp::HandleEvents()
 			{
 				m_paddleDirection = PaddleDirection::DOWN;
 				Message m = Message::CreateMessage(MessageType::PLAY, {
-					{"movedPaddle", {"dirY", 1}}
+					{"movedPaddle", {{"dirY", 1}}}
 					});
 				SendMessage(m);
 			}
@@ -82,7 +82,7 @@ void ClientApp::HandleEvents()
 		{
 			m_paddleDirection = PaddleDirection::NONE;
 			Message m = Message::CreateMessage(MessageType::PLAY, {
-				{"movedPaddle", {"dirY", 0}}
+				{"movedPaddle", {{"dirY", 0}}}
 				});
 			SendMessage(m);
 		}
