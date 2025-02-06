@@ -9,6 +9,8 @@
 #include <atomic>
 #include <mutex>
 
+constexpr int SERVER_TICKRATE = 30;
+
 class ServerHandler : public NetworkHandler
 {
 public:
@@ -28,6 +30,7 @@ public:
 	virtual ~ServerApp();
 
 	void Run();
+
 	void SendMessage(const char* address, u_short port, Message& message);
 
 	int RegisterUser(const std::string& name, u_short port, const std::string& address);

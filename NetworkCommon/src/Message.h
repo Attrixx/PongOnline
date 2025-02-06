@@ -20,7 +20,8 @@ enum MessageType
 	LEAVE_LOBBY,
 
 	PLAY,
-	LOGIC
+	LOGIC,
+	SCORE
 };
 
 struct MessageHeader
@@ -57,4 +58,5 @@ public:
 	static const json connectData;
 	static const json logicData;
 	static const json playData;
+	static const json scoreData;
 };

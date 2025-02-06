@@ -8,6 +8,7 @@
 class User;
 class Ball;
 class Paddle;
+class Message;
 
 class Lobby
 {
@@ -29,6 +30,9 @@ public:
 
 	void InitRound();
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
+
+	// Send message to specific user if id is specified, everyone otherwise (id = -1)
+	void SendMessage(Message& message, int id = -1);
 
 private:
 	int lobbyId;

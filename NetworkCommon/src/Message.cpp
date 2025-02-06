@@ -12,6 +12,9 @@ const json Message::logicData = {
 const json Message::playData = {
 	{"movedPaddle", {{"dirY", 0}}}
 };
+const json Message::scoreData = {
+	{"healthPoints", 0}
+};
 
 std::string Message::toString()
 {
