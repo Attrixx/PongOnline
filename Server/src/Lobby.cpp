@@ -159,12 +159,18 @@ void Lobby::UpdatePaddleDirection(PaddlePosition paddlePosition, int dirY)
 	{
 	case PaddlePosition::LEFT:
 	{
-		m_paddleLeft->SetDirection(Vector2Float(0, dirY * 1.f));
+		{
+			std::lock_guard<std::mutex> lock(m_paddleLeftMutex);
+			m_paddleLeft->SetDirection(Vector2Float(0, dirY * 1.f));
+		}
 	}
 	break;
 	case PaddlePosition::RIGHT:
 	{
-		m_paddleRight->SetDirection(Vector2Float(0, dirY * 1.f));
+		{
+			std::lock_guard<std::mutex> lock(m_paddleRightMutex);
+			m_paddleRight->SetDirection(Vector2Float(0, dirY * 1.f));
+		}
 	}
 	break;
 	default:

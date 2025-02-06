@@ -6,6 +6,7 @@
 #include <string>
 #include <thread>
 #include <atomic>
+#include <mutex>
 
 class User;
 class Ball;
@@ -60,7 +61,9 @@ private:
 
 	Ball* m_ball;
 	Paddle* m_paddleLeft;
-	Paddle* m_paddleRight;
+	std::mutex m_paddleLeftMutex;
 
+	Paddle* m_paddleRight;
+	std::mutex m_paddleRightMutex;
 };
 
