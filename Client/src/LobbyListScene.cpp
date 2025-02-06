@@ -13,9 +13,10 @@ void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
 		Button* lobbyButton = CreateUIElement<Button>();
 		lobbyButton->SetPosition({ float(GetScreenWidth() / 2), (BUTTON_HEIGHT * 1.5f) * i });
 		lobbyButton->SetText(lobbies[i].name + " " + std::to_string(lobbies[i].currentSize) + "/" + std::to_string(lobbies[i].maxSize));
-		auto onLobbyButtonClicked = [&]() {
+		int lobbyId = lobbies[i].id;
+		auto onLobbyButtonClicked = [&, lobbyId]() {
 			Message message = Message::CreateMessage(MessageType::JOIN_LOBBY, {
-				{"lobbyId", lobbies[i].id}
+				{"lobbyId", lobbyId}
 				});
 			message.content["id"] = I(ClientApp)->GetClientId();
 			I(ClientApp)->SendMessage(message);

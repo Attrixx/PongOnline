@@ -115,6 +115,8 @@ int ServerApp::CreateLobby(int userId, const std::string& name)
 
 		m_lobbies.insert({ lobbyId, new Lobby(lobbyId, name) });
 		user->SetIsOwner(true);
+
+		std::cout << "Lobby " << name << " created by " << user->GetName() << std::endl;
 	}
 
 	return lobbyId;
@@ -128,6 +130,7 @@ void ServerApp::RemoveLobby(int lobbyId)
 		if (lobby)
 		{
 			m_lobbies.erase(lobbyId);
+			std::cout << "Lobby " << lobby->GetName() << " removed." << std::endl;
 		}
 	}
 }
@@ -180,10 +183,11 @@ void ServerApp::JoinLobby(int userId, int lobbyId)
 
 		SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
 
-		if (joined)
+		if (joined && lobby)
 		{
 			lobby->AddUser(user);
 			user->SetLobby(lobby);
+			std::cout << "User " << user->GetName() << " joined lobby " << lobby->GetName() << std::endl;
 		}
 	}
 }
@@ -201,6 +205,9 @@ void ServerApp::LeaveLobby(int userId)
 		{
 			lobby->RemoveUser(user->GetId());
 			user->SetLobby(nullptr);
+			user->SetIsOwner(false);
+
+			std::cout << "User " << user->GetName() << " left lobby " << lobby->GetName() << std::endl;
 
 			if (lobby->IsEmpty())
 			{
@@ -219,6 +226,7 @@ void ServerApp::StartLobbyByOwner(int userId)
 		if (lobby)
 		{
 			lobby->StartGame();
+			std::cout << "Game started by " << user->GetName() << " in lobby " << lobby->GetName() << std::endl;
 		}
 	}
 }
