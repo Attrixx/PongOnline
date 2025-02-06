@@ -199,15 +199,15 @@ void ClientHandler::HandleMessage(const Message& message)
 		if (GameScene* scene = dynamic_cast<GameScene*>(I(ClientApp)->GetLoadedScene()))
 		{
 			ReplicationData data;
-			data.BallPosition = Vector2(message.content["ball"]["posX"], message.content["ball"]["posY"]);
-			data.BallDirection = Vector2(message.content["ball"]["dirX"], message.content["ball"]["dirY"]);
+			data.BallPosition = Vector2Float(message.content["ball"]["posX"], message.content["ball"]["posY"]);
+			data.BallDirection = Vector2Float(message.content["ball"]["dirX"], message.content["ball"]["dirY"]);
 			data.BallSpeed = message.content["ball"]["speed"];
 
-			data.PaddleLeftPosition = Vector2(message.content["paddleLeft"]["posX"], message.content["paddleLeft"]["posY"]);
-			data.PaddleLeftDirection = Vector2(message.content["paddleLeft"]["dirX"], message.content["paddleLeft"]["dirY"]);
+			data.PaddleLeftPosition = Vector2Float(message.content["paddleLeft"]["posX"], message.content["paddleLeft"]["posY"]);
+			data.PaddleLeftDirection = Vector2Float(message.content["paddleLeft"]["dirX"], message.content["paddleLeft"]["dirY"]);
 
-			data.PaddleRightPosition = Vector2(message.content["paddleRight"]["posX"], message.content["paddleRight"]["posY"]);
-			data.PaddleRightDirection = Vector2(message.content["paddleRight"]["dirX"], message.content["paddleRight"]["dirY"]);
+			data.PaddleRightPosition = Vector2Float(message.content["paddleRight"]["posX"], message.content["paddleRight"]["posY"]);
+			data.PaddleRightDirection = Vector2Float(message.content["paddleRight"]["dirX"], message.content["paddleRight"]["dirY"]);
 			scene->OnReplication(data);
 		}
 	}

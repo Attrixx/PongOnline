@@ -2,7 +2,7 @@
 #include "Object.h"
 #include <raylib.h>
 
-class Entity : Object
+class Entity : public Object
 {
 public:
 	Entity();
