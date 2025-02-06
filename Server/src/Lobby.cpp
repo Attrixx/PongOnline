@@ -37,16 +37,25 @@ void Lobby::Run()
 
 	InitRound();
 
+	const auto tickDuration = std::chrono::milliseconds(1000 / UPDATE_TICKRATE);
+	auto lastTime = std::chrono::steady_clock::now();
+	auto nextTick = lastTime + tickDuration;
 	while (m_running)
 	{
+		auto now = std::chrono::steady_clock::now();
 		if (m_healthPoints <= 0)
 		{
 			m_running = false;
 			break;
 		}
 
-		float dt = 0.016f; // TODO: Get dt in ???
-		Update(dt);
+		float deltaTime = std::chrono::duration<float>(now - lastTime).count();
+		lastTime = now;
+
+		Update(deltaTime);
+
+		nextTick += tickDuration;
+		std::this_thread::sleep_until(nextTick);
 	}
 }
 

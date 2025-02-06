@@ -9,8 +9,6 @@
 #include <atomic>
 #include <mutex>
 
-constexpr int SERVER_TICKRATE = 30;
-
 class ServerHandler : public NetworkHandler
 {
 public:
