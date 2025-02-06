@@ -8,7 +8,7 @@
 #include "TimeManager.h"
 #include "MainMenuScene.h"
 #include "GameScene.h"
-#include "LobbyScene.h"
+#include "LobbyListScene.h"
 #include "Message.h"
 
 ClientApp::ClientApp()
@@ -43,7 +43,7 @@ void ClientApp::Run()
 
 		timeManager.Update();
 		Update(timeManager.GetDeltaTime());
-		
+
 		Render();
 	}
 
@@ -61,7 +61,7 @@ void ClientApp::HandleEvents()
 				m_paddleDirection = PaddleDirection::UP;
 				Message m = Message::CreateMessage(MessageType::PLAY, {
 					{"movedPaddle", {"dirY", -1}}
-				});
+					});
 				SendMessage(m);
 			}
 		}
@@ -72,16 +72,16 @@ void ClientApp::HandleEvents()
 				m_paddleDirection = PaddleDirection::DOWN;
 				Message m = Message::CreateMessage(MessageType::PLAY, {
 					{"movedPaddle", {"dirY", 1}}
-				});
+					});
 				SendMessage(m);
 			}
 		}
-		else if(m_paddleDirection != PaddleDirection::NONE)
+		else if (m_paddleDirection != PaddleDirection::NONE)
 		{
 			m_paddleDirection = PaddleDirection::NONE;
 			Message m = Message::CreateMessage(MessageType::PLAY, {
 				{"movedPaddle", {"dirY", 0}}
-			});
+				});
 			SendMessage(m);
 		}
 	}
@@ -165,8 +165,13 @@ void ClientHandler::HandleMessage(const Message& message)
 	{
 	case MessageType::CONNECT:
 	{
-		I(ClientApp)->LoadScene<LobbyScene>();
+		I(ClientApp)->LoadScene<LobbyListScene>();
 		I(ClientApp)->SetClientId(message.content["id"]);
+	}
+	break;
+	case MessageType::LOBBIES_LIST:
+	{
+
 	}
 	break;
 	case MessageType::DISCONNECT:

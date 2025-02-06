@@ -57,4 +57,5 @@ public:
 	static const json connectData;
 	static const json logicData;
 	static const json playData;
+	static const json lobbiesListData;
 };

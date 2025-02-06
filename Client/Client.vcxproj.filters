@@ -63,11 +63,14 @@
     <ClCompile Include="src\GameScene.cpp">
       <Filter>Private\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\LobbyScene.cpp">
+    <ClCompile Include="src\LobbyListScene.cpp">
       <Filter>Private\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\BasicText.cpp">
       <Filter>Private\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LobbyScene.cpp">
+      <Filter>Private\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,11 +104,14 @@
     <ClInclude Include="src\ClientGameConsts.h">
       <Filter>Public\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\LobbyScene.h">
+    <ClInclude Include="src\LobbyListScene.h">
       <Filter>Public\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\BasicText.h">
       <Filter>Public\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LobbyScene.h">
+      <Filter>Public\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
