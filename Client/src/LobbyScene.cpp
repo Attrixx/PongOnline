@@ -4,6 +4,7 @@
 #include "CommonGameConsts.h"
 #include "Message.h"
 #include "ClientApp.h"
+#include "LobbyListScene.h"
 
 void LobbyScene::OnInitialize()
 {
@@ -22,6 +23,7 @@ void LobbyScene::OnInitialize()
 	QuitButton->SetPosition({ WINDOW_WIDTH * 0.5f + BUTTON_WIDTH * 2, 75.f });
 	QuitButton->SetText("Quit");
 	auto OnQuitButtonClicked = [&]() {
+		I(ClientApp)->LoadScene<LobbyListScene>();
 		Message message = Message::CreateMessage(MessageType::LEAVE_LOBBY, {});
 		message.content["id"] = I(ClientApp)->GetClientId();
 		I(ClientApp)->SendMessage(message);
