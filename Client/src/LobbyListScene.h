@@ -1,7 +1,9 @@
 #pragma once
 #include "Scene.h"
+
 #include <vector>
 #include <iostream>
+#include <string>
 
 struct LobbyStruct
 {
@@ -19,5 +21,7 @@ public:
 	virtual void OnUpdate(float deltaTime) override;
 	virtual void OnRender() override;
 	virtual void OnUninitialize() override;
+
+	void OnJoinLobby(bool canJoin, const std::string& message);
 };
 
