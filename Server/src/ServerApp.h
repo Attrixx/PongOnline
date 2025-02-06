@@ -15,7 +15,6 @@ public:
 	void HandleMessage(const Message& message) override;
 };
 
-
 class Ball;
 class Paddle;
 

@@ -9,6 +9,7 @@
 #include "MainMenuScene.h"
 #include "GameScene.h"
 #include "LobbyListScene.h"
+#include "LobbyScene.h"
 #include "Message.h"
 
 ClientApp::ClientApp()
@@ -171,7 +172,21 @@ void ClientHandler::HandleMessage(const Message& message)
 	break;
 	case MessageType::LOBBIES_LIST:
 	{
-
+		if (LobbyListScene* scene = dynamic_cast<LobbyListScene*>(I(ClientApp)->GetLoadedScene()))
+		{
+			std::vector<LobbyStruct> lobbies;
+			for (auto lobby : message.content["data"])
+			{
+				LobbyStruct lStruct;
+				lStruct.name = message.content["name"];
+				lStruct.id = message.content["id"];
+				lStruct.maxSize = message.content["capacity"];
+				lStruct.currentSize = message.content["userAmount"];
+				lobbies.push_back(lStruct);
+			}
+			
+			scene->InitLobbiesList(lobbies);
+		}
 	}
 	break;
 	case MessageType::DISCONNECT:
@@ -199,9 +214,9 @@ void ClientHandler::HandleMessage(const Message& message)
 	break;
 	case MessageType::JOIN_LOBBY_RESPONSE:
 	{
-		if (LobbyScene* scene = dynamic_cast<LobbyScene*>(I(ClientApp)->GetLoadedScene()))
+		if (LobbyListScene* scene = dynamic_cast<LobbyListScene*>(I(ClientApp)->GetLoadedScene()))
 		{
-			// send the response to the LobbyScene
+			scene->OnJoinLobby(message.content["canJoin"], message.content["message"]);
 		}
 	}
 	break;
