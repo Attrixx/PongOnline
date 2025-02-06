@@ -111,8 +111,7 @@ int ServerApp::CreateLobby(int userId, const std::string& name)
 	int lobbyId = m_lobbyIdCounter.fetch_add(1, std::memory_order_relaxed);
 
 	{
-		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
-		std::lock_guard<std::mutex> lock2(m_usersMutex);
+		std::scoped_lock lock(m_lobbiesMutex, m_usersMutex);
 
 		m_lobbies.insert({ lobbyId, new Lobby(lobbyId, name) });
 		user->SetIsOwner(true);
@@ -125,22 +124,18 @@ int ServerApp::CreateLobby(int userId, const std::string& name)
 
 void ServerApp::RemoveLobby(int lobbyId)
 {
+	Lobby* lobby = GetLobby(lobbyId);
+	if (lobby)
 	{
-		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
-		Lobby* lobby = GetLobby(lobbyId);
-		if (lobby)
-		{
-			m_lobbies.erase(lobbyId);
-			std::cout << "Lobby " << lobby->GetName() << " removed." << std::endl;
-		}
+		m_lobbies.erase(lobbyId);
+		std::cout << "Lobby " << lobby->GetName() << " removed." << std::endl;
 	}
 }
 
 void ServerApp::JoinLobby(int userId, int lobbyId)
 {
 	{
-		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
-		std::lock_guard<std::mutex> lock2(m_usersMutex);
+		std::scoped_lock lock(m_lobbiesMutex, m_usersMutex);
 
 		Lobby* lobby = GetLobby(lobbyId);
 		User* user = GetUser(userId);
@@ -196,13 +191,18 @@ void ServerApp::JoinLobby(int userId, int lobbyId)
 void ServerApp::LeaveLobby(int userId)
 {
 	{
-		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
-		std::lock_guard<std::mutex> lock2(m_usersMutex);
+		std::scoped_lock lock(m_lobbiesMutex, m_usersMutex);
 
 		User* user = GetUser(userId);
+		if (!user)
+		{
+			std::cerr << "User not found." << std::endl;
+			return;
+		}
+
 		Lobby* lobby = user->GetLobby();
 
-		if (user && lobby)
+		if (lobby)
 		{
 			lobby->RemoveUser(user->GetId());
 			user->SetLobby(nullptr);
@@ -266,8 +266,8 @@ void ServerApp::OnPaddleDirectionChanged(int userId, int dirY)
 void ServerHandler::HandleMessage(const Message& message)
 {
 	json content = message.content;
-	json data = content["data"];
 	int userId = content["id"];
+	json data = content["data"];
 
 	MessageType type = content["messageType"];
 	switch (type)

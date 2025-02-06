@@ -161,9 +161,7 @@ void ClientApp::SendMessage(Message& message)
 	std::string finalMessage = message.toString(); // Ensure thread safety
 	std::vector<char> messageBuffer(finalMessage.begin(), finalMessage.end());
 
-	std::vector<char> hostname(m_serverHostname.begin(), m_serverHostname.end());
-
-	if (!m_udpClient.SendTo(hostname.data(), SERVER_PORT, messageBuffer.data(), static_cast<int>(messageBuffer.size())))
+	if (!m_udpClient.SendTo(m_serverHostname.c_str(), SERVER_PORT, messageBuffer.data(), static_cast<int>(messageBuffer.size())))
 	{
 		std::cerr << "Failed to send message to the server." << std::endl;
 		return;

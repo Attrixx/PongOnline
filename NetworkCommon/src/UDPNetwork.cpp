@@ -227,7 +227,7 @@ void UDPNetwork::Interpret()
 		}
 		catch (const std::exception& e)
 		{
-			std::cerr << "Wrong message format detected: " << e.what() << std::endl;
+			std::cerr << e.what() << std::endl;
 		}
 	}
 }
