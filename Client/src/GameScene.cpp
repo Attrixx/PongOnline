@@ -16,6 +16,23 @@ void GameScene::OnInitialize()
 
 void GameScene::OnUpdate(float deltaTime)
 {
+	{
+		std::lock_guard<std::mutex> lock(m_ballMutex);
+		// Update for prediction
+		//m_ball->Update(deltaTime);
+	}
+
+	{
+		std::lock_guard<std::mutex> lock(m_paddleLeftMutex);
+		// Update for prediction
+		//m_paddleLeft->Update(deltaTime);
+	}
+
+	{
+		std::lock_guard<std::mutex> lock(m_paddleRightMutex);
+		// Update for prediction
+		//m_paddleRight->Update(deltaTime);
+	}
 }
 
 void GameScene::OnRender()
@@ -28,4 +45,22 @@ void GameScene::OnUninitialize()
 
 void GameScene::OnReplication(const ReplicationData& replicationData)
 {
+	{
+		std::lock_guard<std::mutex> lock(m_ballMutex);
+		m_ball->SetPosition(replicationData.BallPosition);
+		m_ball->SetDirection(replicationData.BallDirection);
+		m_ball->SetSpeed(replicationData.BallSpeed);
+	}
+
+	{
+		std::lock_guard<std::mutex> lock(m_paddleLeftMutex);
+		m_paddleLeft->SetPosition(replicationData.BallPosition);
+		m_paddleLeft->SetDirection(replicationData.BallDirection);
+	}
+
+	{
+		std::lock_guard<std::mutex> lock(m_paddleRightMutex);
+		m_paddleLeft->SetPosition(replicationData.BallPosition);
+		m_paddleLeft->SetDirection(replicationData.BallDirection);
+	}
 }
