@@ -89,8 +89,12 @@ void Lobby::Update(float deltaTime)
 {
 	// Update entities
 	m_ball->Update(deltaTime);
-	m_paddleLeft->Update(deltaTime);
-	m_paddleRight->Update(deltaTime);
+	{
+		std::scoped_lock lock(m_paddleLeftMutex, m_paddleRightMutex);
+
+		m_paddleLeft->Update(deltaTime);
+		m_paddleRight->Update(deltaTime);
+	}
 
 	// Check collision
 	m_ball->CheckCollision(m_paddleLeft);
