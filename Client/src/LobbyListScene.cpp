@@ -42,6 +42,10 @@ void LobbyListScene::OnInitialize()
 		I(ClientApp)->SendMessage(message);
 		};
 	createLobbyButton->BindOnClickFunction(onCreateLobbyButtonClicked);
+
+	Message message = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
+	message.content["id"] = I(ClientApp)->GetClientId();
+	I(ClientApp)->SendMessage(message);
 }
 
 void LobbyListScene::OnUpdate(float deltaTime)

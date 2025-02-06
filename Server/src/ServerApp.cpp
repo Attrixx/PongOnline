@@ -250,6 +250,12 @@ void ServerApp::SendLobbies(int userId)
 	response.content["data"] = jsonLobbies;
 
 	User* user = GetUser(userId);
+	if (!user)
+	{
+		std::cerr << "User not found." << std::endl;
+		return;
+	}
+
 	SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
 }
 
