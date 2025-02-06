@@ -35,6 +35,7 @@ void Lobby::Run()
 {
 	// TODO: Send message to all clients to notify game has started
 	Message message = Message::CreateMessage(MessageType::START_GAME, {});
+	SendMessage(message);
 
 	InitRound();
 

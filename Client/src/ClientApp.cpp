@@ -203,6 +203,11 @@ void ClientHandler::HandleMessage(const Message& message)
 		I(ClientApp)->LoadScene<MainMenuScene>();
 	}
 	break;
+	case MessageType::START_GAME:
+	{
+		I(ClientApp)->LoadScene<GameScene>();
+	}
+	break;
 	case MessageType::LOGIC:
 	{
 		if (GameScene* scene = dynamic_cast<GameScene*>(I(ClientApp)->GetLoadedScene()))
