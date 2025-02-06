@@ -17,6 +17,7 @@ Paddle::Paddle(const Vector2Float& position, const Vector2Float& direction, floa
 
 void Paddle::Update(float deltaTime)
 {
+	Object::Update(deltaTime);
 	if (m_position.y < 0)
 	{
 		m_position.y = 0;
