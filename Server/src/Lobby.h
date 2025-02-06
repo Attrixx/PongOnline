@@ -22,6 +22,8 @@ public:
 
 	bool IsEmpty() const { return m_users.empty(); }
 	bool IsFull() const { return m_users.size() >= m_capacity; }
+	int GetCapactity() const { return m_capacity; }
+	int GetUserAmount() const { return m_users.size(); }
 
 	void Rename(const std::string& inName) { name = inName; }
 	

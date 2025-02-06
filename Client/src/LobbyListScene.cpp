@@ -1,5 +1,9 @@
 #include "LobbyListScene.h"
 
+void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
+{
+}
+
 void LobbyListScene::OnInitialize()
 {
 }

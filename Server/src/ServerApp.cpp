@@ -145,7 +145,7 @@ void ServerApp::JoinLobby(int userId, int lobbyId)
 			responseData = {
 				{"canJoin", joined},
 				{"message", "Lobby does not exist."}
-				};
+			};
 		}
 
 		else if (lobby->IsFull())
@@ -169,7 +169,7 @@ void ServerApp::JoinLobby(int userId, int lobbyId)
 		response.content["id"] = userId;
 
 		SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
-		
+
 		if (joined)
 		{
 			lobby->AddUser(user);
@@ -221,6 +221,33 @@ void ServerHandler::HandleMessage(const Message& message)
 		// Send User Id
 		Message response = Message::CreateMessage(MessageType::CONNECT, {});
 		response.content["id"] = userId;
+
+		I(ServerApp)->SendMessage(address.c_str(), port, response);
+	}
+	break;
+	case MessageType::LOBBIES_LIST:
+	{
+		u_short port = data["port"];
+		std::string address = data["address"];
+
+		std::cout << "Client address: " << address << std::endl;
+
+		// Send User Id
+		Message response = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
+
+		json jsonLobbies = json::array();
+
+		for (auto lobby : I(ServerApp)->GetLobbies())
+		{
+			json lStruct = json::object();
+			lStruct["name"] = lobby.second->GetName();
+			lStruct["id"] = lobby.second->GetId();
+			lStruct["capacity"] = lobby.second->GetCapactity();
+			lStruct["userAmount"] = lobby.second->GetUserAmount();
+			jsonLobbies.push_back(lStruct);
+		}
+
+		response.content["data"] = jsonLobbies;
 
 		I(ServerApp)->SendMessage(address.c_str(), port, response);
 	}
