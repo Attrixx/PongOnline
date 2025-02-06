@@ -12,6 +12,8 @@ class Ball;
 class Paddle;
 class Message;
 
+constexpr int UPDATE_TICKRATE = 30;
+
 class Lobby
 {
 public:
