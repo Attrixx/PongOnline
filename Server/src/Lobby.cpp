@@ -28,6 +28,11 @@ Lobby::~Lobby()
 	delete m_paddleRight;
 }
 
+void Lobby::StartGame()
+{
+	Message message = Message::CreateMessage(MessageType::START_GAME, {});
+}
+
 void Lobby::Update(float deltaTime)
 {
 	// Update entities

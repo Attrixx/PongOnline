@@ -45,5 +45,7 @@ private:
 
 	Lobby* m_lobby = nullptr;
 	UserState m_state = NOLOBBY;
+	bool m_isOwner = false;
+
 	PaddlePosition m_paddlePosition = DEFAULT_POSITION;
 };

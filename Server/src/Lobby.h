@@ -4,6 +4,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <thread>
 
 class User;
 class Ball;
@@ -15,6 +16,7 @@ public:
 	Lobby(int id, const std::string& inName);
 	~Lobby();
 
+	void StartGame();
 	void Update(float deltaTime);
 
 	int GetId() const { return lobbyId; }
@@ -32,6 +34,8 @@ public:
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
 
 private:
+	std::thread m_thread;
+
 	int lobbyId;
 	std::string name;
 
