@@ -20,6 +20,9 @@ const json Message::joinLobbyAnswerData = {
 	{"canJoin", false},
 	{"message", ""}
 };
+const json Message::scoreData = {
+	{"healthPoints", 0}
+};
 
 std::string Message::toString()
 {

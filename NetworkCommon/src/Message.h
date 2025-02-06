@@ -20,8 +20,10 @@ enum MessageType
 	JOIN_LOBBY_RESPONSE,
 	LEAVE_LOBBY,
 
+	START_GAME,
 	PLAY,
-	LOGIC
+	LOGIC,
+	SCORE
 };
 
 struct MessageHeader
@@ -60,4 +62,5 @@ public:
 	static const json playData;
 	static const json lobbiesListData;
 	static const json joinLobbyAnswerData;
+	static const json scoreData;
 };

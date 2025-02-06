@@ -4,10 +4,13 @@
 
 #include <unordered_map>
 #include <string>
+#include <thread>
+#include <atomic>
 
 class User;
 class Ball;
 class Paddle;
+class Message;
 
 class Lobby
 {
@@ -15,6 +18,9 @@ public:
 	Lobby(int id, const std::string& inName);
 	~Lobby();
 
+	void Run();
+
+	void StartGame();
 	void Update(float deltaTime);
 
 	int GetId() const { return lobbyId; }
@@ -33,7 +39,13 @@ public:
 	void InitRound();
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
 
+	// Send message to specific user if id is specified, everyone otherwise (id = -1)
+	void SendMessage(Message& message, int id = -1);
+
 private:
+	std::thread m_thread;
+	std::atomic_bool m_running = false;
+
 	int lobbyId;
 	std::string name;
 
