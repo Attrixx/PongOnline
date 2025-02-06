@@ -91,6 +91,7 @@ void ServerApp::UnregisterUser(int id)
 	{
 		std::lock_guard<std::mutex> lock(m_usersMutex);
 		User* user = GetUser(id);
+		std::cout << "User " << user->GetName() << " disconnected" << std::endl;
 		if (user)
 		{
 			m_users.erase(id);
