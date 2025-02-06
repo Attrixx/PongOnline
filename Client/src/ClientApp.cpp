@@ -64,6 +64,7 @@ void ClientApp::HandleEvents()
 				Message m = Message::CreateMessage(MessageType::PLAY, {
 					{"movedPaddle", {"dirY", -1}}
 					});
+				m.content["id"] = GetClientId();
 				SendMessage(m);
 			}
 		}
@@ -75,6 +76,7 @@ void ClientApp::HandleEvents()
 				Message m = Message::CreateMessage(MessageType::PLAY, {
 					{"movedPaddle", {"dirY", 1}}
 					});
+				m.content["id"] = GetClientId();
 				SendMessage(m);
 			}
 		}
@@ -84,6 +86,7 @@ void ClientApp::HandleEvents()
 			Message m = Message::CreateMessage(MessageType::PLAY, {
 				{"movedPaddle", {"dirY", 0}}
 				});
+			m.content["id"] = GetClientId();
 			SendMessage(m);
 		}
 	}
