@@ -92,8 +92,8 @@ void Lobby::Update(float deltaTime)
 	// Send data to clients
 	Message message = Message::CreateMessage(MessageType::LOGIC, {
 		{"ball", {{"posX", m_ball->GetPosition().x}, {"posY", m_ball->GetPosition().y}, {"dirX", m_ball->GetDirection().x}, {"dirY", m_ball->GetDirection().y}, {"speed", m_ball->GetSpeed()}}},
-		{"paddleRight", {{"posX", m_paddleRight->GetPosition().x}, {"posY", m_paddleRight->GetPosition().y}, {"dirY", m_paddleRight->GetDirection().y}}},
-		{"paddleLeft", {{"posX", m_paddleLeft->GetPosition().x}, {"posY", m_paddleLeft->GetPosition().y}, {"dirY", m_paddleLeft->GetDirection().y}}}
+		{"paddleRight", {{"posX", m_paddleRight->GetPosition().x}, {"posY", m_paddleRight->GetPosition().y}, {"dirX", m_paddleRight->GetDirection().x}, {"dirY", m_paddleRight->GetDirection().y}}},
+		{"paddleLeft", {{"posX", m_paddleLeft->GetPosition().x}, {"posY", m_paddleLeft->GetPosition().y}, {"dirX", m_paddleLeft->GetDirection().x}, {"dirY", m_paddleLeft->GetDirection().y}}}
 	});
 	SendMessage(message);
 }
