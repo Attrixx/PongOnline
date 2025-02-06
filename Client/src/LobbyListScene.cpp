@@ -1,4 +1,5 @@
 #include "LobbyListScene.h"
+#include "LobbyScene.h"
 #include "CommonGameConsts.h"
 #include "ClientGameConsts.h"
 #include "Message.h"
@@ -57,10 +58,9 @@ void LobbyListScene::OnUninitialize()
 
 void LobbyListScene::OnJoinLobby(bool canJoin, const std::string& message)
 {
-	// Load the game scene if the player can join the lobby
 	if (canJoin)
 	{
-		// Load LobbyScene
+		I(ClientApp)->LoadScene<LobbyScene>();
 	}
 	else
 	{

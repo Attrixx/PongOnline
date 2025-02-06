@@ -56,6 +56,7 @@ private:
 
 	// Networking
 	void InitNetwork();
+	void Disconnect();
 
 	void SetIsInGame(bool isInGame) { m_isInGame = isInGame; }
 

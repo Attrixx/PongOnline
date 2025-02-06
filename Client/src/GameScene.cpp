@@ -46,15 +46,15 @@ void GameScene::OnUninitialize()
 void GameScene::OnReplication(const ReplicationData& replicationData)
 {
 	{
-		std::scoped_lock<std::mutex, std::mutex, std::mutex>(m_ballMutex, m_paddleLeftMutex, m_paddleRightMutex);
+		std::scoped_lock lock(m_ballMutex, m_paddleLeftMutex, m_paddleRightMutex);
 		m_ball->SetPosition(replicationData.BallPosition);
 		m_ball->SetDirection(replicationData.BallDirection);
 		m_ball->SetSpeed(replicationData.BallSpeed);
 
-		m_paddleLeft->SetPosition(replicationData.BallPosition);
-		m_paddleLeft->SetDirection(replicationData.BallDirection);
+		m_paddleLeft->SetPosition(replicationData.PaddleLeftPosition);
+		m_paddleLeft->SetDirection(replicationData.PaddleLeftDirection);
 
-		m_paddleLeft->SetPosition(replicationData.BallPosition);
-		m_paddleLeft->SetDirection(replicationData.BallDirection);
+		m_paddleLeft->SetPosition(replicationData.PaddleRightPosition);
+		m_paddleLeft->SetDirection(replicationData.PaddleRightDirection);
 	}
 }

@@ -42,6 +42,8 @@ public:
 	void StartLobbyByOwner(int userId);
 	void SendLobbies(int userId);
 
+	void OnPaddleDirectionChanged(int userId, int dirY);
+
 	std::unordered_map<int, Lobby*> GetLobbies() { return m_lobbies; }
 	UDPNetwork& GetUdpServer() { return m_udpServer; }
 

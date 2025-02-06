@@ -145,6 +145,25 @@ void Lobby::OnBallOutOfScreen(bool isOutOnLeftSide)
 	SendMessage(message);
 }
 
+void Lobby::UpdatePaddleDirection(PaddlePosition paddlePosition, int dirY)
+{
+	switch (paddlePosition)
+	{
+	case PaddlePosition::LEFT:
+	{
+		m_paddleLeft->SetDirection(Vector2Float(0, dirY * 1.f));
+	}
+	break;
+	case PaddlePosition::RIGHT:
+	{
+		m_paddleRight->SetDirection(Vector2Float(0, dirY * 1.f));
+	}
+	break;
+	default:
+		break;
+	}
+}
+
 void Lobby::SendMessage(Message& message, int id)
 {
 	if (id < 0)

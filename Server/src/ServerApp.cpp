@@ -252,6 +252,16 @@ void ServerApp::SendLobbies(int userId)
 	SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
 }
 
+void ServerApp::OnPaddleDirectionChanged(int userId, int dirY)
+{
+	User* user = GetUser(userId);
+	Lobby* lobby = user->GetLobby();
+	if (user && lobby)
+	{
+		lobby->UpdatePaddleDirection(user->GetPaddlePosition(), dirY);
+	}
+}
+
 void ServerHandler::HandleMessage(const Message& message)
 {
 	json content = message.content;
@@ -285,6 +295,7 @@ void ServerHandler::HandleMessage(const Message& message)
 	break;
 	case MessageType::DISCONNECT:
 	{
+		I(ServerApp)->LeaveLobby(userId);
 		I(ServerApp)->UnregisterUser(userId);
 	}
 	break;
@@ -319,6 +330,7 @@ void ServerHandler::HandleMessage(const Message& message)
 		// Get lobby with user Id
 		// Get user paddle
 		// Move paddle
+		I(ServerApp)->OnPaddleDirectionChanged(userId, dirY);
 	}
 	break;
 	default:

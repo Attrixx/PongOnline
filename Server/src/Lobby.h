@@ -11,6 +11,7 @@ class User;
 class Ball;
 class Paddle;
 class Message;
+enum PaddlePosition;
 
 constexpr int UPDATE_TICKRATE = 30;
 
@@ -40,6 +41,7 @@ public:
 
 	void InitRound();
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
+	void UpdatePaddleDirection(PaddlePosition paddlePosition, int dirY);
 
 	// Send message to specific user if id is specified, everyone otherwise (id = -1)
 	void SendMessage(Message& message, int id = -1);

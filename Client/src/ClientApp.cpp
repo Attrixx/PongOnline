@@ -48,6 +48,7 @@ void ClientApp::Run()
 		Render();
 	}
 
+	Disconnect();
 	CloseWindow();
 }
 
@@ -138,6 +139,15 @@ void ClientApp::InitNetwork()
 
 	std::cout << "Client Initialized successfully on port " << m_udpClient.GetLocalPort() << std::endl;
 	m_udpClient.StartListening();
+}
+
+void ClientApp::Disconnect()
+{
+	if (m_clientId < 0) return;
+
+	Message message = Message::CreateMessage(MessageType::DISCONNECT, {});
+	message.content["id"] = GetClientId();
+	SendMessage(message);
 }
 
 void ClientApp::SendMessage(Message& message)
