@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <string>
 #include <thread>
+#include <atomic>
 
 class User;
 class Ball;
@@ -15,6 +16,8 @@ class Lobby
 public:
 	Lobby(int id, const std::string& inName);
 	~Lobby();
+
+	void Run();
 
 	void StartGame();
 	void Update(float deltaTime);
@@ -35,6 +38,7 @@ public:
 
 private:
 	std::thread m_thread;
+	std::atomic_bool m_running = false;
 
 	int lobbyId;
 	std::string name;

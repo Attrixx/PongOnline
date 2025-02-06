@@ -5,6 +5,9 @@
 #include "Message.h"
 #include "ServerApp.h"
 
+#include <winimports.h>
+#include <stringapiset.h>
+
 Lobby::Lobby(int id, const std::string& inName)
 	: lobbyId(id)
 	, name(inName)
@@ -28,9 +31,40 @@ Lobby::~Lobby()
 	delete m_paddleRight;
 }
 
-void Lobby::StartGame()
+void Lobby::Run()
 {
 	Message message = Message::CreateMessage(MessageType::START_GAME, {});
+
+	InitRound();
+
+	while (m_running)
+	{
+		if (m_healthPoints <= 0)
+		{
+			m_running = false;
+			break;
+		}
+
+		float dt = 0.016f; // TODO: Get dt in ???
+		Update(dt);
+	}
+}
+
+std::wstring ConvertToWideString(const std::string& str)
+{
+    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
+    std::wstring wstrTo(size_needed, 0);
+    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
+    return wstrTo;
+}
+
+void Lobby::StartGame()
+{
+	m_running = true;
+    m_thread = std::thread(&Lobby::Run, this);
+    std::string threadName = "Runner Lobby " + std::to_string(lobbyId);
+    std::wstring wideThreadName = ConvertToWideString(threadName);
+    SetThreadDescription(m_thread.native_handle(), wideThreadName.c_str());
 }
 
 void Lobby::Update(float deltaTime)
