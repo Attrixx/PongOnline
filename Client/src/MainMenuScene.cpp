@@ -19,9 +19,9 @@ void MainMenuScene::OnInitialize()
 
 	Button* buttonCreateGame = CreateUIElement<Button>();
 	buttonCreateGame->SetPosition({ WINDOW_WIDTH * 0.5f - BUTTON_WIDTH - 25.f, 75.f });
-	buttonCreateGame->SetText("Create game");
+	buttonCreateGame->SetText("Connect to server");
 	auto onCreateGameButtonClicked = [&]() {
-		Message message = Message::CreateMessage(MessageType::JOIN_LOBBY, {
+		Message message = Message::CreateMessage(MessageType::CONNECT, {
 			{"name", m_inputUsername->GetValue()},
 			{"port", I(ClientApp)->GetUdpClient().GetLocalPort()},
 			{"address", I(ClientApp)->GetUdpClient().GetPublicIPAddress()}
@@ -30,12 +30,6 @@ void MainMenuScene::OnInitialize()
 		I(ClientApp)->SendMessage(message);
 	};
 	buttonCreateGame->BindOnClickFunction(onCreateGameButtonClicked);
-
-	Button* buttonJoinGame = CreateUIElement<Button>();
-	buttonJoinGame->SetPosition({ WINDOW_WIDTH * 0.5f + 25.f, 75.f });
-	buttonJoinGame->SetText("Join game");
-	auto onJoinGameButtonClicked = []() { std::cout << "JOIN GAME BUTTON CLICKED" << std::endl; };
-	buttonJoinGame->BindOnClickFunction(onJoinGameButtonClicked);
 }
 
 void MainMenuScene::OnUpdate(float deltaTime)
