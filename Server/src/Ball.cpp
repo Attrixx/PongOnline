@@ -23,9 +23,14 @@ void Ball::Update(float deltaTime)
 {
 	Object::Update(deltaTime);
 
-	if (m_position.y < 0 || m_position.y + m_radius > WINDOW_HEIGHT)
+	if (m_position.y < 0)
 	{
-		m_direction.y *= -1.f;
+		m_direction.y = abs(m_direction.y);
+	}
+
+	else if (m_position.y + m_radius > WINDOW_HEIGHT)
+	{
+		m_direction.y = -1.f * abs(m_direction.y);
 	}
 
 	if (m_position.x < -m_radius && m_lobby)
