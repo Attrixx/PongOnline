@@ -5,6 +5,7 @@ Paddle::Paddle()
 	: m_size(Vector2Float(PADDLE_WIDTH, PADDLE_HEIGHT))
 {
 	m_speed = PADDLE_SPEED;
+	m_direction = Vector2Float(0.f, 0.f);
 }
 
 Paddle::Paddle(const Vector2Float& position, const Vector2Float& direction, float speed, const Vector2Float& size)
