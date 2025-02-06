@@ -131,12 +131,10 @@ void Lobby::InitRound()
 	m_ball->SetDirection(Vector2Float(cos(angle), sin(angle)));
 
 	m_paddleLeft->SetPosition(Vector2Float(PADDLE_MARGIN, WINDOW_HEIGHT * 0.5f - PADDLE_HEIGHT));
-	m_paddleLeft->SetDirection(Vector2Float(0.f, 1.f));
-	m_paddleLeft->SetSpeed(0.f);
+	m_paddleLeft->SetDirection(Vector2Float(0.f, 0.f));
 
 	m_paddleRight->SetPosition(Vector2Float(WINDOW_WIDTH - PADDLE_MARGIN - PADDLE_WIDTH, WINDOW_HEIGHT * 0.5f - PADDLE_HEIGHT));
-	m_paddleRight->SetDirection(Vector2Float(0.f, 1.f));
-	m_paddleRight->SetSpeed(0.f);
+	m_paddleRight->SetDirection(Vector2Float(0.f, 0.f));
 }
 
 void Lobby::OnBallOutOfScreen(bool isOutOnLeftSide)
