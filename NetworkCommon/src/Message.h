@@ -17,8 +17,10 @@ enum MessageType
 	LOBBIES_LIST,
 	CREATE_LOBBY,
 	JOIN_LOBBY,
+	JOIN_LOBBY_RESPONSE,
 	LEAVE_LOBBY,
 
+	START_GAME,
 	PLAY,
 	LOGIC,
 	SCORE
@@ -58,5 +60,7 @@ public:
 	static const json connectData;
 	static const json logicData;
 	static const json playData;
+	static const json lobbiesListData;
+	static const json joinLobbyAnswerData;
 	static const json scoreData;
 };

@@ -12,6 +12,14 @@ const json Message::logicData = {
 const json Message::playData = {
 	{"movedPaddle", {{"dirY", 0}}}
 };
+const json Message::lobbiesListData = {
+
+};
+
+const json Message::joinLobbyAnswerData = {
+	{"canJoin", false},
+	{"message", ""}
+};
 const json Message::scoreData = {
 	{"healthPoints", 0}
 };

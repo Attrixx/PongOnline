@@ -4,6 +4,8 @@
 
 #include <unordered_map>
 #include <string>
+#include <thread>
+#include <atomic>
 
 class User;
 class Ball;
@@ -16,12 +18,16 @@ public:
 	Lobby(int id, const std::string& inName);
 	~Lobby();
 
+	void Run();
+
+	void StartGame();
 	void Update(float deltaTime);
 
 	int GetId() const { return lobbyId; }
 	const std::string& GetName() const { return name; }
 
 	bool IsEmpty() const { return m_users.empty(); }
+	bool IsFull() const { return m_users.size() >= m_capacity; }
 
 	void Rename(const std::string& inName) { name = inName; }
 	
@@ -35,9 +41,13 @@ public:
 	void SendMessage(Message& message, int id = -1);
 
 private:
+	std::thread m_thread;
+	std::atomic_bool m_running = false;
+
 	int lobbyId;
 	std::string name;
 
+	int m_capacity;
 	std::unordered_map<int, User*> m_users;
 
 	int m_healthPoints;

@@ -72,6 +72,7 @@ void ServerApp::Update(float deltaTime)
 {
 }
 
+
 int ServerApp::RegisterUser(const std::string& name, u_short port, const std::string& address)
 {
 	int userId = m_userIdCounter.fetch_add(1, std::memory_order_relaxed);
@@ -99,12 +100,21 @@ void ServerApp::UnregisterUser(int id)
 
 int ServerApp::CreateLobby(int userId, const std::string& name)
 {
+	User* user = GetUser(userId);
+	if (!user)
+	{
+		std::cerr << "User not found." << std::endl;
+		return -1;
+	}
+
 	int lobbyId = m_lobbyIdCounter.fetch_add(1, std::memory_order_relaxed);
 
 	{
 		std::lock_guard<std::mutex> lock(m_lobbiesMutex);
+		std::lock_guard<std::mutex> lock2(m_usersMutex);
 
-		m_lobbies.insert({ lobbyId, new Lobby(userId, name) });
+		m_lobbies.insert({ lobbyId, new Lobby(lobbyId, name) });
+		user->SetIsOwner(true);
 	}
 
 	return lobbyId;
@@ -131,7 +141,46 @@ void ServerApp::JoinLobby(int userId, int lobbyId)
 		Lobby* lobby = GetLobby(lobbyId);
 		User* user = GetUser(userId);
 
-		if (lobby && user)
+		json responseData;
+		bool joined = false;
+
+		if (!user)
+		{
+			std::cerr << "User not found." << std::endl;
+			return;
+		}
+
+		if (!lobby)
+		{
+			responseData = {
+				{"canJoin", joined},
+				{"message", "Lobby does not exist."}
+				};
+		}
+
+		else if (lobby->IsFull())
+		{
+			responseData = {
+				{"canJoin", joined},
+				{"message", "Lobby is full."}
+			};
+		}
+
+		else
+		{
+			joined = true;
+			responseData = {
+				{"canJoin", joined},
+				{"message", ""}
+			};
+		}
+
+		Message response = Message::CreateMessage(MessageType::JOIN_LOBBY_RESPONSE, responseData);
+		response.content["id"] = userId;
+
+		SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
+		
+		if (joined)
 		{
 			lobby->AddUser(user);
 			user->SetLobby(lobby);
@@ -157,6 +206,19 @@ void ServerApp::LeaveLobby(int userId)
 			{
 				RemoveLobby(lobby->GetId());
 			}
+		}
+	}
+}
+
+void ServerApp::StartLobbyByOwner(int userId)
+{
+	User* user = GetUser(userId);
+	if (user && user->IsOwner())
+	{
+		Lobby* lobby = user->GetLobby();
+		if (lobby)
+		{
+			lobby->StartGame();
 		}
 	}
 }
@@ -213,6 +275,12 @@ void ServerHandler::HandleMessage(const Message& message)
 	{
 		int userId = data["id"];
 		I(ServerApp)->LeaveLobby(userId);
+	}
+	break;
+	case MessageType::START_GAME:
+	{
+		int userId = data["id"];
+		I(ServerApp)->StartLobbyByOwner(userId);
 	}
 	break;
 	case MessageType::PLAY:

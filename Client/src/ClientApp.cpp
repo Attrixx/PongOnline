@@ -8,7 +8,7 @@
 #include "TimeManager.h"
 #include "MainMenuScene.h"
 #include "GameScene.h"
-#include "LobbyScene.h"
+#include "LobbyListScene.h"
 #include "Message.h"
 
 ClientApp::ClientApp()
@@ -43,7 +43,7 @@ void ClientApp::Run()
 
 		timeManager.Update();
 		Update(timeManager.GetDeltaTime());
-		
+
 		Render();
 	}
 
@@ -61,7 +61,7 @@ void ClientApp::HandleEvents()
 				m_paddleDirection = PaddleDirection::UP;
 				Message m = Message::CreateMessage(MessageType::PLAY, {
 					{"movedPaddle", {"dirY", -1}}
-				});
+					});
 				SendMessage(m);
 			}
 		}
@@ -72,16 +72,16 @@ void ClientApp::HandleEvents()
 				m_paddleDirection = PaddleDirection::DOWN;
 				Message m = Message::CreateMessage(MessageType::PLAY, {
 					{"movedPaddle", {"dirY", 1}}
-				});
+					});
 				SendMessage(m);
 			}
 		}
-		else if(m_paddleDirection != PaddleDirection::NONE)
+		else if (m_paddleDirection != PaddleDirection::NONE)
 		{
 			m_paddleDirection = PaddleDirection::NONE;
 			Message m = Message::CreateMessage(MessageType::PLAY, {
 				{"movedPaddle", {"dirY", 0}}
-			});
+				});
 			SendMessage(m);
 		}
 	}
@@ -165,8 +165,13 @@ void ClientHandler::HandleMessage(const Message& message)
 	{
 	case MessageType::CONNECT:
 	{
-		I(ClientApp)->LoadScene<LobbyScene>();
+		I(ClientApp)->LoadScene<LobbyListScene>();
 		I(ClientApp)->SetClientId(message.content["id"]);
+	}
+	break;
+	case MessageType::LOBBIES_LIST:
+	{
+
 	}
 	break;
 	case MessageType::DISCONNECT:
@@ -189,6 +194,14 @@ void ClientHandler::HandleMessage(const Message& message)
 			data.PaddleRightPosition = Vector2(message.content["paddleRight"]["posX"], message.content["paddleRight"]["posY"]);
 			data.PaddleRightDirection = Vector2(message.content["paddleRight"]["dirX"], message.content["paddleRight"]["dirY"]);
 			scene->OnReplication(data);
+		}
+	}
+	break;
+	case MessageType::JOIN_LOBBY_RESPONSE:
+	{
+		if (LobbyScene* scene = dynamic_cast<LobbyScene*>(I(ClientApp)->GetLoadedScene()))
+		{
+			// send the response to the LobbyScene
 		}
 	}
 	break;
