@@ -190,6 +190,7 @@ void ClientHandler::HandleMessage(const Message& message)
 			}
 			
 			scene->InitLobbiesList(lobbies);
+			std::cout << "Lobbies list received" << std::endl;
 		}
 	}
 	break;

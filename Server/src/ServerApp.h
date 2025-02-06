@@ -40,6 +40,7 @@ public:
 	void JoinLobby(int userId, int lobbyId);
 	void LeaveLobby(int userId);
 	void StartLobbyByOwner(int userId);
+	void SendLobbies(int userId);
 
 	std::unordered_map<int, Lobby*> GetLobbies() { return m_lobbies; }
 	UDPNetwork& GetUdpServer() { return m_udpServer; }

@@ -223,6 +223,27 @@ void ServerApp::StartLobbyByOwner(int userId)
 	}
 }
 
+void ServerApp::SendLobbies(int userId)
+{
+	Message response = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
+	json jsonLobbies = json::array();
+
+	for (auto lobby : I(ServerApp)->GetLobbies())
+	{
+		json lStruct = json::object();
+		lStruct["name"] = lobby.second->GetName();
+		lStruct["id"] = lobby.second->GetId();
+		lStruct["capacity"] = lobby.second->GetCapactity();
+		lStruct["userAmount"] = lobby.second->GetUserAmount();
+		jsonLobbies.push_back(lStruct);
+	}
+
+	response.content["data"] = jsonLobbies;
+
+	User* user = GetUser(userId);
+	SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
+}
+
 void ServerHandler::HandleMessage(const Message& message)
 {
 	json content = message.content;
@@ -251,30 +272,7 @@ void ServerHandler::HandleMessage(const Message& message)
 	break;
 	case MessageType::LOBBIES_LIST:
 	{
-		u_short port = data["port"];
-		std::string address = data["address"];
-
-		std::cout << "Client address: " << address << std::endl;
-
-		// Send User Id
-		Message response = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
-		response.content["id"] = userId;
-
-		json jsonLobbies = json::array();
-
-		for (auto lobby : I(ServerApp)->GetLobbies())
-		{
-			json lStruct = json::object();
-			lStruct["name"] = lobby.second->GetName();
-			lStruct["id"] = lobby.second->GetId();
-			lStruct["capacity"] = lobby.second->GetCapactity();
-			lStruct["userAmount"] = lobby.second->GetUserAmount();
-			jsonLobbies.push_back(lStruct);
-		}
-
-		response.content["data"] = jsonLobbies;
-
-		I(ServerApp)->SendMessage(address.c_str(), port, response);
+		I(ServerApp)->SendLobbies(userId);
 	}
 	break;
 	case MessageType::DISCONNECT:
