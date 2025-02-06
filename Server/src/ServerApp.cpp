@@ -227,6 +227,7 @@ void ServerHandler::HandleMessage(const Message& message)
 {
 	json content = message.content;
 	json data = content["data"];
+	int userId = content["id"];
 
 	MessageType type = content["messageType"];
 	switch (type)
@@ -239,11 +240,11 @@ void ServerHandler::HandleMessage(const Message& message)
 
 		std::cout << "Client address: " << address << std::endl;
 
-		int userId = I(ServerApp)->RegisterUser(name, port, address);
+		int attributedUserId = I(ServerApp)->RegisterUser(name, port, address);
 
 		// Send User Id
 		Message response = Message::CreateMessage(MessageType::CONNECT, {});
-		response.content["id"] = userId;
+		response.content["id"] = attributedUserId;
 
 		I(ServerApp)->SendMessage(address.c_str(), port, response);
 	}
@@ -257,6 +258,7 @@ void ServerHandler::HandleMessage(const Message& message)
 
 		// Send User Id
 		Message response = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
+		response.content["id"] = userId;
 
 		json jsonLobbies = json::array();
 
@@ -277,13 +279,11 @@ void ServerHandler::HandleMessage(const Message& message)
 	break;
 	case MessageType::DISCONNECT:
 	{
-		int id = data["id"];
-		I(ServerApp)->UnregisterUser(id);
+		I(ServerApp)->UnregisterUser(userId);
 	}
 	break;
 	case MessageType::CREATE_LOBBY:
 	{
-		int userId = data["id"];
 		std::string name = data["name"];
 
 		ServerApp* app = I(ServerApp);
@@ -293,20 +293,17 @@ void ServerHandler::HandleMessage(const Message& message)
 	break;
 	case MessageType::JOIN_LOBBY:
 	{
-		int userId = data["id"];
 		int lobbyId = data["lobbyId"];
 		I(ServerApp)->JoinLobby(userId, lobbyId);
 	}
 	break;
 	case MessageType::LEAVE_LOBBY:
 	{
-		int userId = data["id"];
 		I(ServerApp)->LeaveLobby(userId);
 	}
 	break;
 	case MessageType::START_GAME:
 	{
-		int userId = data["id"];
 		I(ServerApp)->StartLobbyByOwner(userId);
 	}
 	break;
