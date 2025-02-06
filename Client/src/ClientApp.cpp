@@ -168,6 +168,10 @@ void ClientHandler::HandleMessage(const Message& message)
 	{
 		I(ClientApp)->LoadScene<LobbyListScene>();
 		I(ClientApp)->SetClientId(message.content["id"]);
+
+		Message message = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
+		message.content["id"] = I(ClientApp)->GetClientId();
+		I(ClientApp)->SendMessage(message);
 	}
 	break;
 	case MessageType::LOBBIES_LIST:

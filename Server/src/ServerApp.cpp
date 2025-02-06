@@ -258,6 +258,7 @@ void ServerHandler::HandleMessage(const Message& message)
 
 		// Send User Id
 		Message response = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
+		response.content["id"] = userId;
 
 		json jsonLobbies = json::array();
 
