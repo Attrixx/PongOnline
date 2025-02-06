@@ -221,7 +221,7 @@ void ClientHandler::HandleMessage(const Message& message)
 	{
 		if (LobbyListScene* scene = dynamic_cast<LobbyListScene*>(I(ClientApp)->GetLoadedScene()))
 		{
-			scene->OnJoinLobby(message.content["canJoin"], message.content["message"]);
+			scene->OnJoinLobby(message.content["data"]["canJoin"], message.content["data"]["message"]);
 		}
 	}
 	break;
