@@ -76,6 +76,13 @@ void Lobby::StartGame()
     std::string threadName = "Runner Lobby " + std::to_string(lobbyId);
     std::wstring wideThreadName = ConvertToWideString(threadName);
     SetThreadDescription(m_thread.native_handle(), wideThreadName.c_str());
+
+	int index = 0;
+	for (auto it = m_users.begin(); it != m_users.end(); ++it)
+	{
+		it->second->SetPaddlePosition(index % 2 == 0 ? PaddlePosition::LEFT : PaddlePosition::RIGHT);
+		++index;
+	}
 }
 
 void Lobby::Update(float deltaTime)

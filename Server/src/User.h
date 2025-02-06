@@ -36,6 +36,7 @@ public:
 
 	void SetLobby(Lobby* lobby);
 	void SetIsOwner(bool isOwner) { m_isOwner = isOwner; }
+	void SetPaddlePosition(PaddlePosition paddlePosition) { m_paddlePosition = paddlePosition; }
 
 private:
 	int m_id;
