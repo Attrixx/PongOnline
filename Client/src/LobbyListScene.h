@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "InputText.h"
 
 #include <vector>
 #include <iostream>
@@ -23,5 +24,7 @@ public:
 	virtual void OnUninitialize() override;
 
 	void OnJoinLobby(bool canJoin, const std::string& message);
+private:
+	InputText* m_inputLobbyName;
 };
 

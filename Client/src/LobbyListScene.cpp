@@ -4,7 +4,6 @@
 #include "Message.h"
 #include "Button.h"
 #include "ClientApp.h"
-
 #include <iostream>
 
 void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
@@ -27,6 +26,20 @@ void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
 
 void LobbyListScene::OnInitialize()
 {
+	m_inputLobbyName = CreateUIElement<InputText>();
+	m_inputLobbyName->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH), float(GetScreenHeight() / 2 + BUTTON_HEIGHT * 2) });
+
+	Button* createLobbyButton = CreateUIElement<Button>();
+	createLobbyButton->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH), float(GetScreenHeight() / 2) });
+	createLobbyButton->SetText("Create Lobby");
+	auto onCreateLobbyButtonClicked = [&]() {
+		Message message = Message::CreateMessage(MessageType::CREATE_LOBBY, {
+			{"name", m_inputLobbyName->GetValue()}
+			});
+		message.content["id"] = I(ClientApp)->GetClientId();
+		I(ClientApp)->SendMessage(message);
+		};
+	createLobbyButton->BindOnClickFunction(onCreateLobbyButtonClicked);
 }
 
 void LobbyListScene::OnUpdate(float deltaTime)
