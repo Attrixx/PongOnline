@@ -54,7 +54,7 @@ void GameScene::OnReplication(const ReplicationData& replicationData)
 		m_paddleLeft->SetPosition(replicationData.PaddleLeftPosition);
 		m_paddleLeft->SetDirection(replicationData.PaddleLeftDirection);
 
-		m_paddleLeft->SetPosition(replicationData.PaddleRightPosition);
-		m_paddleLeft->SetDirection(replicationData.PaddleRightDirection);
+		m_paddleRight->SetPosition(replicationData.PaddleRightPosition);
+		m_paddleRight->SetDirection(replicationData.PaddleRightDirection);
 	}
 }
