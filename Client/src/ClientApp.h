@@ -44,6 +44,7 @@ public:
 
 	void SetServerHostname(const std::string& address) { m_serverHostname = address; }
 	void SetClientId(int clientId) { m_clientId = clientId; }
+	int GetClientId() const { return m_clientId; }
 	void SendMessage(Message& message);
 	UDPNetwork& GetUdpClient() { return m_udpClient; }
 

@@ -21,7 +21,7 @@ void MainMenuScene::OnInitialize()
 	buttonCreateGame->SetPosition({ WINDOW_WIDTH * 0.5f - BUTTON_WIDTH - 25.f, 75.f });
 	buttonCreateGame->SetText("Create game");
 	auto onCreateGameButtonClicked = [&]() {
-		Message message = Message::CreateMessage(MessageType::CONNECT, {
+		Message message = Message::CreateMessage(MessageType::JOIN_LOBBY, {
 			{"name", m_inputUsername->GetValue()},
 			{"port", I(ClientApp)->GetUdpClient().GetLocalPort()},
 			{"address", I(ClientApp)->GetUdpClient().GetPublicIPAddress()}
