@@ -61,4 +61,5 @@ void Scene::Uninitialize()
 	{
 		(*it)->SetPendingDestroy(true);
 	}
+	OnUninitialize();
 }

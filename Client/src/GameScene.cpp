@@ -2,6 +2,7 @@
 #include "CommonGameConsts.h"
 #include "Entity.h"
 #include "Ball.h"
+#include "ClientApp.h"
 
 void GameScene::OnInitialize()
 {
@@ -13,6 +14,8 @@ void GameScene::OnInitialize()
 
 	m_paddleLeft = CreateEntity<Entity>();
 	m_paddleLeft->Init(Vector2(PADDLE_MARGIN, 0), Vector2(0, 0), 100, "res/paddle.png", RED);
+
+	I(ClientApp)->SetIsInGame(true);
 }
 
 void GameScene::OnUpdate(float deltaTime)
@@ -42,6 +45,7 @@ void GameScene::OnRender()
 
 void GameScene::OnUninitialize()
 {
+	I(ClientApp)->SetIsInGame(false);
 }
 
 void GameScene::OnReplication(const ReplicationData& replicationData)

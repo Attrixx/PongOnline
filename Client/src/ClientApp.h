@@ -47,6 +47,7 @@ public:
 	int GetClientId() const { return m_clientId; }
 	void SendMessage(Message& message);
 	UDPNetwork& GetUdpClient() { return m_udpClient; }
+	void SetIsInGame(bool isInGame) { m_isInGame = isInGame; }
 
 private:
 	// Window
@@ -58,8 +59,6 @@ private:
 	void InitNetwork();
 	void Disconnect();
 
-	void SetIsInGame(bool isInGame) { m_isInGame = isInGame; }
-
 private:
 	UDPNetwork m_udpClient;
 	std::string m_serverHostname = "127.0.0.1";
@@ -68,7 +67,7 @@ private:
 	Scene* m_loadedScene;
 	Scene* m_newScene;
 
-	bool m_isInGame;
+	std::atomic_bool m_isInGame;
 	PaddleDirection m_paddleDirection = NONE;
 
 };

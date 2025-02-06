@@ -125,7 +125,7 @@ void Lobby::InitRound()
 	m_ball->SetSpeed(BALL_INITIAL_SPEED);
 
 	bool leftSize = rand() / RAND_MAX > 0.5f;
-	float minAngle = leftSize ? -BALL_INITIAL_MAX_HALF_ANGLE : -BALL_INITIAL_MAX_HALF_ANGLE + (M_PI * 0.5f);
+	float minAngle = leftSize ? -BALL_INITIAL_MAX_HALF_ANGLE + (M_PI * 0.5f) : -BALL_INITIAL_MAX_HALF_ANGLE;
 	float maxAngle = minAngle + (BALL_INITIAL_MAX_HALF_ANGLE * 2.f);
 	float angle = (minAngle + (rand() / (float)RAND_MAX) * (maxAngle - minAngle));
 	m_ball->SetDirection(Vector2Float(cos(angle), sin(angle)));
