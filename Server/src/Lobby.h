@@ -36,9 +36,10 @@ public:
 	int GetUserAmount() const { return static_cast<int>(m_users.size()); }
 
 	void Rename(const std::string& inName) { name = inName; }
-	
+
 	void AddUser(User* user);
 	void RemoveUser(int id);
+	std::unordered_map<int, User*> GetUsers() { return m_users; }
 
 	void InitRound();
 	void OnBallOutOfScreen(bool isOutOnLeftSide);

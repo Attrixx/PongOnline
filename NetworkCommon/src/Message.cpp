@@ -3,7 +3,7 @@
 #include <iostream>
 
 const json Message::defaultData = { {"message", ""} };
-const json Message::connectData = { {"name", ""}, {"port", 0}, {"address", ""}};
+const json Message::connectData = { {"name", ""}, {"port", 0}, {"address", ""} };
 const json Message::logicData = {
 	{"ball", {{"posX", 0}, {"posY", 0}, {"dirX", 0}, {"dirY", 0}, {"speed", 0}}},
 	{"paddleRight", {{"posX", 0}, {"posY", 0}, {"dirY", 0}}},
@@ -12,9 +12,8 @@ const json Message::logicData = {
 const json Message::playData = {
 	{"movedPaddle", {{"dirY", 0}}}
 };
-const json Message::lobbiesListData = {
-
-};
+const json Message::lobbiesListData = {};
+const json Message::lobbyPlayers = {};
 
 const json Message::joinLobbyAnswerData = {
 	{"canJoin", false},

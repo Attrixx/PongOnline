@@ -259,6 +259,26 @@ void ServerApp::SendLobbies(int userId)
 	SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
 }
 
+void ServerApp::SendLobbyPlayers(int lobbyId)
+{
+	Message response = Message::CreateMessage(MessageType::LOBBY_PLAYERS, {});
+	json jsonPlayers = json::array();
+	response.content["data"]["lobbyId"] = lobbyId;
+
+	Lobby* lobby = GetLobby(lobbyId);
+
+	for (auto player : lobby->GetUsers())
+	{
+		json lStruct = json::object();
+		lStruct["name"] = player.second->GetName();
+		jsonPlayers.push_back(lStruct);
+	}
+
+	response.content["data"]["players"] = jsonPlayers;
+
+	lobby->SendMessage(response);
+}
+
 void ServerApp::OnPaddleDirectionChanged(int userId, int dirY)
 {
 	User* user = GetUser(userId);
@@ -326,6 +346,11 @@ void ServerHandler::HandleMessage(const Message& message)
 	{
 		int lobbyId = data["lobbyId"];
 		I(ServerApp)->JoinLobby(userId, lobbyId);
+	}
+	break;
+	case MessageType::LOBBY_PLAYERS:
+	{
+		I(ServerApp)->SendLobbyPlayers(data["lobbyId"]);
 	}
 	break;
 	case MessageType::LEAVE_LOBBY:

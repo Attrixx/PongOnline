@@ -42,3 +42,15 @@ void LobbyScene::OnRender()
 void LobbyScene::OnUninitialize()
 {
 }
+
+void LobbyScene::RefreshPlayers(std::vector<std::string> playerNames)
+{
+	float yOffset = 0;
+	for (std::string name : playerNames)
+	{
+		Button* PlayerButton = CreateUIElement<Button>();
+		PlayerButton->SetPosition({ BUTTON_WIDTH * 2, 75.f + yOffset });
+		PlayerButton->SetText(name);
+		yOffset += BUTTON_HEIGHT * 1.5f;
+	}
+}

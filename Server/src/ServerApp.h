@@ -41,6 +41,7 @@ public:
 	void LeaveLobby(int userId);
 	void StartLobbyByOwner(int userId);
 	void SendLobbies(int userId);
+	void SendLobbyPlayers(int lobbyId);
 
 	void OnPaddleDirectionChanged(int userId, int dirY);
 
