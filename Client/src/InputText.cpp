@@ -85,7 +85,7 @@ void InputText::Update(float deltaTime)
 
 void InputText::Render()
 {
-	DrawRectangleRec(m_rectangle, m_isMouseHovering ? m_hoverColor : m_hasFocus ? m_focusColor : m_backgroundColor);
+	DrawRectangleRec(m_rectangle, m_hasFocus ? m_focusColor : m_isMouseHovering ? m_hoverColor : m_backgroundColor);
 	DrawRectangleLinesEx(m_rectangle, m_borderSize, m_borderColor);
 	Vector2 textSize = MeasureTextEx(m_font, m_text.c_str(), m_fontSize, 1.f);
 	std::string displayedText = m_text;

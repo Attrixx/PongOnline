@@ -226,7 +226,15 @@ void ClientHandler::HandleMessage(const Message& message)
 
 			data.PaddleRightPosition = Vector2Float(messageData["paddleRight"]["posX"], messageData["paddleRight"]["posY"]);
 			data.PaddleRightDirection = Vector2Float(messageData["paddleRight"]["dirX"], messageData["paddleRight"]["dirY"]);
-			scene->OnReplication(data);
+			scene->OnGameDataReplication(data);
+		}
+	}
+	break;
+	case MessageType::SCORE:
+	{
+		if (GameScene* scene = dynamic_cast<GameScene*>(I(ClientApp)->GetLoadedScene()))
+		{
+			scene->OnScoreReplication(message.content["data"]["score"], message.content["data"]["healthPoints"]);
 		}
 	}
 	break;

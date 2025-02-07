@@ -6,6 +6,8 @@
 #include <raylib.h>
 #include <mutex>
 
+class UIElement;
+class BasicText;
 class Entity;
 class Ball;
 
@@ -31,14 +33,18 @@ public:
 	virtual void OnRender() override;
 	virtual void OnUninitialize() override;
 
-	void OnReplication(const ReplicationData& replicationData);
+	void OnGameDataReplication(const ReplicationData& replicationData);
+	void OnScoreReplication(int score, int healthPoints);
 
 private:
 
+	std::mutex m_scoreMutex;
+	std::mutex m_healthPointsMutex;
 	std::mutex m_ballMutex;
 	std::mutex m_paddleLeftMutex;
 	std::mutex m_paddleRightMutex;
 
+	BasicText* m_score;
 	Ball* m_ball;
 	Entity* m_paddleLeft;
 	Entity* m_paddleRight;

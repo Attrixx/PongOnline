@@ -42,6 +42,7 @@ public:
 
 	void InitRound();
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
+	void OnBallCollideWithPaddle();
 	void UpdatePaddleDirection(PaddlePosition paddlePosition, int dirY);
 
 	// Send message to specific user if id is specified, everyone otherwise (id = -1)
@@ -58,6 +59,7 @@ private:
 	std::unordered_map<int, User*> m_users;
 
 	int m_healthPoints;
+	int m_score;
 
 	Ball* m_ball;
 	Paddle* m_paddleLeft;

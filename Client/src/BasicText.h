@@ -39,6 +39,8 @@ public:
 	void SetHorizontalAlignment(HorizontalAlignment alignment) { m_horizontalAlignment = alignment; };
 	void SetVerticalAlignment(VerticalAlignment alignment) { m_verticalAlignment = alignment; };
 
+	Vector2 GetTextSize() const;
+
 private:
 
 	std::string m_text;

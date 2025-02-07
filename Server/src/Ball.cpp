@@ -52,5 +52,9 @@ void Ball::CheckCollision(Paddle* target)
 	{
 		m_direction.x *= -1.f;
 		m_speed *= BALL_COLLISION_SPEED_COEFF;
+		if (m_lobby)
+		{
+			m_lobby->OnBallCollideWithPaddle();
+		}
 	}
 }

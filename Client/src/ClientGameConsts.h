@@ -16,5 +16,7 @@ constexpr int FONT_SIZE = 16;
 constexpr int INPUT_WIDTH = 250;
 constexpr int INPUT_HEIGHT = 35;
 
-constexpr int BUTTON_WIDTH = 150;
+constexpr int BUTTON_WIDTH = 200;
 constexpr int BUTTON_HEIGHT = 35;
+
+constexpr float PARTY_ENTY_ABS_MARGIN = 100.f;

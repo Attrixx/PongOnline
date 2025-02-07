@@ -12,6 +12,7 @@ Lobby::Lobby(int id, const std::string& inName)
 	: lobbyId(id)
 	, name(inName)
 	, m_healthPoints(HEALTH_POINTS)
+	, m_score(0)
 	, m_capacity(2)
 {
 	m_ball = new Ball(this);
@@ -83,6 +84,9 @@ void Lobby::StartGame()
 		it->second->SetPaddlePosition(index % 2 == 0 ? PaddlePosition::LEFT : PaddlePosition::RIGHT);
 		++index;
 	}
+
+	m_healthPoints = HEALTH_POINTS;
+	m_score = 0;
 }
 
 void Lobby::Update(float deltaTime)
@@ -150,7 +154,16 @@ void Lobby::OnBallOutOfScreen(bool isOutOnLeftSide)
 	}
 
 	Message message = Message::CreateMessage(MessageType::SCORE, {
-		{"score", m_healthPoints}
+		{"healthPoints", m_healthPoints}, {"score", m_score}
+		});
+	SendMessage(message);
+}
+
+void Lobby::OnBallCollideWithPaddle()
+{
+	++m_score;
+	Message message = Message::CreateMessage(MessageType::SCORE, {
+		{"healthPoints", m_healthPoints}, {"score", m_score}
 		});
 	SendMessage(message);
 }

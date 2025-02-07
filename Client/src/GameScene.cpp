@@ -1,11 +1,20 @@
 #include "GameScene.h"
 #include "CommonGameConsts.h"
+#include "UIElement.h"
+#include "BasicText.h"
 #include "Entity.h"
 #include "Ball.h"
 #include "ClientApp.h"
 
+#include <string>
+
 void GameScene::OnInitialize()
 {
+	m_score = CreateUIElement<BasicText>();
+	m_score->SetText("0");
+	m_score->SetTextColor(BLACK);
+	m_score->SetPosition({ WINDOW_WIDTH * 0.5f, 10.f });
+
 	m_ball = CreateEntity<Ball>();
 	m_ball->Init(Vector2(0, 0), Vector2(1, 0), 100, "res/ball.png", PURPLE);
 
@@ -48,7 +57,7 @@ void GameScene::OnUninitialize()
 	I(ClientApp)->SetIsInGame(false);
 }
 
-void GameScene::OnReplication(const ReplicationData& replicationData)
+void GameScene::OnGameDataReplication(const ReplicationData& replicationData)
 {
 	{
 		std::scoped_lock lock(m_ballMutex, m_paddleLeftMutex, m_paddleRightMutex);
@@ -61,5 +70,13 @@ void GameScene::OnReplication(const ReplicationData& replicationData)
 
 		m_paddleRight->SetPosition(replicationData.PaddleRightPosition);
 		m_paddleRight->SetDirection(replicationData.PaddleRightDirection);
+	}
+}
+
+void GameScene::OnScoreReplication(int score, int healthPoints)
+{
+	{
+		std::scoped_lock lock(m_scoreMutex, m_healthPointsMutex);
+		m_score->SetText(std::to_string(score));
 	}
 }

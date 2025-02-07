@@ -1,6 +1,7 @@
 #include "MainMenuScene.h"
 #include "Button.h"
 #include "InputText.h"
+#include "BasicText.h"
 #include "Entity.h"
 #include "ClientGameConsts.h"
 #include "CommonGameConsts.h"
@@ -11,14 +12,29 @@
 
 void MainMenuScene::OnInitialize()
 {
+	const float winCenterH = WINDOW_WIDTH * 0.5f;
+	const float winCenterV = WINDOW_HEIGHT * 0.5f;
+
+	BasicText* labelUsername = CreateUIElement<BasicText>();
+	labelUsername->SetText("Username");
+	labelUsername->SetPosition({ winCenterH - INPUT_WIDTH - 50.f, winCenterV - 60.f});
+	labelUsername->SetTextColor(BLACK);
+	labelUsername->SetVerticalAlignment(VerticalAlignment::BOTTOM);
+
 	m_inputUsername = CreateUIElement<InputText>();
-	m_inputUsername->SetPosition({ WINDOW_WIDTH * 0.5f - INPUT_WIDTH - 25.f, 25.f });
+	m_inputUsername->SetPosition({ winCenterH - INPUT_WIDTH - 50.f, winCenterV - 60.f });
+
+	BasicText* labelIP = CreateUIElement<BasicText>();
+	labelIP->SetText("Server address");
+	labelIP->SetPosition({ winCenterH + 50.f, winCenterV - 60.f});
+	labelIP->SetTextColor(BLACK);
+	labelIP->SetVerticalAlignment(VerticalAlignment::BOTTOM);
 
 	m_inputIp = CreateUIElement<InputText>();
-	m_inputIp->SetPosition({ WINDOW_WIDTH * 0.5f + 25.f, 25.f });
+	m_inputIp->SetPosition({ winCenterH + 50.f, winCenterV - 60.f });
 
 	Button* buttonCreateGame = CreateUIElement<Button>();
-	buttonCreateGame->SetPosition({ WINDOW_WIDTH * 0.5f - BUTTON_WIDTH - 25.f, 75.f });
+	buttonCreateGame->SetPosition({ winCenterH - BUTTON_WIDTH * 0.5f, winCenterV + 20.f });
 	buttonCreateGame->SetText("Connect to server");
 	auto onCreateGameButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::CONNECT, {

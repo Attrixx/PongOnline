@@ -1,7 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "InputText.h"
-#include "Button.h"
+#include "LobbyEntry.h"
 
 #include <vector>
 #include <iostream>
@@ -27,6 +27,6 @@ public:
 	void OnJoinLobby(bool canJoin, const std::string& message);
 private:
 	InputText* m_inputLobbyName;
-	std::vector<Button*> m_lobbyButtons;
+	std::vector<LobbyEntry*> m_lobbyEntries;
 };
 

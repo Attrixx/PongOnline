@@ -21,7 +21,10 @@ const json Message::joinLobbyAnswerData = {
 	{"message", ""}
 };
 const json Message::scoreData = {
-	{"healthPoints", 0}
+	{ {"healthPoints", 0}, {"score", 0} }
+};
+const json Message::startGameData = {
+	{ {"leftPlayerName", ""}, {"rightPlayerName", ""} }
 };
 
 std::string Message::toString()

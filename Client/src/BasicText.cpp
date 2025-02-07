@@ -29,10 +29,46 @@ void BasicText::Update(float deltaTime)
 
 void BasicText::Render()
 {
-	DrawTextEx(m_font, m_text.c_str(), m_position, m_fontSize, 1.f, m_textColor);
+	Vector2 textSize = GetTextSize();
+	Vector2 targetPosition = m_position;
+	switch (m_verticalAlignment)
+	{
+	case VerticalAlignment::CENTER:
+	{
+		targetPosition.y -= textSize.y * 0.5f;
+	}
+	break;
+	case VerticalAlignment::BOTTOM:
+	{
+		targetPosition.y -= textSize.y;
+	}
+	break;
+	default:
+		break;
+	}
+
+	switch (m_horizontalAlignment)
+	{
+	case HorizontalAlignment::CENTER:
+	{
+		targetPosition.x -= textSize.x * 0.5f;
+	}
+	break;
+	case HorizontalAlignment::RIGHT:
+	{
+		targetPosition.x -= textSize.x;
+	}
+	break;
+	}
+	DrawTextEx(m_font, m_text.c_str(), targetPosition, m_fontSize, 1.f, m_textColor);
 }
 
 void BasicText::SetFont(const char* filename)
 {
 	m_font = LoadFont(filename);
+}
+
+Vector2 BasicText::GetTextSize() const
+{
+	return MeasureTextEx(m_font, m_text.c_str(), m_fontSize, 1.f);
 }

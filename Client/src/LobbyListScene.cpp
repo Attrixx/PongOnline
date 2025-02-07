@@ -9,27 +9,18 @@
 
 void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
 {
-	for (int i = 0; i < m_lobbyButtons.size(); i++)
+	for (int i = 0; i < m_lobbyEntries.size(); i++)
 	{
-		m_uiElements.erase(find(m_uiElements.begin(), m_uiElements.end(), m_lobbyButtons[i]));
+		m_uiElements.erase(find(m_uiElements.begin(), m_uiElements.end(), m_lobbyEntries[i]));
 	}
-	m_lobbyButtons.clear();
+	m_lobbyEntries.clear();
 
 	for (int i = 0; i < lobbies.size(); i++)
 	{
-		Button* lobbyButton = CreateUIElement<Button>();
-		lobbyButton->SetPosition({ float(GetScreenWidth() / 2), (BUTTON_HEIGHT * 1.5f) * i });
-		lobbyButton->SetText(lobbies[i].name + " " + std::to_string(lobbies[i].currentSize) + "/" + std::to_string(lobbies[i].maxSize));
-		int lobbyId = lobbies[i].id;
-		auto onLobbyButtonClicked = [&, lobbyId]() {
-			Message message = Message::CreateMessage(MessageType::JOIN_LOBBY, {
-				{"lobbyId", lobbyId}
-				});
-			message.content["id"] = I(ClientApp)->GetClientId();
-			I(ClientApp)->SendMessage(message);
-			};
-		lobbyButton->BindOnClickFunction(onLobbyButtonClicked);
-		m_lobbyButtons.push_back(lobbyButton);
+		LobbyEntry* lobbyEntry = CreateUIElement<LobbyEntry>();
+		lobbyEntry->SetPosition({ float(GetScreenWidth() / 2), (BUTTON_HEIGHT * 1.5f) * i });
+		lobbyEntry->SetData(lobbies[i].name, lobbies[i].currentSize, lobbies[i].maxSize, lobbies[i].id);
+		m_lobbyEntries.push_back(lobbyEntry);
 	}
 }
 
