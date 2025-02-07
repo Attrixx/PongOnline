@@ -211,6 +211,11 @@ void ClientHandler::HandleMessage(const Message& message)
 		I(ClientApp)->LoadScene<GameScene>();
 	}
 	break;
+	case MessageType::END_GAME:
+	{
+		I(ClientApp)->LoadScene<LobbyScene>();
+	}
+	break;
 	case MessageType::LOGIC:
 	{
 		if (GameScene* scene = dynamic_cast<GameScene*>(I(ClientApp)->GetLoadedScene()))

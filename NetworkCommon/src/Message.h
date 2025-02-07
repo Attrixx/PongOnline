@@ -22,6 +22,7 @@ enum MessageType
 	LEAVE_LOBBY,
 
 	START_GAME,
+	END_GAME,
 	PLAY,
 	LOGIC,
 	SCORE
