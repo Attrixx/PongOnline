@@ -238,6 +238,19 @@ void ClientHandler::HandleMessage(const Message& message)
 		}
 	}
 	break;
+	case MessageType::LOBBY_PLAYERS:
+	{
+		if (LobbyScene* scene = dynamic_cast<LobbyScene*>(I(ClientApp)->GetLoadedScene()))
+		{
+			std::vector<std::string> players;
+			for (auto lobby : message.content["data"]["players"])
+			{
+				players.push_back(lobby);
+			}
+			scene->RefreshPlayers(players);
+		}
+	}
+	break;
 	default:
 		break;
 	}
