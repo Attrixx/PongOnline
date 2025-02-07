@@ -5,6 +5,7 @@
 #include "Message.h"
 #include "ClientApp.h"
 #include "LobbyListScene.h"
+#include "BasicText.h"
 
 void LobbyScene::OnInitialize()
 {
@@ -48,9 +49,9 @@ void LobbyScene::RefreshPlayers(std::vector<std::string> playerNames)
 	float yOffset = 0;
 	for (std::string name : playerNames)
 	{
-		Button* PlayerButton = CreateUIElement<Button>();
-		PlayerButton->SetPosition({ BUTTON_WIDTH * 2, 75.f + yOffset });
-		PlayerButton->SetText(name);
+		BasicText* player = CreateUIElement<BasicText>();
+		player->SetPosition({ BUTTON_WIDTH * 2, 75.f + yOffset });
+		player->SetText(name);
 		yOffset += BUTTON_HEIGHT * 1.5f;
 	}
 }
