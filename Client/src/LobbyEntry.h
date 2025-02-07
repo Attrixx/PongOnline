@@ -14,6 +14,7 @@ public:
 
 	void SetData(const std::string& partyName, int playerCount, int maxPlayers, int lobbyId);
 	void SetPosition(const Vector2 position);
+	void SetTextColor(const Color& color) { m_textColor = color; }
 
 	Vector2 GetSize() const;
 
