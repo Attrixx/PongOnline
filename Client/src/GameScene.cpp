@@ -12,8 +12,11 @@ void GameScene::OnInitialize()
 {
 	m_score = CreateUIElement<BasicText>();
 	m_score->SetText("0");
-	m_score->SetTextColor(BLACK);
 	m_score->SetPosition({ WINDOW_WIDTH * 0.5f, 10.f });
+
+	m_healthPoints = CreateUIElement<BasicText>();
+	m_healthPoints->SetText("Health: ");
+	m_healthPoints->SetPosition({ 10.f, 10.f });
 
 	m_ball = CreateEntity<Ball>();
 	m_ball->Init(Vector2(0, 0), Vector2(1, 0), 100, "res/ball.png", PURPLE);
@@ -78,5 +81,6 @@ void GameScene::OnScoreReplication(int score, int healthPoints)
 	{
 		std::scoped_lock lock(m_scoreMutex, m_healthPointsMutex);
 		m_score->SetText(std::to_string(score));
+		m_healthPoints->SetText("Health: " + std::to_string(healthPoints));
 	}
 }

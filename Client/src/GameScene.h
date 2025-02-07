@@ -45,6 +45,7 @@ private:
 	std::mutex m_paddleRightMutex;
 
 	BasicText* m_score;
+	BasicText* m_healthPoints;
 	Ball* m_ball;
 	Entity* m_paddleLeft;
 	Entity* m_paddleRight;
