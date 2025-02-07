@@ -10,7 +10,7 @@
 void LobbyScene::OnInitialize()
 {
 	Button* PlayButton = CreateUIElement<Button>();
-	PlayButton->SetPosition({ WINDOW_WIDTH * 0.5f - BUTTON_WIDTH - 25.f, 75.f });
+	PlayButton->SetPosition({ WINDOW_WIDTH * 0.5f - BUTTON_WIDTH - 25.f, WINDOW_HEIGHT - 75.f });
 	PlayButton->SetText("Play");
 	auto onPlayButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::START_GAME, {});
@@ -21,7 +21,7 @@ void LobbyScene::OnInitialize()
 
 
 	Button* QuitButton = CreateUIElement<Button>();
-	QuitButton->SetPosition({ WINDOW_WIDTH * 0.5f + 25.f, 75.f });
+	QuitButton->SetPosition({ WINDOW_WIDTH * 0.5f ,  WINDOW_HEIGHT - 75.f });
 	QuitButton->SetText("Quit");
 	auto OnQuitButtonClicked = [&]() {
 		I(ClientApp)->LoadScene<LobbyListScene>();
