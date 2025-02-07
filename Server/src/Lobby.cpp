@@ -62,6 +62,9 @@ void Lobby::Run()
 		std::this_thread::sleep_until(nextTick);
 	}
 
+	Message endGameMessage = Message::CreateMessage(MessageType::END_GAME, {});
+	SendMessage(endGameMessage);
+
 	I(ServerApp)->WakeUpMain(lobbyId);
 }
 
