@@ -240,6 +240,10 @@ void ServerApp::LeaveLobby(int userId)
 			{
 				RemoveLobby(lobby->GetId());
 			}
+			else
+			{
+				lobby->NotifyRefresh();
+			}
 		}
 	}
 }
@@ -286,10 +290,7 @@ void ServerApp::SendLobbies(int userId)
 }
 
 void ServerApp::SendLobbyPlayers(int userId)
-{
-	Message response = Message::CreateMessage(MessageType::LOBBY_PLAYERS, {});
-	json jsonPlayers = json::array();
-	
+{	
 	User* user = GetUser(userId);
 	if (!user)
 	{
@@ -298,16 +299,10 @@ void ServerApp::SendLobbyPlayers(int userId)
 	}
 	
 	Lobby* lobby = user->GetLobby();
-
-	for (auto player : lobby->GetUsers())
+	if (lobby)
 	{
-		json lStruct = json::object();
-		lStruct["name"] = player.second->GetName();
-		jsonPlayers.push_back(lStruct);
+		lobby->NotifyRefresh();
 	}
-	response.content["data"]["players"] = jsonPlayers;
-
-	lobby->SendMessage(response);
 }
 
 void ServerApp::OnPaddleDirectionChanged(int userId, int dirY)
@@ -340,8 +335,6 @@ void ServerHandler::HandleMessage(const Message& message)
 		std::string name = data["name"];
 		u_short port = data["port"];
 		std::string address = data["address"];
-
-		std::cout << "Client address: " << address << std::endl;
 
 		int attributedUserId = I(ServerApp)->RegisterUser(name, port, address);
 

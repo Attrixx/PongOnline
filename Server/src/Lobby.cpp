@@ -218,6 +218,21 @@ void Lobby::UpdatePaddleDirection(PaddlePosition paddlePosition, int dirY)
 	}
 }
 
+void Lobby::NotifyRefresh()
+{
+	Message response = Message::CreateMessage(MessageType::LOBBY_PLAYERS, {});
+	json jsonPlayers = json::array();
+
+	for (auto user : m_users)
+	{
+		json lStruct = json::object();
+		lStruct["name"] = user.second->GetName();
+		jsonPlayers.push_back(lStruct);
+	}
+	response.content["data"]["players"] = jsonPlayers;
+	SendMessage(response);
+}
+
 void Lobby::SendMessage(Message& message, int id)
 {
 	if (id < 0)
