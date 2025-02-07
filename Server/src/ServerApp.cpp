@@ -240,6 +240,10 @@ void ServerApp::LeaveLobby(int userId)
 			{
 				RemoveLobby(lobby->GetId());
 			}
+			else
+			{
+				lobby->NotifyRefresh();
+			}
 		}
 	}
 }
