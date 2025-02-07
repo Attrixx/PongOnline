@@ -380,7 +380,7 @@ void ServerHandler::HandleMessage(const Message& message)
 	break;
 	case MessageType::LOBBY_PLAYERS:
 	{
-		I(ServerApp)->SendLobbyPlayers(data["userId"]);
+		I(ServerApp)->SendLobbyPlayers(userId);
 	}
 	break;
 	case MessageType::LEAVE_LOBBY:

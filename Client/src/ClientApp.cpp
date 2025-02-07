@@ -256,9 +256,10 @@ void ClientHandler::HandleMessage(const Message& message)
 		if (LobbyScene* scene = dynamic_cast<LobbyScene*>(I(ClientApp)->GetLoadedScene()))
 		{
 			std::vector<std::string> players;
-			for (auto lobby : message.content["data"]["players"])
+			for (auto player : message.content["data"]["players"])
 			{
-				players.push_back(lobby);
+				std::string name = player["name"];
+				players.push_back(name);
 			}
 			scene->RefreshPlayers(players);
 		}

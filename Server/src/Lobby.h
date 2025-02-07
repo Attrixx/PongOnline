@@ -40,7 +40,7 @@ public:
 
 	void AddUser(User* user);
 	void RemoveUser(int id);
-	std::unordered_map<int, User*> GetUsers() { return m_users; }
+	const std::unordered_map<int, User*>& GetUsers() { return m_users; }
 	void TransferOwnership();
 
 	void InitRound();
