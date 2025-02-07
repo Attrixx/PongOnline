@@ -12,4 +12,7 @@ class LobbyScene : public Scene
 
 public:
 	void RefreshPlayers(std::vector<std::string> playerNames);
+
+private:
+	std::vector<class UIElement*> m_playerNames;
 };
