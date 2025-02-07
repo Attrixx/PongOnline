@@ -8,8 +8,7 @@
 #include <ctime>
 
 ServerApp::ServerApp()
-	: m_healthPoints(3)
-	, m_udpServer(new ServerHandler())
+	: m_udpServer(new ServerHandler())
 {
 }
 
@@ -27,10 +26,23 @@ void ServerApp::Run()
 
 	InitNetwork();
 
+	std::unique_lock<std::mutex> lock(m_mutex);
 	while (1)
 	{
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		m_cv.wait(lock);
+
+		if (m_lobbyToStop >= 0)
+		{
+			StopLobby(m_lobbyToStop);
+			m_lobbyToStop = -1;
+		}
 	}
+}
+
+void ServerApp::WakeUpMain(int lobbyId)
+{
+	m_lobbyToStop = lobbyId;
+	m_cv.notify_one();
 }
 
 void ServerApp::SendMessage(const char* address, u_short port, Message& message)
@@ -71,7 +83,6 @@ void ServerApp::InitNetwork()
 void ServerApp::Update(float deltaTime)
 {
 }
-
 
 int ServerApp::RegisterUser(const std::string& name, u_short port, const std::string& address)
 {
@@ -129,6 +140,16 @@ void ServerApp::RemoveLobby(int lobbyId)
 	{
 		m_lobbies.erase(lobbyId);
 		std::cout << "Lobby " << lobby->GetName() << " removed." << std::endl;
+	}
+}
+
+void ServerApp::StopLobby(int lobbyId)
+{
+	Lobby* lobby = GetLobby(lobbyId);
+	if (lobby)
+	{
+		lobby->Stop();
+		std::cout << "Lobby " << lobby->GetName() << " stopped." << std::endl;
 	}
 }
 
@@ -206,7 +227,12 @@ void ServerApp::LeaveLobby(int userId)
 		{
 			lobby->RemoveUser(user->GetId());
 			user->SetLobby(nullptr);
-			user->SetIsOwner(false);
+
+			if (user->IsOwner())
+			{
+				lobby->TransferOwnership();
+				user->SetIsOwner(false);
+			}
 
 			std::cout << "User " << user->GetName() << " left lobby " << lobby->GetName() << std::endl;
 

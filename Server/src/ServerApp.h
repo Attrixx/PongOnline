@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <atomic>
 #include <mutex>
+#include <condition_variable>
 
 class ServerHandler : public NetworkHandler
 {
@@ -28,6 +29,7 @@ public:
 	virtual ~ServerApp();
 
 	void Run();
+	void WakeUpMain(int lobbyId);
 
 	void SendMessage(const char* address, u_short port, Message& message);
 
@@ -36,6 +38,7 @@ public:
 
 	int CreateLobby(int userId, const std::string& name);
 	void RemoveLobby(int lobbyId);
+	void StopLobby(int lobbyId);
 
 	void JoinLobby(int userId, int lobbyId);
 	void LeaveLobby(int userId);
@@ -58,6 +61,8 @@ private:
 
 private:
 	UDPNetwork m_udpServer;
+	std::condition_variable m_cv;
+	std::mutex m_mutex;
 
 	std::unordered_map<int, User*> m_users;
 	std::unordered_map<int, Lobby*> m_lobbies;
@@ -67,7 +72,6 @@ private:
 	std::atomic_int m_userIdCounter = 0;
 	std::atomic_int m_lobbyIdCounter = 0;
 
-	int m_healthPoints;
-
+	int m_lobbyToStop = -1;
 };
 

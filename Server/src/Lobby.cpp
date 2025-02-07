@@ -43,6 +43,7 @@ void Lobby::Run()
 	const auto tickDuration = std::chrono::milliseconds(1000 / UPDATE_TICKRATE);
 	auto lastTime = std::chrono::steady_clock::now();
 	auto nextTick = lastTime + tickDuration;
+
 	while (m_running)
 	{
 		auto now = std::chrono::steady_clock::now();
@@ -60,23 +61,34 @@ void Lobby::Run()
 		nextTick += tickDuration;
 		std::this_thread::sleep_until(nextTick);
 	}
+
+	I(ServerApp)->WakeUpMain(lobbyId);
+}
+
+void Lobby::Stop()
+{
+	m_running = false;
+	if (m_thread.joinable())
+	{
+		m_thread.join();
+	}
 }
 
 std::wstring ConvertToWideString(const std::string& str)
 {
-    int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
-    std::wstring wstrTo(size_needed, 0);
-    MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
-    return wstrTo;
+	int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
+	std::wstring wstrTo(size_needed, 0);
+	MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), &wstrTo[0], size_needed);
+	return wstrTo;
 }
 
 void Lobby::StartGame()
 {
 	m_running = true;
-    m_thread = std::thread(&Lobby::Run, this);
-    std::string threadName = "Runner Lobby " + std::to_string(lobbyId);
-    std::wstring wideThreadName = ConvertToWideString(threadName);
-    SetThreadDescription(m_thread.native_handle(), wideThreadName.c_str());
+	m_thread = std::thread(&Lobby::Run, this);
+	std::string threadName = "Runner Lobby " + std::to_string(lobbyId);
+	std::wstring wideThreadName = ConvertToWideString(threadName);
+	SetThreadDescription(m_thread.native_handle(), wideThreadName.c_str());
 
 	int index = 0;
 	for (auto it = m_users.begin(); it != m_users.end(); ++it)
@@ -93,6 +105,7 @@ void Lobby::Update(float deltaTime)
 {
 	// Update entities
 	m_ball->Update(deltaTime);
+
 	{
 		std::scoped_lock lock(m_paddleLeftMutex, m_paddleRightMutex);
 
@@ -109,7 +122,7 @@ void Lobby::Update(float deltaTime)
 		{"ball", {{"posX", m_ball->GetPosition().x}, {"posY", m_ball->GetPosition().y}, {"dirX", m_ball->GetDirection().x}, {"dirY", m_ball->GetDirection().y}, {"speed", m_ball->GetSpeed()}}},
 		{"paddleRight", {{"posX", m_paddleRight->GetPosition().x}, {"posY", m_paddleRight->GetPosition().y}, {"dirX", m_paddleRight->GetDirection().x}, {"dirY", m_paddleRight->GetDirection().y}}},
 		{"paddleLeft", {{"posX", m_paddleLeft->GetPosition().x}, {"posY", m_paddleLeft->GetPosition().y}, {"dirX", m_paddleLeft->GetDirection().x}, {"dirY", m_paddleLeft->GetDirection().y}}}
-	});
+		});
 	SendMessage(message);
 }
 
@@ -124,6 +137,15 @@ void Lobby::RemoveUser(int id)
 	if (it != m_users.end())
 	{
 		m_users.erase(it);
+	}
+}
+
+void Lobby::TransferOwnership()
+{
+	if (!m_users.empty())
+	{
+		auto it = m_users.begin();
+		it->second->SetIsOwner(true);
 	}
 }
 
