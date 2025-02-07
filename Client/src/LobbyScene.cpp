@@ -21,7 +21,7 @@ void LobbyScene::OnInitialize()
 
 
 	Button* QuitButton = CreateUIElement<Button>();
-	QuitButton->SetPosition({ WINDOW_WIDTH * 0.5f + BUTTON_WIDTH * 2, 75.f });
+	QuitButton->SetPosition({ WINDOW_WIDTH * 0.5f + 25.f, 75.f });
 	QuitButton->SetText("Quit");
 	auto OnQuitButtonClicked = [&]() {
 		I(ClientApp)->LoadScene<LobbyListScene>();
