@@ -28,7 +28,7 @@ void Ball::Update(float deltaTime)
 		m_direction.y = abs(m_direction.y);
 	}
 
-	else if (m_position.y + m_radius > WINDOW_HEIGHT)
+	else if (m_position.y + 2.f * m_radius > WINDOW_HEIGHT)
 	{
 		m_direction.y = -1.f * abs(m_direction.y);
 	}
@@ -45,17 +45,30 @@ void Ball::Update(float deltaTime)
 
 void Ball::CheckCollision(Paddle* target)
 {
-	const Vector2Float targetPosition = target->GetPosition();
-	const Vector2Float targetSize = target->GetSize();
-	if (m_position.x < targetPosition.x + targetSize.x && m_position.x + (m_radius * 2.f) > targetPosition.x &&
-		m_position.y < targetPosition.y + targetSize.y && m_position.y + (m_radius * 2.f) > targetPosition.y)
-	{
-		m_direction.x = -1.f * m_direction.x;
+    const Vector2Float targetPosition = target->GetPosition();
+    const Vector2Float targetSize = target->GetSize();
 
-		m_speed *= BALL_COLLISION_SPEED_COEFF;
-		if (m_lobby)
-		{
-			m_lobby->OnBallCollideWithPaddle();
-		}
-	}
+    if (m_position.x < targetPosition.x + targetSize.x &&
+        m_position.x + (m_radius * 2.f) > targetPosition.x &&
+        m_position.y < targetPosition.y + targetSize.y &&
+        m_position.y + (m_radius * 2.f) > targetPosition.y)
+    {
+        m_direction.x *= -1.f;
+
+        if (m_direction.x > 0)
+        {
+            m_position.x = targetPosition.x + targetSize.x;
+        }
+        else
+        {
+            m_position.x = targetPosition.x - (m_radius * 2.f);
+        }
+
+        m_speed *= BALL_COLLISION_SPEED_COEFF;
+
+        if (m_lobby)
+        {
+            m_lobby->OnBallCollideWithPaddle();
+        }
+    }
 }
