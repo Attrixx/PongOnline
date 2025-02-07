@@ -27,10 +27,10 @@ void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
 void LobbyListScene::OnInitialize()
 {
 	m_inputLobbyName = CreateUIElement<InputText>();
-	m_inputLobbyName->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH), float(GetScreenHeight() / 2 + BUTTON_HEIGHT * 2) });
+	m_inputLobbyName->SetPosition({ GetScreenWidth() * 0.5f + 10.f, GetScreenHeight() - BUTTON_HEIGHT - 10.f });
 
 	Button* createLobbyButton = CreateUIElement<Button>();
-	createLobbyButton->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH), float(GetScreenHeight() / 2) });
+	createLobbyButton->SetPosition({ GetScreenWidth() * 0.5f - BUTTON_WIDTH - 10.f, GetScreenHeight() - BUTTON_HEIGHT - 10.f});
 	createLobbyButton->SetText("Create Lobby");
 	auto onCreateLobbyButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::CREATE_LOBBY, {
@@ -42,7 +42,7 @@ void LobbyListScene::OnInitialize()
 	createLobbyButton->BindOnClickFunction(onCreateLobbyButtonClicked);
 
 	Button* refreshListButton = CreateUIElement<Button>();
-	refreshListButton->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH), float(GetScreenHeight() / 2) - BUTTON_HEIGHT*2 });
+	refreshListButton->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH - 10.f), 10.f });
 	refreshListButton->SetText("Refresh");
 	auto onRefreshButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
