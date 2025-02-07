@@ -50,7 +50,15 @@ void Ball::CheckCollision(Paddle* target)
 	if (m_position.x < targetPosition.x + targetSize.x && m_position.x + (m_radius * 2.f) > targetPosition.x &&
 		m_position.y < targetPosition.y + targetSize.y && m_position.y + (m_radius * 2.f) > targetPosition.y)
 	{
-		m_direction.x *= -1.f;
+		if (m_direction.x > 0.f)
+		{
+			m_direction.x = -1.f * abs(m_direction.x);
+		}
+		else
+		{
+			m_direction.x = abs(m_direction.x);
+		}
+
 		m_speed *= BALL_COLLISION_SPEED_COEFF;
 		if (m_lobby)
 		{
