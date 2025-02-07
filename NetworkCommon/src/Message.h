@@ -66,5 +66,4 @@ public:
 	static const json lobbyPlayers;
 	static const json joinLobbyAnswerData;
 	static const json scoreData;
-	static const json startGameData;
 };
