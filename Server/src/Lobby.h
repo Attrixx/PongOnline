@@ -30,7 +30,6 @@ public:
 
 	int GetId() const { return lobbyId; }
 	const std::string& GetName() const { return name; }
-
 	bool IsEmpty() const { return m_users.empty(); }
 	bool IsFull() const { return m_users.size() >= m_capacity; }
 	int GetCapactity() const { return m_capacity; }
@@ -40,13 +39,14 @@ public:
 
 	void AddUser(User* user);
 	void RemoveUser(int id);
-	const std::unordered_map<int, User*>& GetUsers() { return m_users; }
 	void TransferOwnership();
 
 	void InitRound();
 	void OnBallOutOfScreen(bool isOutOnLeftSide);
 	void OnBallCollideWithPaddle();
 	void UpdatePaddleDirection(PaddlePosition paddlePosition, int dirY);
+
+	void NotifyRefresh();
 
 	// Send message to specific user if id is specified, everyone otherwise (id = -1)
 	void SendMessage(Message& message, int id = -1);
