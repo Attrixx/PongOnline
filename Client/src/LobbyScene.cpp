@@ -24,10 +24,10 @@ void LobbyScene::OnInitialize()
 	QuitButton->SetPosition({ WINDOW_WIDTH * 0.5f ,  WINDOW_HEIGHT - 75.f });
 	QuitButton->SetText("Quit");
 	auto OnQuitButtonClicked = [&]() {
-		I(ClientApp)->LoadScene<LobbyListScene>();
 		Message message = Message::CreateMessage(MessageType::LEAVE_LOBBY, {});
 		message.content["id"] = I(ClientApp)->GetClientId();
 		I(ClientApp)->SendMessage(message);
+		I(ClientApp)->LoadScene<LobbyListScene>();
 		};
 	QuitButton->BindOnClickFunction(OnQuitButtonClicked);
 
