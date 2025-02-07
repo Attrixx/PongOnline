@@ -30,6 +30,10 @@ void LobbyScene::OnInitialize()
 		I(ClientApp)->SendMessage(message);
 		};
 	QuitButton->BindOnClickFunction(OnQuitButtonClicked);
+
+	Message message = Message::CreateMessage(MessageType::LOBBY_PLAYERS, {});
+	message.content["id"] = I(ClientApp)->GetClientId();
+	I(ClientApp)->SendMessage(message);
 }
 
 void LobbyScene::OnUpdate(float deltaTime)
@@ -46,6 +50,12 @@ void LobbyScene::OnUninitialize()
 
 void LobbyScene::RefreshPlayers(std::vector<std::string> playerNames)
 {
+	for (int i = 0; i < m_playerNames.size(); i++)
+	{
+		m_uiElements.erase(find(m_uiElements.begin(), m_uiElements.end(), m_playerNames[i]));
+	}
+	m_playerNames.clear();
+
 	float yOffset = 0;
 	for (std::string name : playerNames)
 	{
@@ -53,5 +63,6 @@ void LobbyScene::RefreshPlayers(std::vector<std::string> playerNames)
 		player->SetPosition({ BUTTON_WIDTH * 2, 75.f + yOffset });
 		player->SetText(name);
 		yOffset += BUTTON_HEIGHT * 1.5f;
+		m_playerNames.push_back(player);
 	}
 }

@@ -285,13 +285,19 @@ void ServerApp::SendLobbies(int userId)
 	SendMessage(user->GetPublicIpAddress().c_str(), user->GetPort(), response);
 }
 
-void ServerApp::SendLobbyPlayers(int lobbyId)
+void ServerApp::SendLobbyPlayers(int userId)
 {
 	Message response = Message::CreateMessage(MessageType::LOBBY_PLAYERS, {});
 	json jsonPlayers = json::array();
-	response.content["data"]["lobbyId"] = lobbyId;
-
-	Lobby* lobby = GetLobby(lobbyId);
+	
+	User* user = GetUser(userId);
+	if (!user)
+	{
+		std::cout << "User not found." << std::endl;
+		return;
+	}
+	
+	Lobby* lobby = user->GetLobby();
 
 	for (auto player : lobby->GetUsers())
 	{
@@ -299,7 +305,6 @@ void ServerApp::SendLobbyPlayers(int lobbyId)
 		lStruct["name"] = player.second->GetName();
 		jsonPlayers.push_back(lStruct);
 	}
-
 	response.content["data"]["players"] = jsonPlayers;
 
 	lobby->SendMessage(response);
@@ -376,7 +381,7 @@ void ServerHandler::HandleMessage(const Message& message)
 	break;
 	case MessageType::LOBBY_PLAYERS:
 	{
-		I(ServerApp)->SendLobbyPlayers(data["lobbyId"]);
+		I(ServerApp)->SendLobbyPlayers(data["userId"]);
 	}
 	break;
 	case MessageType::LEAVE_LOBBY:
