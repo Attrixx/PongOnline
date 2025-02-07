@@ -5,7 +5,7 @@
 #include "Lobby.h"
 
 Ball::Ball(Lobby* lobby)
-	: m_radius(0.f)
+	: m_radius(BALL_RADIUS)
 	, m_lobby(lobby)
 {
 }
