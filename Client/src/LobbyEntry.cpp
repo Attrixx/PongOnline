@@ -19,6 +19,8 @@ LobbyEntry::LobbyEntry()
 	m_joinButton = new Button();
 	m_joinButton->SetFont(m_font);
 	m_joinButton->SetFontSize(m_fontSize);
+	m_joinButton->SetText("Join");
+	m_joinButton->SetSize({ 100.f, BUTTON_HEIGHT });
 
 	auto onJoinButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::JOIN_LOBBY, {
@@ -51,10 +53,9 @@ void LobbyEntry::SetPosition(const Vector2 position)
 
 Vector2 LobbyEntry::GetSize() const
 {
-	// textHeight > BUTTON_HEIGHT
 	Vector2 textSize = MeasureTextEx(m_font, m_partyName.c_str(), m_fontSize, 1.f);
 	return Vector2(
-		2.f * PARTY_ENTY_ABS_MARGIN + BUTTON_WIDTH,
+		2.f * PARTY_ENTY_ABS_MARGIN + 100.f,
 		BUTTON_HEIGHT > textSize.y ? BUTTON_HEIGHT : textSize.y
 	);
 }
@@ -66,9 +67,11 @@ void LobbyEntry::Update(float deltaTime)
 
 void LobbyEntry::Render()
 {
-	DrawTextEx(m_font, m_partyName.c_str(), m_position, m_fontSize, 1.f, m_textColor);
+	Vector2 textSize = MeasureTextEx(m_font, m_partyName.c_str(), m_fontSize, 1.f);
+	DrawTextEx(m_font, m_partyName.c_str(), { m_position.x, m_position.y + (BUTTON_HEIGHT - textSize.y) * 0.5f }, m_fontSize, 1.f, m_textColor);
 	Vector2 targetPosition = m_position;
 	targetPosition.x += PARTY_ENTY_ABS_MARGIN;
+	targetPosition.y += (BUTTON_HEIGHT - textSize.y) * 0.5f;
 	DrawTextEx(m_font, (std::to_string(m_playerCount) + "/" + std::to_string(m_maxPlayers)).c_str(), targetPosition, m_fontSize, 1.f, m_textColor);
 
 	m_joinButton->Render();

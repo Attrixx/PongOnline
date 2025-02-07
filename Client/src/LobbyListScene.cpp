@@ -18,8 +18,9 @@ void LobbyListScene::InitLobbiesList(std::vector<LobbyStruct> lobbies)
 	for (int i = 0; i < lobbies.size(); i++)
 	{
 		LobbyEntry* lobbyEntry = CreateUIElement<LobbyEntry>();
-		lobbyEntry->SetPosition({ float(GetScreenWidth() / 2), (BUTTON_HEIGHT * 1.5f) * i });
+		lobbyEntry->SetPosition({ GetScreenWidth() * 0.5f - lobbyEntry->GetSize().x * 0.5f, (BUTTON_HEIGHT * 1.5f) * i + (BUTTON_HEIGHT + 10.f) });
 		lobbyEntry->SetData(lobbies[i].name, lobbies[i].currentSize, lobbies[i].maxSize, lobbies[i].id);
+		lobbyEntry->SetTextColor(BLACK);
 		m_lobbyEntries.push_back(lobbyEntry);
 	}
 }
@@ -42,7 +43,8 @@ void LobbyListScene::OnInitialize()
 	createLobbyButton->BindOnClickFunction(onCreateLobbyButtonClicked);
 
 	Button* refreshListButton = CreateUIElement<Button>();
-	refreshListButton->SetPosition({ float(GetScreenWidth() - BUTTON_WIDTH - 10.f), 10.f });
+	refreshListButton->SetSize(Vector2(100.f, BUTTON_HEIGHT));
+	refreshListButton->SetPosition({ float(GetScreenWidth() - 100.f - 10.f), 10.f });
 	refreshListButton->SetText("Refresh");
 	auto onRefreshButtonClicked = [&]() {
 		Message message = Message::CreateMessage(MessageType::LOBBIES_LIST, {});
