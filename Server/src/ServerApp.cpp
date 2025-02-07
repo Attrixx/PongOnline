@@ -318,7 +318,6 @@ void ServerApp::OnPaddleDirectionChanged(int userId, int dirY)
 	if (lobby)
 	{
 		lobby->UpdatePaddleDirection(user->GetPaddlePosition(), dirY);
-		std::cout << "Update paddle direction for user " << user->GetName() << "(" << userId << ") : " << dirY << std::endl;
 	}
 }
 
