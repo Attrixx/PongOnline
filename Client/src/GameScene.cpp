@@ -15,7 +15,7 @@ void GameScene::OnInitialize()
 	m_score->SetPosition({ WINDOW_WIDTH * 0.5f, 10.f });
 
 	m_healthPoints = CreateUIElement<BasicText>();
-	m_healthPoints->SetText("Health: ");
+	m_healthPoints->SetText("Health: " + std::to_string(HEALTH_POINTS));
 	m_healthPoints->SetPosition({ 10.f, 10.f });
 
 	m_ball = CreateEntity<Ball>();
